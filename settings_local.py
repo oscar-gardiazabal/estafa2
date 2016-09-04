@@ -85,4 +85,3 @@ EMAIL_UNIQUE = False #if True, email addresses must be unique in all accounts
 
 FEEDBACK_SITE_URL = None #None or url
 LOGIN_URL = '/%s%s%s' % (FORUM_SCRIPT_ALIAS,'account/','signin/')
-
