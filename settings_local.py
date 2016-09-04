@@ -1,5 +1,5 @@
 # encoding:utf-8
-import os
+#import os
 import os.path
 
 SITE_SRC_ROOT = os.path.dirname(__file__)
