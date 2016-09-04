@@ -23,11 +23,17 @@ DEBUG_TOOLBAR_CONFIG = {
 TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1',)
 
-DATABASE_NAME = 'estafa2'
-DATABASE_USER = 'root'
-DATABASE_PASSWORD = ''
+#DATABASE_NAME = 'estafa2'
+#DATABASE_USER = 'root'
+#DATABASE_PASSWORD = ''
+#DATABASE_HOST = 'localhost'
+
+DATABASE_NAME = '$MYSQL_DATABASE'
+DATABASE_USER = '$MYSQL_USERNAME'
+DATABASE_PASSWORD = '$MYSQL_PASSWORD'
+DATABASE_HOST = '$MYSQL_LOCATION'
+
 DATABASE_ENGINE = 'django.db.backends.mysql'
-DATABASE_HOST = 'localhost'
 DATABASE_PORT = '3306'
 
 CACHE_BACKEND = 'file://%s' % os.path.join(os.path.dirname(__file__),'cache').replace('\\','/')
