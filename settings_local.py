@@ -1,4 +1,5 @@
 # encoding:utf-8
+import os
 import os.path
 
 SITE_SRC_ROOT = os.path.dirname(__file__)
@@ -28,10 +29,10 @@ INTERNAL_IPS = ('127.0.0.1',)
 #DATABASE_PASSWORD = ''
 #DATABASE_HOST = 'localhost'
 
-DATABASE_NAME = '$MYSQL_DATABASE'
-DATABASE_USER = '$MYSQL_USERNAME'
-DATABASE_PASSWORD = '$MYSQL_PASSWORD'
-DATABASE_HOST = '$MYSQL_LOCATION'
+DATABASE_NAME = os.environ["MYSQL_DATABASE"]
+DATABASE_USER = os.environ["MYSQL_USERNAME"]
+DATABASE_PASSWORD = os.environ["MYSQL_PASSWORD"]
+DATABASE_HOST = os.environ["MYSQL_LOCATION"]
 
 DATABASE_ENGINE = 'django.db.backends.mysql'
 DATABASE_PORT = '3306'
