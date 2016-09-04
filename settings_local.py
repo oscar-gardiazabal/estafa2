@@ -1,6 +1,13 @@
 # encoding:utf-8
-#import os
 import os.path
+from django.utils.translation import ugettext as _
+
+def check_local_setting(name, value):
+    local_vars = locals()
+    if name in local_vars and local_vars[name] == value:
+        return True
+    else:
+        return False
 
 SITE_SRC_ROOT = os.path.dirname(__file__)
 LOG_FILENAME = 'django.osqa.log'
@@ -9,20 +16,21 @@ LOG_FILENAME = 'django.osqa.log'
 import logging
 logging.basicConfig(
     filename=os.path.join(SITE_SRC_ROOT, 'log', LOG_FILENAME),
-    level=logging.ERROR,
+    level=logging.DEBUG,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )
 
 #ADMINS and MANAGERS
-ADMINS = ()
+ADMINS = (('Forum Admin', 'forum@example.com'),)
 MANAGERS = ADMINS
 
-DEBUG = False
+DEBUG = True
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': True
 }
 TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1',)
+
 
 #DATABASE_NAME = 'estafa2'
 #DATABASE_USER = 'root'
@@ -42,46 +50,42 @@ DATABASE_HOST = 'mysql'
 DATABASE_ENGINE = 'django.db.backends.mysql'
 DATABASE_PORT = '3306'
 
-CACHE_BACKEND = 'file://%s' % os.path.join(os.path.dirname(__file__),'cache').replace('\\','/')
-#CACHE_BACKEND = 'dummy://'
+
+#CACHE_BACKEND = 'file://%s' % os.path.join(os.path.dirname(__file__),'cache').replace('\\','/')
+CACHE_BACKEND = 'dummy://'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-# This should be equal to your domain name, plus the web application context.
-# This shouldn't be followed by a trailing slash.
-# I.e., http://www.yoursite.com or http://www.hostedsite.com/yourhostapp
-APP_URL = 'http://www.estafa2.com'
+APP_URL = 'http://' #used by email notif system and RSS
 
 #LOCALIZATIONS
-TIME_ZONE = 'Europe/Berlin'
+TIME_ZONE = 'America/New_York'
+
+###########################
+#
+#   this will allow running your forum with url like http://site.com/forum
+#
+#   FORUM_SCRIPT_ALIAS = 'forum/'
+#
+FORUM_SCRIPT_ALIAS = '' #no leading slash, default = '' empty string
+
 
 #OTHER SETTINGS
 
 USE_I18N = True
-LANGUAGE_CODE = 'es'
-
-DJANGO_VERSION = 1.1
-OSQA_DEFAULT_SKIN = 'default'
-
-#DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
-DISABLED_MODULES = ['project_badges', 'localauth']
-#DISABLED_MODULES = [localauth]
-
-DEFAULT_FROM_EMAIL = 'messenger@localhost'
-SERVER_EMAIL = 'messenger@localhost'
-
-EMAIL_SUBJECT_PREFIX = 'Estafa2'
-EMAIL_HOST='smtp.oscargardiazabal.com'
-EMAIL_PORT='587'
-EMAIL_USE_TLS=True
-
-#if you set FORUM_SCRIPT_ALIAS= 'forum/'
-#then OSQA will run at url http://example.com/forum
-#FORUM_SCRIPT_ALIAS cannot have leading slash, otherwise it can be set to anything
-FORUM_SCRIPT_ALIAS = '' #no leading slash, default = '' empty string
-
+LANGUAGE_CODE = 'en'
 EMAIL_VALIDATION = 'off' #string - on|off
 MIN_USERNAME_LENGTH = 1
-EMAIL_UNIQUE = False #if True, email addresses must be unique in all accounts
+EMAIL_UNIQUE = False
 
+WIKI_ON = True
 FEEDBACK_SITE_URL = None #None or url
-LOGIN_URL = '/%s%s%s' % (FORUM_SCRIPT_ALIAS,'account/','signin/')
+EDITABLE_SCREEN_NAME = False #True or False - can user change screen name?
+
+DJANGO_VERSION = 1.1
+RESOURCE_REVISION=4
+
+OSQA_DEFAULT_SKIN = 'default'
+
+DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
+
+from forum.settings import *
