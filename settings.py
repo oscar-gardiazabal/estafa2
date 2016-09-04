@@ -115,10 +115,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
-
-    #'django.contrib.markup',
-    'markup_deprecated',
-
+    'django.contrib.markup',
     'forum',
 ]
 
