@@ -15,7 +15,7 @@ from django.conf import settings
 #handler500 = 'forum.views.meta.error_handler'
 
 
-
+#https://github.com/OSQA/osqa/blob/master/urls.py
 urlpatterns = patterns('',
     (r'^%s' % settings.FORUM_SCRIPT_ALIAS, include('forum.urls')),
 )
