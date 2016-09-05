@@ -1,331 +1,315 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
+
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
-from forum.badges.base import AbstractBadge
-from forum.models import Badge
-from forum.actions import *
-from forum.models import Vote, Flag
+
+from forum.badges.base import PostCountableAbstractBadge, ActivityAbstractBadge, FirstActivityAbstractBadge, \
+        ActivityCountAbstractBadge, CountableAbstractBadge, AbstractBadge, NodeCountableAbstractBadge
+from forum.models import Node, Question, Answer, Activity, Tag
+from forum.models.user import activity_record
+from forum import const
 
 import settings
 
-class QuestionViewBadge(AbstractBadge):
-    abstract = True
-    listen_to = (QuestionViewAction,)
+class PopularQuestionBadge(PostCountableAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Asked a question with %s views') % str(settings.POPULAR_QUESTION_VIEWS)
 
-    @property
-    def description(self):
-        return _('Asked a question with %s views') % str(self.nviews)
+    def __init__(self):
+        super(PopularQuestionBadge, self).__init__(Question, 'view_count', settings.POPULAR_QUESTION_VIEWS)
 
-    def award_to(self, action):
-        if action.node.extra_count == int(self.nviews):
-            return action.node.author
+class NotableQuestionBadge(PostCountableAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Asked a question with %s views') % str(settings.NOTABLE_QUESTION_VIEWS)
 
+    def __init__(self):
+        super(NotableQuestionBadge, self).__init__(Question, 'view_count', settings.NOTABLE_QUESTION_VIEWS)
 
-class PopularQuestion(QuestionViewBadge):
-    name = _('Popular Question')
-    nviews = settings.POPULAR_QUESTION_VIEWS
+class FamousQuestionBadge(PostCountableAbstractBadge):
+    type = const.GOLD_BADGE
+    description = _('Asked a question with %s views') % str(settings.FAMOUS_QUESTION_VIEWS)
 
-
-class NotableQuestion(QuestionViewBadge):
-    type = Badge.SILVER
-    name = _('Notable Question')
-    nviews = settings.NOTABLE_QUESTION_VIEWS
-
-class FamousQuestion(QuestionViewBadge):
-    type = Badge.GOLD
-    name = _('Famous Question')
-    nviews = settings.FAMOUS_QUESTION_VIEWS
+    def __init__(self):
+        super(FamousQuestionBadge, self).__init__(Question, 'view_count', settings.FAMOUS_QUESTION_VIEWS)
 
 
-class NodeScoreBadge(AbstractBadge):
-    abstract = True
-    listen_to = (VoteAction,)
+class NiceAnswerBadge(NodeCountableAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Answer voted up %s times') % str(settings.NICE_ANSWER_VOTES_UP)
 
-    def award_to(self, action):
-        if (action.node.node_type == self.node_type) and (action.node.score == int(self.expected_score)):
-            return action.node.author
+    def __init__(self):
+        super(NiceAnswerBadge, self).__init__("answer", 'vote_up_count', settings.NICE_ANSWER_VOTES_UP)
 
+class NiceQuestionBadge(NodeCountableAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Question voted up %s times') % str(settings.NICE_QUESTION_VOTES_UP)
 
-class QuestionScoreBadge(NodeScoreBadge):
-    abstract = True
-    node_type = "question"
+    def __init__(self):
+        super(NiceQuestionBadge, self).__init__("question", 'vote_up_count', settings.NICE_QUESTION_VOTES_UP)
 
-    @property
-    def description(self):
-        return _('Question voted up %s times') % str(self.expected_score)
+class GoodAnswerBadge(NodeCountableAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Answer voted up %s times') % str(settings.GOOD_ANSWER_VOTES_UP)
 
-class NiceQuestion(QuestionScoreBadge):
-    expected_score = settings.NICE_QUESTION_VOTES_UP
-    name = _("Nice Question")
+    def __init__(self):
+        super(GoodAnswerBadge, self).__init__("answer", 'vote_up_count', settings.GOOD_ANSWER_VOTES_UP)
 
-class GoodQuestion(QuestionScoreBadge):
-    type = Badge.SILVER
-    expected_score = settings.GOOD_QUESTION_VOTES_UP
-    name = _("Good Question")
+class GoodQuestionBadge(NodeCountableAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Question voted up %s times') % str(settings.GOOD_QUESTION_VOTES_UP)
 
-class GreatQuestion(QuestionScoreBadge):
-    type = Badge.GOLD
-    expected_score = settings.GREAT_QUESTION_VOTES_UP
-    name = _("Great Question")
+    def __init__(self):
+        super(GoodQuestionBadge, self).__init__("question", 'vote_up_count', settings.GOOD_QUESTION_VOTES_UP)
 
+class GreatAnswerBadge(NodeCountableAbstractBadge):
+    type = const.GOLD_BADGE
+    description = _('Answer voted up %s times') % str(settings.GREAT_ANSWER_VOTES_UP)
 
-class AnswerScoreBadge(NodeScoreBadge):
-    abstract = True
-    node_type = "answer"
+    def __init__(self):
+        super(GreatAnswerBadge, self).__init__("answer", 'vote_up_count', settings.GREAT_ANSWER_VOTES_UP)
 
-    @property
-    def description(self):
-        return _('Answer voted up %s times') % str(self.expected_score)
+class GreatQuestionBadge(NodeCountableAbstractBadge):
+    type = const.GOLD_BADGE
+    description = _('Question voted up %s times') % str(settings.GREAT_QUESTION_VOTES_UP)
 
-class NiceAnswer(AnswerScoreBadge):
-    expected_score = settings.NICE_ANSWER_VOTES_UP
-    name = _("Nice Answer")
-
-class GoodAnswer(AnswerScoreBadge):
-    type = Badge.SILVER
-    expected_score = settings.GOOD_ANSWER_VOTES_UP
-    name = _("Good Answer")
-
-class GreatAnswer(AnswerScoreBadge):
-    type = Badge.GOLD
-    expected_score = settings.GREAT_ANSWER_VOTES_UP
-    name = _("Great Answer")
+    def __init__(self):
+        super(GreatQuestionBadge, self).__init__("question", 'vote_up_count', settings.GREAT_QUESTION_VOTES_UP)
 
 
-class FavoriteQuestionBadge(AbstractBadge):
-    abstract = True
-    listen_to = (FavoriteAction,)
+class FavoriteQuestionBadge(PostCountableAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Question favorited by %s users') % str(settings.FAVORITE_QUESTION_FAVS)
 
-    @property
-    def description(self):
-        return _('Question favorited by %s users') % str(self.expected_count)
+    def __init__(self):
+        super(FavoriteQuestionBadge, self).__init__(Question, 'favourite_count', settings.FAVORITE_QUESTION_FAVS)
 
-    def award_to(self, action):
-        if (action.node.node_type == "question") and (action.node.favorite_count == int(self.expected_count)):
-            return action.node.author
+class StellarQuestionBadge(PostCountableAbstractBadge):
+    type = const.GOLD_BADGE
+    description = _('Question favorited by %s users') % str(settings.STELLAR_QUESTION_FAVS)
 
-class FavoriteQuestion(FavoriteQuestionBadge):
-    type = Badge.SILVER
-    name = _("Favorite Question")
-    expected_count = settings.FAVORITE_QUESTION_FAVS
-
-class StellarQuestion(FavoriteQuestionBadge):
-    type = Badge.GOLD
-    name = _("Stellar Question")
-    expected_count = settings.STELLAR_QUESTION_FAVS
+    def __init__(self):
+        super(StellarQuestionBadge, self).__init__(Question, 'favourite_count', settings.STELLAR_QUESTION_FAVS)
 
 
-class Disciplined(AbstractBadge):
-    listen_to = (DeleteAction,)
-    name = _("Disciplined")
-    description = _('Deleted own post with score of %s or higher') % settings.DISCIPLINED_MIN_SCORE
+class DisciplinedBadge(ActivityAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Deleted own post with score of %s or higher') % str(settings.DISCIPLINED_MIN_SCORE)
 
-    def award_to(self, action):
-        if (action.node.author == action.user) and (action.node.score >= int(settings.DISCIPLINED_MIN_SCORE)):
-            return action.user
+    def __init__(self):
+        def handler(instance):
+            if instance.user.id == instance.content_object.author.id and instance.content_object.score >= settings.DISCIPLINED_MIN_SCORE:
+                self.award_badge(instance.user, instance)
 
-class PeerPressure(AbstractBadge):
-    listen_to = (DeleteAction,)
-    name = _("Peer Pressure")
-    description = _('Deleted own post with score of %s or lower') % settings.PEER_PRESSURE_MAX_SCORE
+        super(DisciplinedBadge, self).__init__(const.TYPE_ACTIVITY_DELETE_QUESTION, handler)
 
-    def award_to(self, action):
-        if (action.node.author == action.user) and (action.node.score <= int(settings.PEER_PRESSURE_MAX_SCORE)):
-            return action.user
+class PeerPressureBadge(ActivityAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Deleted own post with score of %s or lower') % str(settings.PEER_PRESSURE_MAX_SCORE)
 
+    def __init__(self):
+        def handler(instance):
+            if instance.user.id == instance.content_object.author.id and instance.content_object.score <= settings.PEER_PRESSURE_MAX_SCORE:
+                self.award_badge(instance.user, instance)
 
-class Critic(AbstractBadge):
-    award_once = True
-    listen_to = (VoteDownAction,)
-    name = _("Critic")
-    description = _('First down vote')
-
-    def award_to(self, action):
-        if (action.user.vote_down_count == 1):
-            return action.user
+        super(PeerPressureBadge, self).__init__(const.TYPE_ACTIVITY_DELETE_QUESTION, handler)
 
 
-class Supporter(AbstractBadge):
-    award_once = True
-    listen_to = (VoteUpAction,)
-    name = _("Supporter")
-    description = _('First up vote')
-
-    def award_to(self, action):
-        if (action.user.vote_up_count == 1):
-            return action.user
-
-
-class FirstActionBadge(AbstractBadge):
-    award_once = True
-    abstract = True
-
-    def award_to(self, action):
-        if (self.listen_to[0].objects.filter(user=action.user).count() == 1):
-            return action.user
-
-class CitizenPatrol(FirstActionBadge):
-    listen_to = (FlagAction,)
-    name = _("Citizen Patrol")
+class CitizenPatrolBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('First flagged post')
 
-class Organizer(FirstActionBadge):
-    listen_to = (RetagAction,)
-    name = _("Organizer")
+    def __init__(self):
+        super(CitizenPatrolBadge, self).__init__(const.TYPE_ACTIVITY_MARK_OFFENSIVE)
+
+class CriticBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('First down vote')
+
+    def __init__(self):
+        super(CriticBadge, self).__init__(const.TYPE_ACTIVITY_VOTE_DOWN)
+
+class OrganizerBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('First retag')
 
-class Editor(FirstActionBadge):
-    listen_to = (ReviseAction,)
-    name = _("Editor")
+    def __init__(self):
+        super(OrganizerBadge, self).__init__(const.TYPE_ACTIVITY_UPDATE_TAGS)
+
+class SupporterBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('First up vote')
+
+    def __init__(self):
+        super(SupporterBadge, self).__init__(const.TYPE_ACTIVITY_VOTE_UP)
+
+class EditorBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('First edit')
 
-class Scholar(FirstActionBadge):
-    listen_to = (AcceptAnswerAction,)
-    name = _("Scholar")
+    def __init__(self):
+        super(EditorBadge, self).__init__((const.TYPE_ACTIVITY_UPDATE_ANSWER, const.TYPE_ACTIVITY_UPDATE_QUESTION))
+
+class ScholarBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('First accepted answer on your own question')
 
-class Cleanup(FirstActionBadge):
-    listen_to = (RollbackAction,)
-    name = _("Cleanup")
-    description = _('First rollback')
+    def __init__(self):
+        super(ScholarBadge, self).__init__(const.TYPE_ACTIVITY_MARK_ANSWER)
 
-
-class Autobiographer(AbstractBadge):
-    award_once = True
-    listen_to = (EditProfileAction,)
-    name = _("Autobiographer")
+class AutobiographerBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('Completed all user profile fields')
 
-    def award_to(self, action):
-        user = action.user
-        if user.email and user.real_name and user.website and user.location and \
-                user.date_of_birth and user.about:
-            return user
+    def __init__(self):
+        super(AutobiographerBadge, self).__init__(const.TYPE_ACTIVITY_USER_FULL_UPDATED)
+
+class CleanupBadge(FirstActivityAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('First rollback')
+
+    def __init__(self):
+        super(CleanupBadge, self).__init__((const.TYPE_ACTIVITY_CANCEL_VOTE_UP, const.TYPE_ACTIVITY_CANCEL_VOTE_DOWN))
 
 
-class CivicDuty(AbstractBadge):
-    type = Badge.SILVER
-    award_once = True
-    listen_to = (VoteUpAction, VoteDownAction)
-    name = _("Civic Duty")
-    description = _('Voted %s times') % settings.CIVIC_DUTY_VOTES
+class CivicDutyBadge(ActivityCountAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Voted %s times') % str(settings.CIVIC_DUTY_VOTES)
 
-    def award_to(self, action):
-        if (action.user.vote_up_count + action.user.vote_down_count) == int(settings.CIVIC_DUTY_VOTES):
-            return action.user
+    def __init__(self):
+        super(CivicDutyBadge, self).__init__((const.TYPE_ACTIVITY_VOTE_DOWN, const.TYPE_ACTIVITY_VOTE_UP), settings.CIVIC_DUTY_VOTES)
 
+class PunditBadge(ActivityCountAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Left %s comments') % str(settings.PUNDIT_COMMENT_COUNT)
 
-class Pundit(AbstractBadge):
-    award_once = True
-    listen_to = (CommentAction,)
-    name = _("Pundit")
-    description = _('Left %s comments') % settings.PUNDIT_COMMENT_COUNT
-
-    def award_to(self, action):
-        if action.user.nodes.filter_state(deleted=False).filter(node_type="comment").count() == int(
-                settings.PUNDIT_COMMENT_COUNT):
-            return action.user
+    def __init__(self):
+        super(PunditBadge, self).__init__((const.TYPE_ACTIVITY_COMMENT_ANSWER, const.TYPE_ACTIVITY_COMMENT_QUESTION), settings.PUNDIT_COMMENT_COUNT)
 
 
-class SelfLearner(AbstractBadge):
-    listen_to = (VoteUpAction, )
-    name = _("Self Learner")
-    description = _('Answered your own question with at least %s up votes') % settings.SELF_LEARNER_UP_VOTES
+class SelfLearnerBadge(CountableAbstractBadge):
+    type = const.BRONZE_BADGE
+    description = _('Answered your own question with at least %s up votes') % str(settings.SELF_LEARNER_UP_VOTES)
 
-    def award_to(self, action):
-        if (action.node.node_type == "answer") and (action.node.author == action.node.parent.author) and (
-        action.node.score == int(settings.SELF_LEARNER_UP_VOTES)):
-            return action.node.author
+    def __init__(self):
 
+        def handler(instance):
+            if instance.node_type == "answer" and instance.author_id == instance.question.author_id:
+                self.award_badge(instance.author, instance)
 
-class StrunkAndWhite(AbstractBadge):
-    type = Badge.SILVER
-    award_once = True
-    listen_to = (ReviseAction,)
-    name = _("Strunk & White")
-    description = _('Edited %s entries') % settings.STRUNK_AND_WHITE_EDITS
-
-    def award_to(self, action):
-        if (ReviseAction.objects.filter(user=action.user).count() == int(settings.STRUNK_AND_WHITE_EDITS)):
-            return action.user
+        super(SelfLearnerBadge, self).__init__(Node, 'vote_up_count', settings.SELF_LEARNER_UP_VOTES, handler)
 
 
-class Student(AbstractBadge):
-    award_once = True
-    listen_to = (VoteUpAction,)
-    name = _("Student")
+class StrunkAndWhiteBadge(ActivityCountAbstractBadge):
+    type = const.SILVER_BADGE
+    name = _('Strunk & White')
+    description = _('Edited %s entries') % str(settings.STRUNK_AND_WHITE_EDITS)
+
+    def __init__(self):
+        super(StrunkAndWhiteBadge, self).__init__((const.TYPE_ACTIVITY_UPDATE_ANSWER, const.TYPE_ACTIVITY_UPDATE_QUESTION), settings.STRUNK_AND_WHITE_EDITS)
+
+
+def is_user_first(post):
+    return post.__class__.objects.filter(author=post.author).order_by('added_at')[0].id == post.id
+
+class StudentBadge(CountableAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('Asked first question with at least one up vote')
 
-    def award_to(self, action):
-        if (action.node.node_type == "question") and (action.node.author.nodes.filter_state(deleted=False).filter(
-                node_type="question", score=1).count() == 1):
-            return action.node.author
+    def __init__(self):
+        def handler(instance):
+            if instance.node_type == "question" and is_user_first(instance):
+                self.award_badge(instance.author, instance)
 
+        super(StudentBadge, self).__init__(Node, 'vote_up_count', 1, handler)
 
-class Teacher(AbstractBadge):
-    award_once = True
-    listen_to = (VoteUpAction,)
-    name = _("Teacher")
+class TeacherBadge(CountableAbstractBadge):
+    type = const.BRONZE_BADGE
     description = _('Answered first question with at least one up vote')
 
-    def award_to(self, action):
-        if (action.node.node_type == "answer") and (action.node.author.nodes.filter_state(deleted=False).filter(
-                node_type="answer", score=1).count() == 1):
-            return action.node.author
+    def __init__(self):
+        def handler(instance):
+            if instance.node_type == "answer" and is_user_first(instance):
+                self.award_badge(instance.author, instance)
+
+        super(TeacherBadge, self).__init__(Node, 'vote_up_count', 1, handler)
 
 
-class Enlightened(AbstractBadge):
-    type = Badge.SILVER
-    award_once = True
-    listen_to = (VoteUpAction, AcceptAnswerAction)
-    name = _("Enlightened")
-    description = _('First answer was accepted with at least %s up votes') % settings.ENLIGHTENED_UP_VOTES
+class AcceptedAndVotedAnswerAbstractBadge(AbstractBadge):
+    def __init__(self, up_votes, handler):
+        def wrapper(sender, instance, **kwargs):
+            if sender is Node:
+                if not (instance.node_type == "answer" and "vote_up_count" in instance.get_dirty_fields()):
+                    return
 
-    def award_to(self, action):
-        if (action.node.node_type == "answer") and (action.node.accepted) and (
-        action.node.score >= int(settings.ENLIGHTENED_UP_VOTES)):
-            return action.node.author
+                answer = instance.leaf
+            else:
+                answer = instance.content_object
 
+            accepted = answer.accepted
+            vote_count = answer.vote_up_count
 
-class Guru(AbstractBadge):
-    type = Badge.SILVER
-    listen_to = (VoteUpAction, AcceptAnswerAction)
-    name = _("Guru")
-    description = _('Accepted answer and voted up %s times') % settings.GURU_UP_VOTES
+            if accepted and vote_count == up_votes:
+                handler(answer)
 
-    def award_to(self, action):
-        if (action.node.node_type == "answer") and (action.node.accepted) and (
-        action.node.score >= int(settings.GURU_UP_VOTES)):
-            return action.node.author
+        activity_record.connect(wrapper, sender=const.TYPE_ACTIVITY_MARK_ANSWER, weak=False)
+        post_save.connect(wrapper, sender=Node, weak=False)
 
 
-class Necromancer(AbstractBadge):
-    type = Badge.SILVER
-    listen_to = (VoteUpAction,)
-    name = _("Necromancer")
+class EnlightenedBadge(AcceptedAndVotedAnswerAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('First answer was accepted with at least %s up votes') % str(settings.ENLIGHTENED_UP_VOTES)
+
+    def __init__(self):
+        def handler(answer):
+            self.award_badge(answer.author, answer, True)
+
+        super(EnlightenedBadge, self).__init__(settings.ENLIGHTENED_UP_VOTES, handler)
+
+
+class GuruBadge(AcceptedAndVotedAnswerAbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Accepted answer and voted up %s times') % str(settings.GURU_UP_VOTES)
+
+    def __init__(self):
+        def handler(answer):
+            self.award_badge(answer.author, answer)
+
+        super(GuruBadge, self).__init__(settings.GURU_UP_VOTES, handler)
+
+
+class NecromancerBadge(CountableAbstractBadge):
+    type = const.SILVER_BADGE
     description = _('Answered a question more than %(dif_days)s days later with at least %(up_votes)s votes') % \
-            {'dif_days': settings.NECROMANCER_DIF_DAYS, 'up_votes': settings.NECROMANCER_UP_VOTES}
+            {'dif_days': str(settings.NECROMANCER_DIF_DAYS), 'up_votes': str(settings.NECROMANCER_UP_VOTES)}
 
-    def award_to(self, action):
-        if (action.node.node_type == "answer") and (
-        action.node.added_at >= (action.node.question.added_at + timedelta(days=int(settings.NECROMANCER_DIF_DAYS)))
-        ) and (int(action.node.score) == int(settings.NECROMANCER_UP_VOTES)):
-            return action.node.author
+    def __init__(self):
+        def handler(instance):
+            if instance.node_type == "answer" and instance.added_at >= (instance.question.added_at + timedelta(days=int(settings.NECROMANCER_DIF_DAYS))):
+                self.award_badge(instance.author, instance)
 
-class Taxonomist(AbstractBadge):
-    type = Badge.SILVER
-    listen_to = tuple()
-    name = _("Taxonomist")
-    description = _('Created a tag used by %s questions') % settings.TAXONOMIST_USE_COUNT
+        super(NecromancerBadge, self).__init__(Node, "vote_up_count", settings.NECROMANCER_UP_VOTES, handler)
 
-    def award_to(self, action):
-        return None
 
-class ValidatedEmail(AbstractBadge):
-    type = Badge.BRONZE
-    listen_to = (EmailValidationAction,)
-    name = _("Validated Email")
-    description = _("User who has validated email associated to the account")
-    award_once = True
+class TaxonomistBadge(AbstractBadge):
+    type = const.SILVER_BADGE
+    description = _('Created a tag used by %s questions') % str(settings.TAXONOMIST_USE_COUNT)
 
-    def award_to(self, action):
-        return action.user
+    def __init__(self):
+        def handler(instance, **kwargs):
+            if instance.used_count == settings.TAXONOMIST_USE_COUNT:
+                self.award_badge(instance.created_by, instance)           
+
+        post_save.connect(handler, sender=Tag, weak=False)
+
+
+#class GeneralistTag(AbstractBadge):
+#    pass
+
+#class ExpertTag(AbstractBadge):
+#    pass
+
+#class YearlingTag(AbstractBadge):
+#    pass
+
+
+            

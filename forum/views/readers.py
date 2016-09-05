@@ -2,301 +2,203 @@
 import datetime
 import logging
 from urllib import unquote
+from django.conf import settings as django_settings
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404, HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden, Http404, HttpResponsePermanentRedirect
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template import RequestContext
 from django import template
 from django.utils.html import *
-from django.db.models import Q, Count
+from django.utils import simplejson
+from django.db.models import Q
 from django.utils.translation import ugettext as _
+from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
+from django.utils.datastructures import SortedDict
+from django.views.decorators.cache import cache_page
+from django.utils.http import urlquote  as django_urlquote
 from django.template.defaultfilters import slugify
 from django.utils.safestring import mark_safe
 
-from forum import settings as django_settings
-from forum.utils.html import hyperlink
+from forum.utils.html import sanitize_html
 from forum.utils.diff import textDiff as htmldiff
-from forum.utils import pagination
 from forum.forms import *
 from forum.models import *
-from forum.actions import QuestionViewAction
-from forum.http_responses import HttpResponseUnauthorized
-from forum.feed import RssQuestionFeed, RssAnswerFeed
-from forum.utils.pagination import generate_uri
-
+from forum.const import *
+from forum.utils.forms import get_next_url
+from forum.models.question import question_view
 import decorators
 
-class HottestQuestionsSort(pagination.SortBase):
-    def apply(self, questions):
-        return questions.annotate(new_child_count=Count('all_children')).filter(
-                all_children__added_at__gt=datetime.datetime.now() - datetime.timedelta(days=1)).order_by('-new_child_count')
+# used in index page
+#refactor - move these numbers somewhere?
+INDEX_PAGE_SIZE = 30
+INDEX_AWARD_SIZE = 15
+INDEX_TAGS_SIZE = 25
+# used in tags list
+DEFAULT_PAGE_SIZE = 60
+# used in questions
+QUESTIONS_PAGE_SIZE = 30
+# used in answers
+ANSWERS_PAGE_SIZE = 10
 
-
-class QuestionListPaginatorContext(pagination.PaginatorContext):
-    def __init__(self, id='QUESTIONS_LIST', prefix='', pagesizes=(15, 30, 50), default_pagesize=30):
-        super (QuestionListPaginatorContext, self).__init__(id, sort_methods=(
-            (_('active'), pagination.SimpleSort(_('active'), '-last_activity_at', _("Most <strong>recently updated</strong> questions"))),
-            (_('newest'), pagination.SimpleSort(_('newest'), '-added_at', _("most <strong>recently asked</strong> questions"))),
-            (_('hottest'), HottestQuestionsSort(_('hottest'), _("most <strong>active</strong> questions in the last 24 hours</strong>"))),
-            (_('mostvoted'), pagination.SimpleSort(_('most voted'), '-score', _("most <strong>voted</strong> questions"))),
-        ), pagesizes=pagesizes, default_pagesize=default_pagesize, prefix=prefix)
-
-class AnswerSort(pagination.SimpleSort):
-    def apply(self, answers):
-        if not settings.DISABLE_ACCEPTING_FEATURE:
-            return answers.order_by(*(['-marked'] + list(self._get_order_by())))
-        else:
-            return super(AnswerSort, self).apply(answers)
-
-class AnswerPaginatorContext(pagination.PaginatorContext):
-    def __init__(self, id='ANSWER_LIST', prefix='', default_pagesize=10):
-        super (AnswerPaginatorContext, self).__init__(id, sort_methods=(
-            (_('oldest'), AnswerSort(_('oldest answers'), 'added_at', _("oldest answers will be shown first"))),
-            (_('newest'), AnswerSort(_('newest answers'), '-added_at', _("newest answers will be shown first"))),
-            (_('votes'), AnswerSort(_('popular answers'), ('-score', 'added_at'), _("most voted answers will be shown first"))),
-        ), default_sort=_('votes'), pagesizes=(5, 10, 20), default_pagesize=default_pagesize, prefix=prefix)
-
-class TagPaginatorContext(pagination.PaginatorContext):
-    def __init__(self):
-        super (TagPaginatorContext, self).__init__('TAG_LIST', sort_methods=(
-            (_('name'), pagination.SimpleSort(_('by name'), 'name', _("sorted alphabetically"))),
-            (_('used'), pagination.SimpleSort(_('by popularity'), '-used_count', _("sorted by frequency of tag use"))),
-        ), default_sort=_('used'), pagesizes=(30, 60, 120))
-    
-
-def feed(request):
-    return RssQuestionFeed(
-                request,
-                Question.objects.filter_state(deleted=False).order_by('-last_activity_at'),
-                settings.APP_TITLE + _(' - ')+ _('latest questions'),
-                settings.APP_DESCRIPTION)(request)
+#system to display main content
+def _get_tags_cache_json():#service routine used by views requiring tag list in the javascript space
+    """returns list of all tags in json format
+    no caching yet, actually
+    """
+    tags = Tag.objects.filter(deleted=False).all()
+    tags_list = []
+    for tag in tags:
+        dic = {'n': tag.name, 'c': tag.used_count}
+        tags_list.append(dic)
+    tags = simplejson.dumps(tags_list)
+    return tags
 
 @decorators.render('index.html')
 def index(request):
-    paginator_context = QuestionListPaginatorContext()
-    paginator_context.base_path = reverse('questions')
-    return question_list(request,
-                         Question.objects.all(),
-                         base_path=reverse('questions'),
-                         feed_url=reverse('latest_questions_feed'),
-                         paginator_context=paginator_context)
+    return question_list(request, Question.objects.all(), sort='active', base_path=reverse('questions'))
 
-@decorators.render('questions.html', 'unanswered', _('unanswered'), weight=400)
+@decorators.render('questions.html', 'unanswered')
 def unanswered(request):
-    return question_list(request,
-                         Question.objects.exclude(id__in=Question.objects.filter(children__marked=True).distinct()).exclude(marked=True),
-                         _('open questions without an accepted answer'),
-                         None,
-                         _("Unanswered Questions"))
+    return question_list(request, Question.objects.filter(accepted_answer=None),
+                         _('Open questions without an accepted answer'))
 
-@decorators.render('questions.html', 'questions', _('questions'), weight=0)
+@decorators.render('questions.html', 'questions')
 def questions(request):
-    return question_list(request,
-                         Question.objects.all(),
-                         _('questions'))
+    return question_list(request, Question.objects.all())
 
 @decorators.render('questions.html')
 def tag(request, tag):
-    try:
-        tag = Tag.active.get(name=unquote(tag))
-    except Tag.DoesNotExist:
-        raise Http404
+    return question_list(request, Question.objects.filter(tags__name=unquote(tag)),
+                        mark_safe(_('Questions tagged <span class="tag">%(tag)s</span>') % {'tag': tag}))
 
-    # Getting the questions QuerySet
-    questions = Question.objects.filter(tags__id=tag.id)
+@decorators.list('questions', QUESTIONS_PAGE_SIZE)
+def question_list(request, initial, list_description=_('questions'), sort=None, base_path=None):
+    pagesize = request.utils.page_size(QUESTIONS_PAGE_SIZE)
+    page = int(request.GET.get('page', 1))
 
-    if request.method == "GET":
-        user = request.GET.get('user', None)
+    questions = initial.filter(deleted=False)
 
-        if user is not None:
-            try:
-                questions = questions.filter(author=User.objects.get(username=user))
-            except User.DoesNotExist:
-                raise Http404
+    if request.user.is_authenticated():
+        questions = questions.filter(
+                ~Q(tags__id__in=request.user.marked_tags.filter(user_selections__reason='bad')))
 
-    # The extra tag context we need to pass
-    tag_context = {
-        'tag' : tag,
-    }
-
-    # The context returned by the question_list function, contains info about the questions
-    question_context = question_list(request,
-                         questions,
-                         mark_safe(_(u'questions tagged <span class="tag">%(tag)s</span>') % {'tag': tag}),
-                         None,
-                         mark_safe(_(u'Questions Tagged With %(tag)s') % {'tag': tag}),
-                         False)
-
-    # If the return data type is not a dict just return it
-    if not isinstance(question_context, dict):
-        return question_context
-
-    question_context = dict(question_context)
-
-    # Create the combined context
-    context = dict(question_context.items() + tag_context.items())
-
-    return context
-
-@decorators.render('questions.html', 'questions', tabbed=False)
-def user_questions(request, mode, user, slug):
-    user = get_object_or_404(User, id=user)
-
-    if mode == _('asked-by'):
-        questions = Question.objects.filter(author=user)
-        description = _("Questions asked by %s")
-    elif mode == _('answered-by'):
-        questions = Question.objects.filter(children__author=user, children__node_type='answer').distinct()
-        description = _("Questions answered by %s")
-    elif mode == _('subscribed-by'):
-        if not (request.user.is_superuser or request.user == user):
-            return HttpResponseUnauthorized(request)
-        questions = user.subscriptions
-
-        if request.user == user:
-            description = _("Questions you subscribed %s")
+    if sort is not False:
+        if sort is None:
+            sort = request.utils.sort_method('latest')
         else:
-            description = _("Questions subscribed by %s")
-    else:
-        raise Http404
+            request.utils.set_sort_method(sort)
 
+        view_dic = {"latest":"-added_at", "active":"-last_activity_at", "hottest":"-answer_count", "mostvoted":"-score" }
 
-    return question_list(request, questions,
-                         mark_safe(description % hyperlink(user.get_profile_url(), user.username)),
-                         page_title=description % user.username)
+        questions=questions.order_by(view_dic.get(sort, '-added_at'))
 
-def question_list(request, initial,
-                  list_description=_('questions'),
-                  base_path=None,
-                  page_title=_("All Questions"),
-                  allowIgnoreTags=True,
-                  feed_url=None,
-                  paginator_context=None,
-                  show_summary=None,
-                  feed_sort=('-added_at',),
-                  feed_req_params_exclude=(_('page'), _('pagesize'), _('sort')),
-                  extra_context={}):
-
-    if show_summary is None:
-        show_summary = bool(settings.SHOW_SUMMARY_ON_QUESTIONS_LIST)
-
-    questions = initial.filter_state(deleted=False)
-
-    if request.user.is_authenticated() and allowIgnoreTags:
-        questions = questions.filter(~Q(tags__id__in = request.user.marked_tags.filter(user_selections__reason = 'bad')))
-
-    if page_title is None:
-        page_title = _("Questions")
-
-    if request.GET.get('type', None) == 'rss':
-        if feed_sort:
-            questions = questions.order_by(*feed_sort)
-        return RssQuestionFeed(request, questions, page_title, list_description)(request)
-
-    keywords =  ""
-    if request.GET.get("q"):
-        keywords = request.GET.get("q").strip()
-
-    #answer_count = Answer.objects.filter_state(deleted=False).filter(parent__in=questions).count()
-    #answer_description = _("answers")
-
-    if not feed_url:
-        req_params = generate_uri(request.GET, feed_req_params_exclude)
-
-        if req_params:
-            req_params = '&' + req_params
-
-        feed_url = request.path + "?type=rss" + req_params
-
-    context = {
-        'questions' : questions.distinct(),
-        'questions_count' : questions.count(),
-        'keywords' : keywords,
-        'list_description': list_description,
-        'base_path' : base_path,
-        'page_title' : page_title,
-        'tab' : 'questions',
-        'feed_url': feed_url,
-        'show_summary' : show_summary,
-    }
-    context.update(extra_context)
-
-    return pagination.paginated(request,
-                               ('questions', paginator_context or QuestionListPaginatorContext()), context)
+    return {
+        "questions" : questions,
+        "questions_count" : questions.count(),
+        "tags_autocomplete" : _get_tags_cache_json(),
+        "list_description": list_description,
+        "base_path" : base_path,
+        }
 
 
 def search(request):
     if request.method == "GET" and "q" in request.GET:
         keywords = request.GET.get("q")
         search_type = request.GET.get("t")
-
+        
         if not keywords:
             return HttpResponseRedirect(reverse(index))
         if search_type == 'tag':
-            return HttpResponseRedirect(reverse('tags') + '?q=%s' % urlquote(keywords.strip()))
+            return HttpResponseRedirect(reverse('tags') + '?q=%s' % (keywords.strip()))
         elif search_type == "user":
-            return HttpResponseRedirect(reverse('users') + '?q=%s' % urlquote(keywords.strip()))
-        else:
+            return HttpResponseRedirect(reverse('users') + '?q=%s' % (keywords.strip()))
+        elif search_type == "question":
             return question_search(request, keywords)
     else:
         return render_to_response("search.html", context_instance=RequestContext(request))
 
 @decorators.render('questions.html')
 def question_search(request, keywords):
-    rank_feed = False
-    can_rank, initial = Question.objects.search(keywords)
+    def question_search(keywords):
+        return Question.objects.filter(Q(title__icontains=keywords) | Q(body__icontains=keywords))
 
-    if can_rank:
-        sort_order = None
+    from forum.modules import get_handler
 
-        if isinstance(can_rank, basestring):
-            sort_order = can_rank
-            rank_feed = True
+    question_search = get_handler('question_search', question_search)
+    initial = question_search(keywords)
 
-        paginator_context = QuestionListPaginatorContext()
-        paginator_context.sort_methods[_('ranking')] = pagination.SimpleSort(_('relevance'), sort_order, _("most relevant questions"))
-        paginator_context.force_sort = _('ranking')
-    else:
-        paginator_context = None
+    return question_list(request, initial, _("questions matching '%(keywords)s'") % {'keywords': keywords},
+            base_path="%s?t=question&q=%s" % (reverse('search'), django_urlquote(keywords)), sort=False)
+    
 
-    feed_url = mark_safe(escape(request.path + "?type=rss&q=" + keywords))
-
-    return question_list(request, initial,
-                         _("questions matching '%(keywords)s'") % {'keywords': keywords},
-                         None,
-                         _("questions matching '%(keywords)s'") % {'keywords': keywords},
-                         paginator_context=paginator_context,
-                         feed_url=feed_url, feed_sort=rank_feed and (can_rank,) or '-added_at')
-
-
-@decorators.render('tags.html', 'tags', _('tags'), weight=100)
-def tags(request):
+def tags(request):#view showing a listing of available tags - plain list
     stag = ""
-    tags = Tag.active.all()
+    is_paginated = True
+    sortby = request.GET.get('sort', 'used')
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
 
     if request.method == "GET":
         stag = request.GET.get("q", "").strip()
-        if stag:
-            tags = tags.filter(name__icontains=stag)
+        if stag != '':
+            objects_list = Paginator(Tag.objects.filter(deleted=False).exclude(used_count=0).extra(where=['name like %s'], params=['%' + stag + '%']), DEFAULT_PAGE_SIZE)
+        else:
+            if sortby == "name":
+                objects_list = Paginator(Tag.objects.all().filter(deleted=False).exclude(used_count=0).order_by("name"), DEFAULT_PAGE_SIZE)
+            else:
+                objects_list = Paginator(Tag.objects.all().filter(deleted=False).exclude(used_count=0).order_by("-used_count"), DEFAULT_PAGE_SIZE)
 
-    return pagination.paginated(request, ('tags', TagPaginatorContext()), {
-        "tags" : tags,
-        "stag" : stag,
-        "keywords" : stag
-    })
+    try:
+        tags = objects_list.page(page)
+    except (EmptyPage, InvalidPage):
+        tags = objects_list.page(objects_list.num_pages)
+
+    return render_to_response('tags.html', {
+                                            "tags" : tags,
+                                            "stag" : stag,
+                                            "tab_id" : sortby,
+                                            "keywords" : stag,
+                                            "context" : {
+                                                'is_paginated' : is_paginated,
+                                                'pages': objects_list.num_pages,
+                                                'page': page,
+                                                'has_previous': tags.has_previous(),
+                                                'has_next': tags.has_next(),
+                                                'previous': tags.previous_page_number(),
+                                                'next': tags.next_page_number(),
+                                                'base_url' : reverse('tags') + '?sort=%s&' % sortby
+                                            }
+                                }, context_instance=RequestContext(request))
+
+def get_answer_sort_order(request):
+    view_dic = {"latest":"-added_at", "oldest":"added_at", "votes":"-score" }
+
+    view_id = request.GET.get('sort', request.session.get('answer_sort_order', None))
+
+    if view_id is None or not view_id in view_dic:
+        view_id = "votes"
+
+    if view_id != request.session.get('answer_sort_order', None):
+        request.session['answer_sort_order'] = view_id
+
+    return (view_id, view_dic[view_id])
 
 def update_question_view_times(request, question):
-    last_seen_in_question = request.session.get('last_seen_in_question', {})
+    if not 'last_seen_in_question' in request.session:
+        request.session['last_seen_in_question'] = {}
 
-    last_seen = last_seen_in_question.get(question.id, None)
+    last_seen = request.session['last_seen_in_question'].get(question.id,None)
 
-    if (not last_seen) or (last_seen < question.last_activity_at):
-        QuestionViewAction(question, request.user, ip=request.META['REMOTE_ADDR']).save()
-        last_seen_in_question[question.id] = datetime.datetime.now()
-        request.session['last_seen_in_question'] = last_seen_in_question
+    if (not last_seen) or last_seen < question.last_activity_at:
+        question_view.send(sender=update_question_view_times, instance=question, user=request.user)
+        request.session['last_seen_in_question'][question.id] = datetime.datetime.now()
 
-def match_question_slug(id, slug):
+    request.session['last_seen_in_question'][question.id] = datetime.datetime.now()
+
+def match_question_slug(slug):
     slug_words = slug.split('-')
     qs = Question.objects.filter(title__istartswith=slug_words[0])
 
@@ -306,72 +208,34 @@ def match_question_slug(id, slug):
 
     return None
 
-def answer_redirect(request, answer):
-    pc = AnswerPaginatorContext()
-
-    sort = pc.sort(request)
-
-    if sort == _('oldest'):
-        filter = Q(added_at__lt=answer.added_at)
-    elif sort == _('newest'):
-        filter = Q(added_at__gt=answer.added_at)
-    elif sort == _('votes'):
-        filter = Q(score__gt=answer.score) | Q(score=answer.score, added_at__lt=answer.added_at)
-    else:
-        raise Http404()
-
-    count = answer.question.answers.filter(Q(marked=True) | filter).exclude(state_string="(deleted)").count()
-    pagesize = pc.pagesize(request)
-
-    page = count / pagesize
-    
-    if count % pagesize:
-        page += 1
-        
-    if page == 0:
-        page = 1
-
-    return HttpResponseRedirect("%s?%s=%s&focusedAnswerId=%s#%s" % (
-        answer.question.get_absolute_url(), _('page'), page, answer.id, answer.id))
-
-@decorators.render("question.html", 'questions')
-def question(request, id, slug='', answer=None):
+def question(request, id, slug):
     try:
         question = Question.objects.get(id=id)
     except:
-        if slug:
-            question = match_question_slug(id, slug)
-            if question is not None:
-                return HttpResponseRedirect(question.get_absolute_url())
-
-        raise Http404()
-
-    if question.nis.deleted and not request.user.can_view_deleted_post(question):
-        raise Http404
-
-    if request.GET.get('type', None) == 'rss':
-        return RssAnswerFeed(request, question, include_comments=request.GET.get('comments', None) == 'yes')(request)
-
-    if answer:
-        answer = get_object_or_404(Answer, id=answer)
-
-        if (question.nis.deleted and not request.user.can_view_deleted_post(question)) or answer.question != question:
-            raise Http404
-
-        if answer.marked:
+        question = match_question_slug(slug)
+        if question is not None:
             return HttpResponsePermanentRedirect(question.get_absolute_url())
+        else:
+            raise Http404()
 
-        return answer_redirect(request, answer)
-
-    if settings.FORCE_SINGLE_URL and (slug != slugify(question.title)):
+    if slug != urlquote(slugify(question.title)):
         return HttpResponsePermanentRedirect(question.get_absolute_url())
 
-    if request.POST:
-        answer_form = AnswerForm(request.POST, user=request.user)
-    else:
-        answer_form = AnswerForm(user=request.user)
+    page = int(request.GET.get('page', 1))
+    view_id, order_by = get_answer_sort_order(request)
 
+    if question.deleted and not request.user.can_view_deleted_post(question):
+        raise Http404
+
+    answer_form = AnswerForm(question)
     answers = request.user.get_visible_answers(question)
+
+    if answers is not None:
+        answers = [a for a in answers.order_by("-accepted", order_by)
+                   if not a.deleted or a.author == request.user]
+
+    objects_list = Paginator(answers, ANSWERS_PAGE_SIZE)
+    page_objects = objects_list.page(page)
 
     update_question_view_times(request, question)
 
@@ -382,20 +246,27 @@ def question(request, id, slug='', answer=None):
             subscription = False
     else:
         subscription = False
-    try:
-        focused_answer_id = int(request.GET.get("focusedAnswerId", None))
-    except TypeError, ValueError:
-        focused_answer_id = None
 
-    return pagination.paginated(request, ('answers', AnswerPaginatorContext()), {
-    "question" : question,
-    "answer" : answer_form,
-    "answers" : answers,
-    "similar_questions" : question.get_related_questions(),
-    "subscription": subscription,
-    "embed_youtube_videos" : settings.EMBED_YOUTUBE_VIDEOS,
-    "focused_answer_id" : focused_answer_id
-    })
+    return render_to_response('question.html', {
+        "question" : question,
+        "answer" : answer_form,
+        "answers" : page_objects.object_list,
+        "tags" : question.tags.all(),
+        "tab_id" : view_id,
+        "similar_questions" : question.get_related_questions(),
+        "subscription": subscription,
+        "context" : {
+            'is_paginated' : True,
+            'pages': objects_list.num_pages,
+            'page': page,
+            'has_previous': page_objects.has_previous(),
+            'has_next': page_objects.has_next(),
+            'previous': page_objects.previous_page_number(),
+            'next': page_objects.next_page_number(),
+            'base_url' : request.path + '?sort=%s&' % view_id,
+            'extend_url' : "#sort-top"
+        }
+        }, context_instance=RequestContext(request))
 
 
 REVISION_TEMPLATE = template.loader.get_template('node/revision.html')
@@ -403,13 +274,14 @@ REVISION_TEMPLATE = template.loader.get_template('node/revision.html')
 def revisions(request, id):
     post = get_object_or_404(Node, id=id).leaf
     revisions = list(post.revisions.order_by('revised_at'))
+
     rev_ctx = []
 
     for i, revision in enumerate(revisions):
-        rev_ctx.append(dict(inst=revision, html=template.loader.get_template('node/revision.html').render(template.Context({
-        'title': revision.title,
-        'html': revision.html,
-        'tags': revision.tagname_list(),
+        rev_ctx.append(dict(inst=revision, html=REVISION_TEMPLATE.render(template.Context({
+                'title': revision.title,
+                'html': revision.html,
+                'tags': revision.tagname_list(),
         }))))
 
         if i > 0:
@@ -421,13 +293,11 @@ def revisions(request, id):
             rev_ctx[i]['summary'] = _('Revision n. %(rev_number)d') % {'rev_number': revision.revision}
         else:
             rev_ctx[i]['summary'] = revision.summary
-
-    rev_ctx.reverse()
-
-    return render_to_response('revisions.html', {
-    'post': post,
-    'revisions': rev_ctx,
-    }, context_instance=RequestContext(request))
+            
+    return render_to_response('revisions_question.html', {
+                              'post': post,
+                              'revisions': rev_ctx,
+                              }, context_instance=RequestContext(request))
 
 
 

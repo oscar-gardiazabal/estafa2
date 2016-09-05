@@ -5,3 +5,4 @@ from django.conf import settings
 urlpatterns = patterns('',
     (r'^%s' % settings.FORUM_SCRIPT_ALIAS, include('forum.urls')),
 )
+

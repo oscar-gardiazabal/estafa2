@@ -18,3 +18,6 @@ from upload import *
 from pages import *
 
 BADGES_SET = SettingSet('badges', _('Badges config'), _("Configure badges on your OSQA site."), 500)
+
+#__all__ = locals().keys()
+

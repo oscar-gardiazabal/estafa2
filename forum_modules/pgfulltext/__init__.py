@@ -1,11 +1,10 @@
-from forum.base import get_database_engine
-database_type = get_database_engine()
-
 NAME = 'Postgresql Full Text Search'
 DESCRIPTION = "Enables PostgreSql full text search functionality."
 
 try:
     import psycopg2
-    CAN_USE = 'postgresql' in database_type
+    from django.conf import settings
+    CAN_USE = settings.DATABASE_ENGINE in ('postgresql_psycopg2', 'postgresql', )
 except:
     CAN_USE = False
+    

@@ -1,63 +1,52 @@
-# -*- coding: utf-8 -*-
-
-import datetime
-import logging
-import urllib
-from urlparse import urlparse
-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from forum.models import User
 from django.http import HttpResponseRedirect, Http404
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
-from django.utils.encoding import smart_unicode
-from django.contrib.auth import login, logout
+from django.utils.http import urlquote_plus
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login,  logout
+from django.http import get_host
+import types
+import datetime
 
-from writers import manage_pending_data
+from forum.authentication.forms import SimpleRegistrationForm, SimpleEmailSubscribeForm, \
+        TemporaryLoginRequestForm, ChangePasswordForm, SetPasswordForm
+from forum.utils.mail import send_email
 
-from forum.actions import EmailValidationAction
-from forum.utils import html
-from forum.views.decorators import login_required
-from forum.modules import decorate
-from forum.forms import SimpleRegistrationForm, TemporaryLoginRequestForm, ChangePasswordForm, SetPasswordForm
-from forum.http_responses import HttpResponseUnauthorized
-from forum.utils.mail import send_template_email
 from forum.authentication.base import InvalidAuthentication
-from forum.authentication import AUTH_PROVIDERS
-from forum.models import User, AuthKeyUserAssociation, ValidationHash
-from forum.actions import UserJoinsAction, UserLoginAction
-from forum import settings
+from forum.authentication import AUTH_PROVIDERS, user_logged_in
 
-from vars import ON_SIGNIN_SESSION_ATTR, PENDING_SUBMISSION_SESSION_ATTR
+from forum.models import AuthKeyUserAssociation, ValidationHash, Question, Answer
 
-def signin_page(request):
-    referer = request.META.get('HTTP_REFERER', '/')
+def signin_page(request, action=None):
+    if action is None:
+        request.session['on_signin_url'] = request.META.get('HTTP_REFERER', '/')
+    else:
+        request.session['on_signin_action'] = action
+        request.session['on_signin_url'] = reverse('auth_action_signin', kwargs={'action': action})
 
-    # If the referer is equal to the sign up page, e. g. if the previous login attempt was not successful we do not
-    # change the sign in URL. The user should go to the same page.
-    if not referer.replace(settings.APP_URL, '') == reverse('auth_signin'):
-        request.session[ON_SIGNIN_SESSION_ATTR] = referer
-
-    all_providers = [provider.context for provider in AUTH_PROVIDERS.values() if provider.context]
+    all_providers = [provider.context for provider in AUTH_PROVIDERS.values()]
 
     sort = lambda c1, c2: c1.weight - c2.weight
     can_show = lambda c: not request.user.is_authenticated() or c.show_to_logged_in_user
 
     bigicon_providers = sorted([
-    context for context in all_providers if context.mode == 'BIGICON' and can_show(context)
+        context for context in all_providers if context.mode == 'BIGICON' and can_show(context)
     ], sort)
 
     smallicon_providers = sorted([
-    context for context in all_providers if context.mode == 'SMALLICON' and can_show(context)
+        context for context in all_providers if context.mode == 'SMALLICON' and can_show(context)
     ], sort)
 
     top_stackitem_providers = sorted([
-    context for context in all_providers if context.mode == 'TOP_STACK_ITEM' and can_show(context)
+        context for context in all_providers if context.mode == 'TOP_STACK_ITEM' and can_show(context)
     ], sort)
 
     stackitem_providers = sorted([
-    context for context in all_providers if context.mode == 'STACK_ITEM' and can_show(context)
+        context for context in all_providers if context.mode == 'STACK_ITEM' and can_show(context)
     ], sort)
 
     try:
@@ -69,26 +58,25 @@ def signin_page(request):
     return render_to_response(
             'auth/signin.html',
             {
-            'msg': msg,
-            'all_providers': all_providers,
-            'bigicon_providers': bigicon_providers,
-            'top_stackitem_providers': top_stackitem_providers,
-            'stackitem_providers': stackitem_providers,
-            'smallicon_providers': smallicon_providers,
+                'msg': msg,
+                'all_providers': all_providers,
+                'bigicon_providers': bigicon_providers,
+                'top_stackitem_providers': top_stackitem_providers,
+                'stackitem_providers': stackitem_providers,
+                'smallicon_providers': smallicon_providers,
             },
             RequestContext(request))
 
 def prepare_provider_signin(request, provider):
     force_email_request = request.REQUEST.get('validate_email', 'yes') == 'yes'
     request.session['force_email_request'] = force_email_request
-
+    
     if provider in AUTH_PROVIDERS:
         provider_class = AUTH_PROVIDERS[provider].consumer
 
         try:
             request_url = provider_class.prepare_authentication_request(request,
-                                                                        reverse('auth_provider_done',
-                                                                                kwargs={'provider': provider}))
+                    reverse('auth_provider_done', kwargs={'provider': provider}))
 
             return HttpResponseRedirect(request_url)
         except NotImplementedError, e:
@@ -96,9 +84,7 @@ def prepare_provider_signin(request, provider):
         except InvalidAuthentication, e:
             request.session['auth_error'] = e.message
 
-        return HttpResponseRedirect(reverse('auth_signin'))
-    else:
-        raise Http404()
+        return HttpResponseRedirect(reverse('auth_signin'))    
 
 
 def process_provider_signin(request, provider):
@@ -114,38 +100,32 @@ def process_provider_signin(request, provider):
         if request.user.is_authenticated():
             if isinstance(assoc_key, (type, User)):
                 if request.user != assoc_key:
-                    request.session['auth_error'] = _(
-                            "Sorry, these login credentials belong to anoother user. Plese terminate your current session and try again."
-                            )
+                    request.session['auth_error'] = _("Sorry, these login credentials belong to anoother user. Plese terminate your current session and try again.")
                 else:
                     request.session['auth_error'] = _("You are already logged in with that user.")
             else:
                 try:
                     assoc = AuthKeyUserAssociation.objects.get(key=assoc_key)
                     if assoc.user == request.user:
-                        request.session['auth_error'] = _(
-                                "These login credentials are already associated with your account.")
+                        request.session['auth_error'] = _("These login credentials are already associated with your account.")
                     else:
-                        request.session['auth_error'] = _(
-                                "Sorry, these login credentials belong to anoother user. Plese terminate your current session and try again."
-                                )
+                        request.session['auth_error'] = _("Sorry, these login credentials belong to anoother user. Plese terminate your current session and try again.")
                 except:
                     uassoc = AuthKeyUserAssociation(user=request.user, key=assoc_key, provider=provider)
                     uassoc.save()
-                    request.user.message_set.create(
-                            message=_('The new credentials are now associated with your account'))
-                    return HttpResponseRedirect(reverse('user_authsettings', args=[request.user.id]))
+                    request.user.message_set.create(message=_('The new credentials are now associated with your account'))
+                    return HttpResponseRedirect(reverse('user_authsettings'))
 
             return HttpResponseRedirect(reverse('auth_signin'))
         else:
             if isinstance(assoc_key, User):
-                return login_and_forward(request, assoc_key)
+                return login_and_forward(request, assoc_key) 
 
         try:
             assoc = AuthKeyUserAssociation.objects.get(key=assoc_key)
             user_ = assoc.user
             return login_and_forward(request, user_)
-        except AuthKeyUserAssociation.DoesNotExist:
+        except:
             request.session['assoc_key'] = assoc_key
             request.session['auth_provider'] = provider
             return HttpResponseRedirect(reverse('auth_external_register'))
@@ -155,78 +135,70 @@ def process_provider_signin(request, provider):
 def external_register(request):
     if request.method == 'POST' and 'bnewaccount' in request.POST:
         form1 = SimpleRegistrationForm(request.POST)
+        email_feeds_form = SimpleEmailSubscribeForm(request.POST)
 
-        if form1.is_valid():
-            user_ = User(username=form1.cleaned_data['username'], email=form1.cleaned_data['email'], real_name=form1.cleaned_data['real_name'])
+        if (form1.is_valid() and email_feeds_form.is_valid()):
+            user_ = User(username=form1.cleaned_data['username'], email=form1.cleaned_data['email'])
             user_.email_isvalid = request.session.get('auth_validated_email', '') == form1.cleaned_data['email']
             user_.set_unusable_password()
 
             if User.objects.all().count() == 0:
                 user_.is_superuser = True
-                user_.is_staff = True
-
+            
             user_.save()
-            UserJoinsAction(user=user_, ip=request.META['REMOTE_ADDR']).save()
+
+            if not user_.email_isvalid:
+                send_validation_email(user_)
 
             try:
                 assoc_key = request.session['assoc_key']
                 auth_provider = request.session['auth_provider']
             except:
-                request.session['auth_error'] = _(
-                        "Oops, something went wrong in the middle of this process. Please try again. Note that you need to have cookies enabled for the authentication to work."
-                        )
-                logging.error("Missing session data when trying to complete user registration: %s" % ", ".join(
-                        ["%s: %s" % (k, v) for k, v in request.META.items()]))
-                return HttpResponseRedirect(reverse('auth_signin'))
+                request.session['auth_error'] = _("Oops, something went wrong in the middle of this process. Please try again.")
+                return HttpResponseRedirect(request.session.get('on_signin_url', reverse('auth_signin'))) 
 
-            uassoc = AuthKeyUserAssociation(user=user_, key=assoc_key, provider=auth_provider)
+            uassoc = AuthKeyUserAssociation(user=user_, key=request.session['assoc_key'], provider=request.session['auth_provider'])
             uassoc.save()
+
+            if email_feeds_form.cleaned_data['subscribe'] == 'n':
+                user_.subscription_settings.enable_notifications = False
+                user_.subscription_settings.save()
 
             del request.session['assoc_key']
             del request.session['auth_provider']
 
-            return login_and_forward(request, user_, message=_("A welcome email has been sent to your email address. "))
+            if user_.email_isvalid:
+                return login_and_forward(request, user_)
+            else:
+                return HttpResponseRedirect(reverse('index'))
     else:
-        auth_provider = request.session.get('auth_provider', None)
-        if not auth_provider:
-            request.session['auth_error'] = _(
-                    "Oops, something went wrong in the middle of this process. Please try again.")
-            logging.error("Missing session data when trying to complete user registration: %s" % ", ".join(
-                    ["%s: %s" % (k, v) for k, v in request.META.items()]))
-            return HttpResponseRedirect(reverse('auth_signin'))
-
-        provider_class = AUTH_PROVIDERS[auth_provider].consumer
-
-        if provider_class.__class__.__name__ == 'FacebookAuthConsumer':
-            user_data = provider_class.get_user_data(request.session['access_token'])
-        else:
-            user_data = provider_class.get_user_data(request.session['assoc_key'])
-
-
-        if not user_data:
-            user_data = request.session.get('auth_consumer_data', {})
+        provider_class = AUTH_PROVIDERS[request.session['auth_provider']].consumer
+        user_data = provider_class.get_user_data(request.session['assoc_key'])
 
         username = user_data.get('username', '')
         email = user_data.get('email', '')
-        real_name = user_data.get('real_name', '')
+
+        if not email:
+            email = request.session.get('auth_email_request', '')
 
         if email:
             request.session['auth_validated_email'] = email
 
         form1 = SimpleRegistrationForm(initial={
-        'next': '/',
-        'username': username,
-        'email': email,
-        'real_name': real_name,
+            'next': '/',
+            'username': username,
+            'email': email,
         })
+        email_feeds_form = SimpleEmailSubscribeForm()
 
     provider_context = AUTH_PROVIDERS[request.session['auth_provider']].context
 
     return render_to_response('auth/complete.html', {
-    'form1': form1,
-    'provider':provider_context and mark_safe(provider_context.human_name) or _('unknown'),
-    'login_type':provider_context.id,
-    'gravatar_faq_url':reverse('faq') + '#gravatar',
+        'form1': form1,
+        'email_feeds_form': email_feeds_form,
+        'provider':mark_safe(provider_context.human_name),
+        'login_type':provider_context.id,
+        'gravatar_faq_url':reverse('faq') + '#gravatar',
     }, context_instance=RequestContext(request))
 
 def request_temp_login(request):
@@ -234,113 +206,87 @@ def request_temp_login(request):
         form = TemporaryLoginRequestForm(request.POST)
 
         if form.is_valid():
-            users = form.user_cache
+            user = form.user_cache
 
-            for u in users:
-                if u.is_suspended():
-                    return forward_suspended_user(request, u, False)
+            try:
+                hash = get_object_or_404(ValidationHash, user=user, type='templogin')
+                if hash.expiration < datetime.datetime.now():
+                    hash.delete()
+                    return request_temp_login(request)
+            except:
+                hash = ValidationHash.objects.create_new(user, 'templogin', [user.id])
 
-            for u in users:
-                try:
-                    hash = get_object_or_404(ValidationHash, user=u, type='templogin')
-                    if hash.expiration < datetime.datetime.now():
-                        hash.delete()
-                        return request_temp_login(request)
-                except:
-                    hash = ValidationHash.objects.create_new(u, 'templogin', [u.id])
+            send_email(_("Temporary login link"), [(user.username, user.email)], "auth/temp_login_email.html", {
+                'temp_login_code': hash,
+                'user': user
+            })
 
-                send_template_email([u], "auth/temp_login_email.html", {'temp_login_code': hash})
-
-                request.user.message_set.create(message=_("An email has been sent with your temporary login key"))
+            request.user.message_set.create(message=_("An email has been sent with your temporary login key"))
 
             return HttpResponseRedirect(reverse('index'))
     else:
         form = TemporaryLoginRequestForm()
 
     return render_to_response(
-            'auth/temp_login_request.html', {'form': form},
+            'auth/temp_login_request.html', {'form': form}, 
             context_instance=RequestContext(request))
 
 def temp_signin(request, user, code):
     user = get_object_or_404(User, id=user)
 
     if (ValidationHash.objects.validate(code, user, 'templogin', [user.id])):
-        
-        # If the user requests temp_signin he must have forgotten his password. So we mark it as unusable.
-        user.set_unusable_password()
-        user.save()
-        
-        return login_and_forward(request, user, reverse('user_authsettings', kwargs={'id': user.id}),
-                                 _(
-                                         "You are logged in with a temporary access key, please take the time to fix your issue with authentication."
-                                         ))
+        return login_and_forward(request,  user, reverse('user_authsettings'),
+                _("You are logged in with a temporary access key, please take the time to fix your issue with authentication."))
     else:
         raise Http404()
 
-def send_validation_email(request):
-    if not request.user.is_authenticated():
-        return HttpResponseUnauthorized(request)
-    else:
-        # We check if there are some old validation hashes. If there are -- we delete them.
-        try:
-            hash = ValidationHash.objects.get(user=request.user, type='email')
-            hash.delete()
-        except:
-            pass
-
-        # We don't care if there are previous cashes in the database... In every case we have to create a new one
-        hash = ValidationHash.objects.create_new(request.user, 'email', [request.user.email])
-
-        additional_get_params = urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in request.GET.items()))
-        send_template_email([request.user], "auth/mail_validation.html", {
-            'validation_code': hash,
-            'additional_get_params' : additional_get_params
-        })
-
-        request.user.message_set.create(message=_("A message with an email validation link was just sent to your address."))
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
-        
+def send_validation_email(user):
+    hash = ValidationHash.objects.create_new(user, 'email', [user.email])
+    send_email(_("Email Validation"), [(user.username, user.email)], "auth/email_validation.html", {
+        'validation_code': hash,
+        'user': user
+    })
 
 def validate_email(request, user, code):
     user = get_object_or_404(User, id=user)
 
     if (ValidationHash.objects.validate(code, user, 'email', [user.email])):
-        EmailValidationAction(user=user, ip=request.META['REMOTE_ADDR']).save()
-        return login_and_forward(request, user, reverse('index'), _("Thank you, your email is now validated."))
+        user.email_isvalid = True
+        user.save()
+        return login_and_forward(request,  user, None, _("Thank you, your email is now validated."))
     else:
-        return render_to_response('auth/mail_already_validated.html', { 'user' : user }, RequestContext(request))
+        raise Http404()
 
-def auth_settings(request, id):
-    user_ = get_object_or_404(User, id=id)
+@login_required
+def auth_settings(request):
+    """
+    change password view.
 
-    if not (request.user.is_superuser or request.user == user_):
-        return HttpResponseUnauthorized(request)
-
+    url : /changepw/
+    template: authopenid/changepw.html
+    """
+    user_ = request.user
     auth_keys = user_.auth_keys.all()
 
-    if request.user.is_superuser or (not user_.has_usable_password()):
-        FormClass = SetPasswordForm
-    else:
+    if user_.has_usable_password():
         FormClass = ChangePasswordForm
+    else:
+        FormClass = SetPasswordForm
 
     if request.POST:
         form = FormClass(request.POST, user=user_)
         if form.is_valid():
-            is_new_pass = not user_.has_usable_password()
+            if user_.has_usable_password():
+                request.user.message_set.create(message=_("Your password was changed"))
+            else:
+                request.user.message_set.create(message=_("New password set"))
+                FormClass = ChangePasswordForm
+                
             user_.set_password(form.cleaned_data['password1'])
             user_.save()
-
-            if is_new_pass:
-                request.user.message_set.create(message=_("New password set"))
-                if not request.user.is_superuser:
-                    form = ChangePasswordForm(user=user_)
-            else:
-                request.user.message_set.create(message=_("Your password was changed"))
-
-            return HttpResponseRedirect(reverse('user_authsettings', kwargs={'id': user_.id}))
-    else:
-        form = FormClass(user=user_)
+            return HttpResponseRedirect(reverse('user_authsettings'))
+    
+    form = FormClass(user=user_)
 
     auth_keys_list = []
 
@@ -354,88 +300,68 @@ def auth_settings(request, id):
             "unknown: %s" % ConsumerTemplateContext.readable_key(k)
 
         auth_keys_list.append({
-        'name': name,
-        'id': k.id
+            'name': name,
+            'id': k.id
         })
 
     return render_to_response('auth/auth_settings.html', {
-    'view_user': user_,
-    "can_view_private": (user_ == request.user) or request.user.is_superuser,
-    'form': form,
-    'has_password': user_.has_usable_password(),
-    'auth_keys': auth_keys_list,
-    'allow_local_auth': AUTH_PROVIDERS.get('local', None),
+        'form': form,
+        'has_password': user_.has_usable_password(),
+        'auth_keys': auth_keys_list,
     }, context_instance=RequestContext(request))
 
 def remove_external_provider(request, id):
     association = get_object_or_404(AuthKeyUserAssociation, id=id)
-    if not (request.user.is_superuser or request.user == association.user):
-        return HttpResponseUnauthorized(request)
-
     request.user.message_set.create(message=_("You removed the association with %s") % association.provider)
     association.delete()
-    return HttpResponseRedirect(reverse('user_authsettings', kwargs={'id': association.user.id}))
+    return HttpResponseRedirect(reverse('user_authsettings'))
 
-def login_and_forward(request, user, forward=None, message=None):
-    if user.is_suspended():
-        return forward_suspended_user(request, user)
+def newquestion_signin_action(user):
+    question = Question.objects.filter(author=user).order_by('-added_at')[0]
+    return question.get_absolute_url()
 
+def newanswer_signin_action(user):
+    answer = Answer.objects.filter(author=user).order_by('-added_at')[0]
+    return answer.get_absolute_url()
+
+POST_SIGNIN_ACTIONS = {
+    'newquestion': newquestion_signin_action,
+    'newanswer': newanswer_signin_action,
+}
+
+def login_and_forward(request,  user, forward=None, message=None):
+    old_session = request.session.session_key
     user.backend = "django.contrib.auth.backends.ModelBackend"
-    login(request, user)
+    login(request,  user)
 
-    # Store the login action
-    UserLoginAction(user=user, ip=request.META['REMOTE_ADDR']).save()
-
-    if message is None:
-        message = _("Welcome back %s, you are now logged in") % smart_unicode(user.username)
-
-    request.user.message_set.create(message=message)
+    user_logged_in.send(user=user,old_session=old_session,sender=None)
 
     if not forward:
-        forward = request.session.get(ON_SIGNIN_SESSION_ATTR, reverse('index'))
+        signin_action = request.session.get('on_signin_action', None)
+        if not signin_action:
+            forward = request.session.get('on_signin_url', None)
 
-    pending_data = request.session.get(PENDING_SUBMISSION_SESSION_ATTR, None)
-
-    if pending_data and (user.email_isvalid or pending_data['type'] not in settings.REQUIRE_EMAIL_VALIDATION_TO):
-        submission_time = pending_data['time']
-        if submission_time < datetime.datetime.now() - datetime.timedelta(minutes=int(settings.HOLD_PENDING_POSTS_MINUTES)):
-            del request.session[PENDING_SUBMISSION_SESSION_ATTR]
-        elif submission_time < datetime.datetime.now() - datetime.timedelta(minutes=int(settings.WARN_PENDING_POSTS_MINUTES)):
-            user.message_set.create(message=(_("You have a %s pending submission.") % pending_data['data_name']) + " %s, %s, %s" % (
-                html.hyperlink(reverse('manage_pending_data', kwargs={'action': _('save')}), _("save it")),
-                html.hyperlink(reverse('manage_pending_data', kwargs={'action': _('review')}), _("review")),
-                html.hyperlink(reverse('manage_pending_data', kwargs={'action': _('cancel')}), _("cancel"))
-            ))
+            if not forward:
+                forward = reverse('index')
         else:
-            return manage_pending_data(request, _('save'), forward)
+            try:
+                forward = POST_SIGNIN_ACTIONS[signin_action](user)
+            except:
+                forward = reverse('index')
 
-    additional_get_params = urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in request.GET.items()))
+    if message is None:
+        message = _("Welcome back %s, you are now logged in") % user.username
 
-    parsed_forward = urlparse(forward)
+    request.user.message_set.create(message=message)
+    return HttpResponseRedirect(forward)
 
-    # If there is already some parsed query in the URL then change the forward URL
-    if parsed_forward.query:
-        forward_url = forward + "&%s" % additional_get_params
-    else:
-        forward_url = forward + "?%s" % additional_get_params
-
-    return HttpResponseRedirect(forward_url)
-
-def forward_suspended_user(request, user, show_private_msg=True):
-    message = _("Sorry, but this account is suspended")
-    if show_private_msg:
-        msg_type = 'privatemsg'
-    else:
-        msg_type = 'publicmsg'
-
-    suspension = user.suspension
-    if suspension:
-        message += (":<br />" + suspension.extra.get(msg_type, ''))
-
-    request.user.message_set.create(message)
-    return HttpResponseRedirect(reverse('index'))
-
-@decorate.withfn(login_required)
+@login_required
 def signout(request):
+    """
+    signout from the website. Remove openid from session and kill it.
+
+    url : /signout/"
+    """
+
     logout(request)
     return HttpResponseRedirect(reverse('index'))
