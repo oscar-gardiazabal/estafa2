@@ -86,3 +86,11 @@ except:
     pass
 
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
+
+
+# TroLL:
+
+# prevent ERROR: AttributeError: 'Settings' object has no attribute 'SITE_SRC_ROOT
+#Module system initialization
+MODULES_PACKAGE = 'forum_modules'
+MODULES_FOLDER = os.path.join(SITE_SRC_ROOT, MODULES_PACKAGE)
