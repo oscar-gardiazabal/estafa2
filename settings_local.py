@@ -24,7 +24,8 @@ logging.basicConfig(
 ADMINS = (('Forum Admin', 'forum@example.com'),)
 MANAGERS = ADMINS
 
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': True
 }
