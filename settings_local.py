@@ -45,7 +45,8 @@ INTERNAL_IPS = ('127.0.0.1',)
 DATABASE_NAME = 'estafa2'
 DATABASE_USER = 'root'
 DATABASE_PASSWORD = '&MOVy1PV'
-DATABASE_HOST = 'mysql'
+#DATABASE_HOST = 'mysql'
+DATABASE_HOST = 'localhost'
 
 DATABASE_ENGINE = 'django.db.backends.mysql'
 DATABASE_PORT = '3306'
