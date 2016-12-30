@@ -1,10 +1,10 @@
 *.pyc
 *.swp
 *.log
-
-osqa.wsgi
+cache/??
+# osqa.wsgi
 nbproject
-settings_local.py
+# settings_local.py
 .idea
 *.iml
 env
@@ -14,4 +14,3 @@ pip-log.txt
 tmp/*
 forum/upfiles/[^R]*
 .svn
-
