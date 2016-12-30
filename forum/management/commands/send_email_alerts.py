@@ -1,171 +1,125 @@
-from datetime import datetime, timedelta
+import datetime
+from forum.models import *
+from forum import settings
+from django.db import models
+from forum.utils.mail import send_template_email
 from django.core.management.base import NoArgsCommand
-from django.utils.translation import ugettext as _
-from django.template import loader, Context, Template
-from django.core.mail import EmailMultiAlternatives
-from django.conf import settings
-from forum.models import KeyValue, Activity, User, QuestionSubscription
-from forum.utils.mail import send_email
-from forum import const
+from forum.settings.email import EMAIL_DIGEST_FLAG
+from django.utils import translation
+import logging
 
-class QuestionRecord:
-    def __init__(self, question):
-        self.question = question
-        self.records = []
+SHOW_N_MORE_ACTIVE_NEW_MEMBERS = 5
+SUB_QUESTION_LIST_LENGTH = 5
+TRY_N_USER_TAGS = 5
 
-    def log_activity(self, activity):
-        self.records.append(activity)
+class DigestQuestionsIndex(object):
+    def __init__(self, from_date):
+        self.from_date = from_date
 
-    def get_activity_since(self, since):
-        activity = [r for r in self.records if r.active_at > since]
-        answers = [a for a in activity if a.activity_type == const.TYPE_ACTIVITY_ANSWER]
-        comments = [a for a in activity if a.activity_type in (const.TYPE_ACTIVITY_COMMENT_QUESTION, const.TYPE_ACTIVITY_COMMENT_ANSWER)]
+        new_questions = Question.objects.filter_state(deleted=False).\
+            filter(added_at__gt=from_date).\
+            annotate(n_actions=models.Count('actions')).\
+            annotate(child_count=models.Count('all_children'))
 
-        accepted = [a for a in activity if a.activity_type == const.TYPE_ACTIVITY_MARK_ANSWER]
+        hotness = lambda q: 3*q.child_count + q.n_actions
 
-        if len(accepted):
-            accepted = accepted[-1:][0]
+        for q in new_questions:
+            q.hotness=hotness(q)
+
+        self.questions = sorted(new_questions, lambda q1, q2: q2.hotness - q1.hotness)
+        self.count = len(self.questions)
+
+    def unseen_question(self, user, question):
+        try:
+            subscription = QuestionSubscription.objects.get(question=q, user=user)
+        except:
+            subscription = None
+
+        return (not subscription) or subscription.last_view < q.last_activity_at
+
+    def get_for_user(self, user):
+        user_tags = list(user.marked_tags.filter(user_selections__reason='good'))
+
+        if len(user_tags) < TRY_N_USER_TAGS:
+            user_tags += list(Tag.objects.filter(models.Q(nodes__author=user) | models.Q(nodes__children__author=user)) \
+                .annotate(user_tag_usage_count=models.Count('name')).order_by('-user_tag_usage_count')[:TRY_N_USER_TAGS - len(user_tags)])
+
+        user_tag_names = set([t.name for t in user_tags])
+
+
+        subscriptions = user.subscriptions.filter(added_at__lt=self.from_date, last_activity_at__gt=models.F('questionsubscription__last_view')
+                                                  ).order_by('-questionsubscription__last_view')[:SUB_QUESTION_LIST_LENGTH]
+
+        unseen_questions = [q for q in self.questions if self.unseen_question(user, q)]
+
+        interesting = []
+
+        for q in unseen_questions:
+            if len(set(q.tagname_list()) & user_tag_names): interesting.append(q)
+
+
+        may_help = []
+        if len(interesting):
+            if len(interesting) > SUB_QUESTION_LIST_LENGTH:
+                may_help = interesting[SUB_QUESTION_LIST_LENGTH:][-SUB_QUESTION_LIST_LENGTH:]
+                interesting = interesting[:SUB_QUESTION_LIST_LENGTH]
         else:
-            accepted = None
+            interesting = unseen_questions[:SUB_QUESTION_LIST_LENGTH]
 
-        return {
-            'answers': answers,
-            'comments': comments,
-            'accepted': accepted,
-        }
+        return {'interesting': interesting, 'may_help': may_help, 'subscriptions': subscriptions}
+
+
 
 
 class Command(NoArgsCommand):
     def handle_noargs(self, **options):
-        digest_control = self.get_digest_control()
+        try:
+            translation.activate(settings.LANGUAGE_CODE)
+        except:
+            logging.error("Unable to set the locale in the send emails cron job")
 
-        self.send_digest('daily', 'd', digest_control.value['LAST_DAILY'])
-        digest_control.value['LAST_DAILY'] = datetime.now()
+        digest_control = EMAIL_DIGEST_FLAG.value
 
-        if digest_control.value['LAST_WEEKLY'] + timedelta(days=7) <= datetime.now():
-            self.send_digest('weekly', 'w', digest_control.value['LAST_WEEKLY'])
-            digest_control.value['LAST_WEEKLY'] = datetime.now()
-
-        digest_control.save()
-            
-
-    def send_digest(self, name, char_in_db, control_date):
-        new_questions, question_records = self.prepare_activity(control_date)
-        new_users = User.objects.filter(date_joined__gt=control_date)
-
-        digest_subject = settings.EMAIL_SUBJECT_PREFIX + _('Daily digest')
-
-        users = User.objects.filter(subscription_settings__enable_notifications=True)
-
-        msgs = []
-
-        for u in users:
-            context = {
-                'user': u,
-                'digest_type': name,
+        if digest_control is None:
+            digest_control = {
+            'LAST_DAILY': datetime.datetime.now() - datetime.timedelta(days=1),
+            'LAST_WEEKLY': datetime.datetime.now() - datetime.timedelta(days=1),
             }
 
-            if u.subscription_settings.member_joins == char_in_db:
-                context['new_users'] = new_users
-            else:
-                context['new_users'] = False
+        from_date = digest_control['LAST_DAILY']
+        digest_control['LAST_DAILY'] = datetime.datetime.now()
 
-            if u.subscription_settings.subscribed_questions == char_in_db:
-                activity_in_subscriptions = []
+        EMAIL_DIGEST_FLAG.set_value(digest_control)
 
-                for id, r in question_records.items():
-                    try:
-                        subscription = QuestionSubscription.objects.get(question=r.question, user=u)
+        users = User.objects.filter(subscription_settings__enable_notifications=True,
+                                    subscription_settings__send_digest=True)
 
-                        record = r.get_activity_since(subscription.last_view)
+        # Send digest only to active users
+        if settings.SEND_DIGEST_ONLY_TO_ACTIVE_USERS:
+            users = users.filter(is_active=True)
 
-                        if not u.subscription_settings.notify_answers:
-                            del record['answers']
+        # Send digest only to users with validated emails
+        if settings.SEND_DIGEST_ONLY_TO_VALIDATED_USERS:
+            users = users.filter(email_isvalid=True)
 
-                        if not u.subscription_settings.notify_comments:
-                            if u.subscription_settings.notify_comments_own_post:
-                                record.comments = [a for a in record.comments if a.content_object.content_object.author == u]
-                                record['own_comments_only'] = True
-                            else:
-                                del record['comments']
+        new_members = User.objects.filter(is_active=True, date_joined__gt=from_date).annotate(n_actions=models.Count('actions')).order_by('-n_actions')
 
-                        if not u.subscription_settings.notify_accepted:
-                            del record['accepted']
+        new_member_count = new_members.count()
 
-                        if record.get('answers', False) or record.get('comments', False) or record.get('accepted', False):
-                            activity_in_subscriptions.append({'question': r.question, 'activity': record})
-                    except:
-                        pass
+        # The number of the flagged content for the day
+        flagged_count = Flag.objects.filter(flagged_at__gt=datetime.datetime.today()-datetime.timedelta(days=1)).count()
 
-                context['activity_in_subscriptions'] = activity_in_subscriptions
-            else:
-                context['activity_in_subscriptions'] = False
-
-
-            if u.subscription_settings.new_question == char_in_db:
-                context['new_questions'] = new_questions
-                context['watched_tags_only'] = False
-            elif u.subscription_settings.new_question_watched_tags == char_in_db:
-                context['new_questions'] = [q for q in new_questions if
-                                            q.tags.filter(id__in=u.marked_tags.filter(user_selections__reason='good')).count() > 0]
-                context['watched_tags_only'] = True
-            else:
-                context['new_questions'] = False
-
-            if context['new_users'] or context['activity_in_subscriptions'] or context['new_questions']:
-                send_email(digest_subject, (u.username, u.email), "notifications/digest.html", context, threaded=False)
-
-
-    def get_digest_control(self):
-        try:
-            digest_control = KeyValue.objects.get(key='DIGEST_CONTROL')
-        except:
-            digest_control = KeyValue(key='DIGEST_CONTROL', value={
-                'LAST_DAILY': datetime.now() - timedelta(days=1),
-                'LAST_WEEKLY': datetime.now() - timedelta(days=1),
-            })
-
-        return digest_control
-
-    def prepare_activity(self, since):
-        all_activity = Activity.objects.filter(active_at__gt=since, activity_type__in=(
-            const.TYPE_ACTIVITY_ASK_QUESTION, const.TYPE_ACTIVITY_ANSWER,
-            const.TYPE_ACTIVITY_COMMENT_QUESTION, const.TYPE_ACTIVITY_COMMENT_ANSWER,
-            const.TYPE_ACTIVITY_MARK_ANSWER
-        )).order_by('active_at')
-
-        question_records = {}
-        new_questions = []
-
-
-        for activity in all_activity:
-            try:
-                question = self.get_question_for_activity(activity)
-
-                if not question.id in question_records:
-                    question_records[question.id] = QuestionRecord(question)
-
-                question_records[question.id].log_activity(activity)
-
-                if activity.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
-                    new_questions.append(question)
-            except:
-                pass
-
-        return new_questions, question_records
-
-    def get_question_for_activity(self, activity):
-        if activity.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
-            question = activity.content_object
-        elif activity.activity_type == const.TYPE_ACTIVITY_ANSWER:
-            question = activity.content_object.question
-        elif activity.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
-            question = activity.content_object.content_object
-        elif activity.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
-            question = activity.content_object.content_object.question
-        elif activity.activity_type == const.TYPE_ACTIVITY_MARK_ANSWER:
-            question = activity.content_object.question
+        if new_member_count >= SHOW_N_MORE_ACTIVE_NEW_MEMBERS:
+            new_members = new_members[:SHOW_N_MORE_ACTIVE_NEW_MEMBERS]
+            show_all_users = True
         else:
-            raise Exception
+            show_all_users = False
 
-        return question
+        digest = DigestQuestionsIndex(from_date)
+
+        if (not new_member_count) and (not digest.count):
+            return
+
+        send_template_email(users, "notifications/digest.html", locals())
+
+

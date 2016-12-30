@@ -1,139 +1,126 @@
 import django.dispatch
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_unicode, smart_unicode
+from datetime import datetime, timedelta
+import logging
+
+TMP_MINICACHE_SECONDS = 5
 
 class SettingSet(list):
-    def __init__(self, name, title, description, weight=1000):
+    def __init__(self, name, title, description, weight=1000, markdown=False, can_preview=False):
         self.name = name
         self.title = title
         self.description = description
         self.weight = weight
+        self.markdown = markdown
+        self.can_preview = can_preview
+
 
 class BaseSetting(object):
-    def __init__(self, name, default, field_context):
+    @classmethod
+    def add_to_class(cls, name):
+        def wrapper(self, *args, **kwargs):
+            return self.value.__getattribute__(name)(*args, **kwargs)
+
+        setattr(cls, name, wrapper)
+
+    def __init__(self, name, default, set=None, field_context=None):
         self.name = name
         self.default = default
-        self.field_context = field_context
+        self.field_context = field_context or {}
 
-    @property
-    def value(self):
-        from forum.models import KeyValue
+        self._temp = None
 
-        try:
-            kv = KeyValue.objects.get(key=self.name)
-        except:
-            kv = KeyValue(key=self.name, value=self._parse(self.default))
-            kv.save()
+        if set is not None:
+            self.set = set
+            
+            if not set.name in Setting.sets:
+                Setting.sets[set.name] = set
 
-        return kv.value
-
-    def set_value(self, new_value):
-        new_value = self._parse(new_value)
-        from forum.models import KeyValue
-
-        try:
-            kv = KeyValue.objects.get(key=self.name)
-            old_value = kv.value
-        except:
-            kv = KeyValue(key=self.name)
-            old_value = self.default
-
-        kv.value = new_value
-        kv.save()
-
-        setting_update.send(sender=self, old_value=old_value, new_value=new_value)
-
-    def to_default(self):
-        self.set_value(self.default)
-
-    def _parse(self, value):
-        return value
+            Setting.sets[set.name].append(self)
 
     def __str__(self):
         return str(self.value)
 
     def __unicode__(self):
-        return unicode(self.value)
+        return smart_unicode(self.value)
 
-    def __nonzero__(self):
-        return bool(self.value)
+    @property
+    def value(self):
+        if self._temp:
+            v, exp = self._temp
+            if exp + timedelta(seconds=TMP_MINICACHE_SECONDS) > datetime.now():
+                return v
 
+        from forum.models import KeyValue
 
-class StringSetting(BaseSetting):
+        try:
+            kv = KeyValue.objects.get(key=self.name)
+            v = kv.value
+            self._temp = (v, datetime.now() + timedelta(seconds=TMP_MINICACHE_SECONDS))
+            return v
+        except KeyValue.DoesNotExist:
+            self._temp = (self.default, datetime.now() + timedelta(seconds=TMP_MINICACHE_SECONDS))
+            self.save(self.default)
+        except Exception, e:
+            logging.error("Error retrieving setting from database (%s): %s" % (self.name, str(e)))
+            
+        return self.default
+
+    def set_value(self, new_value):
+        new_value = self._parse(new_value)
+        self._temp = None
+        self.save(new_value)
+
+    def save(self, value):
+        from forum.models import KeyValue
+
+        try:
+            kv = KeyValue.objects.get(key=self.name)
+        except KeyValue.DoesNotExist:
+            kv = KeyValue(key=self.name)
+        except Exception, e:
+            logging.error("Error saving setting to database (%s): %s" % (self.name, str(e)))
+            return
+
+        kv.value = value
+        kv.save()
+
+    def to_default(self):
+        self.set_value(self.default)
+
     def _parse(self, value):
-        if isinstance(value, unicode):
-            return value.encode('utf8')
-        else:
-            return str(value)
+        if not isinstance(value, self.base_type):
+            try:
+                return self.base_type(value)
+            except:
+                pass
+        return value
 
-    def __unicode__(self):
-        return unicode(self.value.decode('utf8'))
+class AnyTypeSetting(BaseSetting):
+     def _parse(self, value):
+        return value
 
-    def __add__(self, other):
-        return "%s%s" % (unicode(self), other)
-
-    def __cmp__(self, other):
-        return cmp(str(self), str(other))
-
-class IntegerSetting(BaseSetting):
-    def _parse(self, value):
-        return int(value)
-
-    def __int__(self):
-        return int(self.value)
-
-    def __add__(self, other):
-        return int(self) + int(other)
-
-    def __sub__(self, other):
-        return int(self) - int(other)
-
-    def __cmp__(self, other):
-        return int(self) - int(other)
-
-class FloatSetting(BaseSetting):
-    def _parse(self, value):
-        return float(value)
-
-    def __int__(self):
-        return int(self.value)
-
-    def __float__(self):
-        return float(self.value)
-
-    def __add__(self, other):
-        return float(self) + float(other)
-
-    def __sub__(self, other):
-        return float(self) - float(other)
-
-    def __cmp__(self, other):
-        return float(self) - float(other)
-
-class BoolSetting(BaseSetting):
-    def _parse(self, value):
-        return bool(value)
 
 class Setting(object):
+    emulators = {}
     sets = {}
 
-    def __new__(cls, name, default, set=None, field_context={}):
-        if isinstance(default, bool):
-            instance = BoolSetting(name, default, field_context)
-        elif isinstance(default, str):
-            instance = StringSetting(name, default, field_context)
-        elif isinstance(default, float):
-            instance = FloatSetting(name, default, field_context)
-        elif isinstance(default, int):
-            instance = IntegerSetting(name, default, field_context)
+    def __new__(cls, name, default, set=None, field_context=None):
+        if default is None:
+            return AnyTypeSetting(name, default, set, field_context)
+            
+        deftype = type(default)
+
+        if deftype in Setting.emulators:
+            emul = Setting.emulators[deftype]
         else:
-            instance = BaseSetting(name, default, field_context)
+            emul = type(deftype.__name__ + cls.__name__, (BaseSetting,), {'base_type': deftype})
 
-        if set is not None:
-            if not set.name in cls.sets:
-                cls.sets[set.name] = set
+            fns = [n for n, f in [(p, getattr(deftype, p)) for p in dir(deftype) if not p in dir(cls)] if callable(f)]
 
-            cls.sets[set.name].append(instance)
+            for n in fns:
+               emul.add_to_class(n)
 
-        return instance
+            Setting.emulators[deftype] = emul
 
-setting_update = django.dispatch.Signal(providing_args=['old_value', 'new_value'])
+        return emul(name, default, set, field_context)

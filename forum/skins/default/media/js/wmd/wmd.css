@@ -1,23 +1,11 @@
-/*body 
+body 
 { 
-	background-color: White
-}
-*/
-.wmd-panel
-{
+
 }
 
-#wmd-button-bar 
+#wmd-editor
 {
-	background-color: White; 
-}
-
-#wmd-input 
-{ 
-	height: 500px;
-	background-color: Gainsboro;
-	border: 1px solid DarkGray;
-	margin-top: -20px;
+	background-color: Aquamarine;
 }
 
 #wmd-preview 
@@ -111,7 +99,7 @@
 }
 
 .wmd-prompt-dialog > div {
-	font-size: 1em;
+	font-size: 0.8em;
 	font-family: arial, helvetica, sans-serif;
 }
 
@@ -124,6 +112,6 @@
 .wmd-prompt-dialog > form > input[type="button"]{
 	border: 1px solid #888888;
 	font-family: trebuchet MS, helvetica, sans-serif;
-	font-size: 1em;
+	font-size: 0.8em;
 	font-weight: bold;
 }

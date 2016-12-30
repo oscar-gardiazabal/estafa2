@@ -1,4 +1,4 @@
-from forum.utils.forms import NextUrlField,  UserNameField,  UserEmailField, SetPasswordForm
+from forum.forms import NextUrlField, UserNameField, UserEmailField, SetPasswordForm
 from forum.models import Question
 from forum.modules import call_all_handlers
 from django.contrib.contenttypes.models import ContentType
@@ -17,15 +17,23 @@ class ClassicRegisterForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super(ClassicRegisterForm, self).__init__(*args, **kwargs)
 
-        spam_fields = call_all_handlers('create_anti_spam_field')
-        if spam_fields:
-            spam_fields = dict(spam_fields)
-            for name,field in spam_fields.items():
-                self.fields[name] = field
+        # Try importing the ReCapthca public and private keys, Import Error will be raised in case it has been disabled
+        try:
+            from forum.settings import RECAPTCHA_PUB_KEY, RECAPTCHA_PRIV_KEY
+            recaptcha_enabled = len(str(RECAPTCHA_PUB_KEY.value)) > 0 and len(str(RECAPTCHA_PRIV_KEY.value)) > 0
+        except ImportError:
+            recaptcha_enabled = False
 
-            self._anti_spam_fields = spam_fields.keys()
-        else:
-            self._anti_spam_fields = []
+        if recaptcha_enabled:
+            spam_fields = call_all_handlers('create_anti_spam_field')
+            if spam_fields:
+                spam_fields = dict(spam_fields)
+                for name, field in spam_fields.items():
+                    self.fields[name] = field
+
+                self._anti_spam_fields = spam_fields.keys()
+            else:
+                self._anti_spam_fields = []
 
     def anti_spam_fields(self):
         return [self[name] for name in self._anti_spam_fields]
@@ -33,21 +41,21 @@ class ClassicRegisterForm(SetPasswordForm):
 class ClassicLoginForm(forms.Form):
     """ legacy account signin form """
     next = NextUrlField()
-    username = UserNameField(required=False,skip_clean=True)
+    username = UserNameField(required=False, skip_clean=True)
     password = forms.CharField(max_length=128,
-            widget=forms.widgets.PasswordInput(attrs={'class':'required login'}),
-            required=False)
+                               widget=forms.widgets.PasswordInput(attrs={'class':'required login'}),
+                               required=False)
 
     def __init__(self, data=None, files=None, auto_id='id_%s',
-            prefix=None, initial=None):
+                 prefix=None, initial=None):
         super(ClassicLoginForm, self).__init__(data, files, auto_id,
-                prefix, initial)
+                                               prefix, initial)
         self.user_cache = None
 
-    def _clean_nonempty_field(self,field):
+    def _clean_nonempty_field(self, field):
         value = None
         if field in self.cleaned_data:
-            value = str(self.cleaned_data[field]).strip()
+            value = self.cleaned_data[field].strip()
             if value == '':
                 value = None
         self.cleaned_data[field] = value
@@ -72,13 +80,11 @@ class ClassicLoginForm(forms.Form):
                 del self.cleaned_data['username']
                 del self.cleaned_data['password']
 
-                error_list.insert(0,(_("Please enter valid username and password "
-                                    "(both are case-sensitive).")))
+                error_list.insert(0, (_("Please enter valid username and password "
+                "(both are case-sensitive).")))
 
-            elif not user_.is_active:
-                error_list.append(_("This account is inactive."))
             if len(error_list) > 0:
-                error_list.insert(0,_('Login failed.'))
+                error_list.insert(0, _('Login failed.'))
             try:
                 self.user_cache = user_.user
             except:
@@ -92,7 +98,7 @@ class ClassicLoginForm(forms.Form):
             error_list.append(_('Please enter user name'))
         if len(error_list) > 0:
             self._errors['__all__'] = forms.util.ErrorList(error_list)
-            
+
         return self.cleaned_data
 
     def get_user(self):

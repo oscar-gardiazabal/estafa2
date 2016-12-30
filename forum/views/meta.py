@@ -1,103 +1,201 @@
-from django.shortcuts import render_to_response, get_object_or_404
-from django.core.urlresolvers import reverse
+import os
+from itertools import groupby
+
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
-from django.conf import settings
-from forum.forms import FeedbackForm
-from django.core.urlresolvers import reverse
-from django.core.mail import mail_admins
+from django.views.static import serve
+from django.views.decorators.cache import cache_page
 from django.utils.translation import ugettext as _
-from forum.utils.forms import get_next_url
-from forum.models import Badge, Award, User
-from forum.badges import ALL_BADGES
+from django.utils.safestring import mark_safe
+
 from forum import settings
-from forum.utils.mail import send_email
-import re
+from forum.views.decorators import login_required
+from forum.forms import FeedbackForm
+from forum.modules import decorate
+from forum.forms import get_next_url
+from forum.models import Badge, Award, User, Page
+from forum.badges.base import BadgesMeta
+from forum.http_responses import HttpResponseNotFound, HttpResponseIntServerError
+from forum.utils.mail import send_template_email
+from forum.templatetags.extra_filters import or_preview
+
+import decorators
+import logging, traceback
 
 def favicon(request):
     return HttpResponseRedirect(str(settings.APP_FAVICON))
 
-def about(request):
-    return render_to_response('about.html', {'text': settings.ABOUT_PAGE_TEXT.value }, context_instance=RequestContext(request))
+def custom_css(request):
+    return HttpResponse(or_preview(settings.CUSTOM_CSS, request), mimetype="text/css")
 
-def faq(request):
-    data = {
-        'gravatar_faq_url': reverse('faq') + '#gravatar',
-        #'send_email_key_url': reverse('send_email_key'),
-        'ask_question_url': reverse('ask'),
-    }
-    return render_to_response('faq.html', data, context_instance=RequestContext(request))
+def static(request, title, content):
+    return render_to_response('static.html', {'content' : content, 'title': title},
+                              context_instance=RequestContext(request))
+
+def media(request, skin, path):
+    response = serve(request, "%s/media/%s" % (skin, path),
+                 document_root=os.path.join(os.path.dirname(os.path.dirname(__file__)), 'skins').replace('\\', '/'))
+    content_type = response['Content-Type']
+    if ('charset=' not in content_type):
+        if (content_type.startswith('text') or content_type=='application/x-javascript'):
+            content_type += '; charset=utf-8'
+            response['Content-Type'] = content_type
+    return response
+
+
+def markdown_help(request):
+    return render_to_response('markdown_help.html', context_instance=RequestContext(request))
+
+@cache_page(60 * 60 * 24 * 30) #30 days
+def opensearch(request):
+    return render_to_response('opensearch.html', {'settings' : settings}, context_instance=RequestContext(request))
+
 
 def feedback(request):
     if request.method == "POST":
-        form = FeedbackForm(request.POST)
+        form = FeedbackForm(request.user, data=request.POST)
         if form.is_valid():
-            context = {'user': request.user}
+            context = {
+                 'user': request.user,
+                 'email': request.user.is_authenticated() and request.user.email or form.cleaned_data.get('email', None),
+                 'message': form.cleaned_data['message'],
+                 'name': request.user.is_authenticated() and request.user.username or form.cleaned_data.get('name', None),
+                 'ip': request.META['REMOTE_ADDR'],
+            }
 
-            if not request.user.is_authenticated:
-                context['email'] = form.cleaned_data.get('email',None)
-            context['message'] = form.cleaned_data['message']
-            context['name'] = form.cleaned_data.get('name',None)
+            recipients = User.objects.filter(is_superuser=True)
+            send_template_email(recipients, "notifications/feedback.html", context)
 
-            recipients = [(adm.username, adm.email) for adm in User.objects.filter(is_superuser=True)]
-
-            send_email(settings.EMAIL_SUBJECT_PREFIX + _("Feedback message from %(site_name)s") % {'site_name': settings.APP_SHORT_NAME},
-                       recipients, "notifications/feedback.html", context)
-            
             msg = _('Thanks for the feedback!')
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(get_next_url(request))
     else:
-        form = FeedbackForm(initial={'next':get_next_url(request)})
+        form = FeedbackForm(request.user, initial={'next':get_next_url(request)})
 
     return render_to_response('feedback.html', {'form': form}, context_instance=RequestContext(request))
+
 feedback.CANCEL_MESSAGE=_('We look forward to hearing your feedback! Please, give it next time :)')
 
 def privacy(request):
     return render_to_response('privacy.html', context_instance=RequestContext(request))
 
+@decorate.withfn(login_required)
 def logout(request):
     return render_to_response('logout.html', {
-        'next' : get_next_url(request),
+    'next' : get_next_url(request),
     }, context_instance=RequestContext(request))
 
-def badges(request):#user status/reputation system
-    badges = Badge.objects.all().order_by('name')
+@decorators.render('badges.html', 'badges', _('badges'), weight=300)
+def badges(request):
+    badges = sorted([Badge.objects.get(id=id) for id in BadgesMeta.by_id.keys()], lambda b1, b2: cmp(b1.name, b2.name))
 
-    badges_dict = dict([(badge.badge, badge.description) for badge in ALL_BADGES])
-
-    for badge in badges:
-        if badge.description != badges_dict.get(badge.slug, badge.description):
-            badge.description = badges_dict[badge.slug]
-            badge.save()
-    
-    my_badges = []
     if request.user.is_authenticated():
-        my_badges = Award.objects.filter(user=request.user).values('badge_id')
-        #my_badges.query.group_by = ['badge_id']
+        my_badges = Award.objects.filter(user=request.user).values_list('badge_id', flat=True).distinct()
+    else:
+        my_badges = []
 
-    return render_to_response('badges.html', {
+    return {
         'badges' : badges,
         'mybadges' : my_badges,
-        'feedback_faq_url' : reverse('feedback'),
-    }, context_instance=RequestContext(request))
+    }
 
-def badge(request, id):
-    badge = get_object_or_404(Badge, id=id)
-    awards = Award.objects.extra(
-        select={'id': 'auth_user.id', 
-                'name': 'auth_user.username', 
-                'rep':'forum_user.reputation',
-                'gold': 'forum_user.gold',
-                'silver': 'forum_user.silver',
-                'bronze': 'forum_user.bronze'},
-        tables=['award', 'auth_user', 'forum_user'],
-        where=['badge_id=%s AND user_id=auth_user.id AND forum_user.user_ptr_id = auth_user.id'],
-        params=[id]
-    ).distinct('id')
+def badge(request, id, slug):
+    badge = Badge.objects.get(id=id)
+    awards = list(Award.objects.filter(badge=badge).order_by('user', 'awarded_at'))
+    award_count = len(awards)
+
+    awards = sorted([dict(count=len(list(g)), user=k) for k, g in groupby(awards, lambda a: a.user)],
+                    lambda c1, c2: c2['count'] - c1['count'])
 
     return render_to_response('badge.html', {
-        'awards' : awards,
-        'badge' : badge,
+    'award_count': award_count,
+    'awards' : awards,
+    'badge' : badge,
     }, context_instance=RequestContext(request))
 
+def page(request):
+    path = request.path[1:]
+
+    if path in settings.STATIC_PAGE_REGISTRY:
+        try:
+            page = Page.objects.get(id=settings.STATIC_PAGE_REGISTRY[path])
+
+            if (not page.published) and (not request.user.is_superuser):
+                return HttpResponseNotFound(request)
+        except:
+            return HttpResponseNotFound(request)
+    else:
+        return HttpResponseNotFound(request)
+
+    template = page.extra.get('template', 'default')
+    sidebar = page.extra.get('sidebar', '')
+
+    if template == 'default':
+        base = 'base_content.html'
+    elif template == 'sidebar':
+        base = 'base.html'
+
+        sidebar_render = page.extra.get('render', 'markdown')
+
+        if sidebar_render == 'markdown':
+            sidebar = page._as_markdown(sidebar)
+        elif sidebar_render == 'html':
+            sidebar = mark_safe(sidebar)
+
+    else:
+        return HttpResponse(page.body, mimetype=page.extra.get('mimetype', 'text/html'))
+
+    render = page.extra.get('render', 'markdown')
+
+    if render == 'markdown':
+        body = page.as_markdown()
+    elif render == 'html':
+        body = mark_safe(page.body)
+    else:
+        body = page.body
+
+    return render_to_response('page.html', {
+    'page' : page,
+    'body' : body,
+    'sidebar': sidebar,
+    'base': base,
+    }, context_instance=RequestContext(request))
+
+
+def error_handler(request):
+
+    stacktrace = "".join(["\t\t%s\n" % l for l in traceback.format_exc().split("\n")])
+
+    try:
+        log_msg = """
+        error executing request:
+        PATH: %(path)s
+        USER: %(user)s
+        METHOD: %(method)s
+        POST PARAMETERS:
+        %(post)s
+        GET PARAMETERS:
+        %(get)s
+        HTTP HEADERS:
+        %(headers)s
+        COOKIES:
+        %(cookies)s
+        EXCEPTION INFO:
+        %(stacktrace)s
+        """ % {
+            'path': request.path,
+            'user': request.user.is_authenticated() and ("%s (%s)" % (request.user.username, request.user.id)) or "<anonymous>",
+            'method': request.method,
+            'post': request.POST and "".join(["\t\t%s: %s\n" % (k, v) for k, v in request.POST.items()]) or "None",
+            'get': request.GET and "".join(["\t\t%s: %s\n" % (k, v) for k, v in request.GET.items()]) or "None",
+            'cookies': request.COOKIES and "".join(["\t\t%s: %s\n" % (k, v) for k, v in request.COOKIES.items()]) or "None",
+            'headers': request.META and "".join(["\t\t%s: %s\n" % (k, v) for k, v in request.META.items()]) or "None",
+            'stacktrace': stacktrace
+        }
+    except:
+        log_msg = "error executing request:\n%s" % stacktrace
+
+
+    logging.error(log_msg)
+    return HttpResponseIntServerError(request)

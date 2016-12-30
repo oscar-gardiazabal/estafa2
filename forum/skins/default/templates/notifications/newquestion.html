@@ -1,27 +1,54 @@
-{% extends "email_base.html" %}
-{% load i18n %}
-{% load extra_tags %}
+{% load i18n extra_tags email_tags %}
 
-{% block content %}
-    <p>{% trans "Hello" %} {% user_var username %},</p>
+{% declare %}
+    prefix = html.mark_safe(smart_str(settings.EMAIL_SUBJECT_PREFIX))
+    app_name = smart_str(settings.APP_SHORT_NAME)
+    safe_app_name = html.mark_safe(smart_str(settings.APP_SHORT_NAME))
+    question_author = html.mark_safe(smart_str(question.author.username))
+    question_url = smart_str(settings.APP_URL + question.get_absolute_url())
+    question_title = html.mark_safe(smart_str(question.title))
+    question_tags = html.mark_safe(smart_str(question.tagnames))
+    safe_body = html.html2text(smart_str(question.html))
+    author_link = html.objlink(question.author, style=settings.EMAIL_ANCHOR_STYLE)
+    question_link = html.objlink(question, style=settings.EMAIL_ANCHOR_STYLE)
+    tag_links = html.mark_safe(smart_str(" ".join([html.objlink(t, style=settings.EMAIL_ANCHOR_STYLE) for t in question.tags.all()])))
+{% enddeclare %}
 
-    <p>
-        {% blocktrans with question.author.username as author_name and settings.APP_SHORT_NAME as app_title and settings.APP_URL as app_url and question.get_absolute_url as question_url and question.title as question_title and question.tagnames as question_tags %}
-        {{ author_name }} has just posted a new question on {{ app_title }}, with title
-        <a href="{{ app_url }}{{ question_url }}">{{ question_title }}</a> and tagged <em>{{ question_tags }}</em>:
-        {% endblocktrans %}
-    </p>
+{% email %}
+    {% subject %}{% blocktrans %}{{ prefix }} New question: {{ question_title }} on {{ safe_app_name }}{% endblocktrans %}{% endsubject %}
 
-    <blockquote>
-        {{ question.html|safe }}
-    </blockquote>
+    {% htmlcontent notifications/base.html %}
+        <p style="{{ p_style }}">
+            {% if tag_links != "" %}
+            {% blocktrans %}
+            {{ author_link }} has just posted a new question on {{ app_name }}, entitled
+            {{ question_link }}
+             and tagged "<em>{{ tag_links }}</em>". Here's what it says:
+            {% endblocktrans %}
+            {%else%}
+            {% blocktrans %}
+            {{ author_link }} has just posted a new question on {{ app_name }}, entitled
+            {{ question_link }}. Here's what it says:
+            {% endblocktrans %}
+            {%endif%}
+        </p>
 
-    <p>
-    {% blocktrans %}
-        Don't forget to come over and cast your vote.
-    {% endblocktrans %}
-    </p>
+        <blockquote>
+            {{ question.html|safe }}
+        </blockquote>
 
-    <p>{% blocktrans %}Sincerely,<br />
-    Forum Administrator{% endblocktrans %}</p>
-{% endblock %}
+        <p style="{{ p_style }}">{% trans "Don't forget to come over and cast your vote." %}</p>        
+    {% endhtmlcontent %}
+
+{% textcontent notifications/base_text.html %}
+{% blocktrans %}
+{{ question_author }} has just posted a new question on {{ safe_app_name }}, entitled
+"{{ question_title }}" and tagged {{ question_tags }}:
+{% endblocktrans %}
+{{ safe_body }}
+
+{% trans "Don't forget to come over and cast your vote." %}
+{% endtextcontent %}
+
+{% endemail %}
+

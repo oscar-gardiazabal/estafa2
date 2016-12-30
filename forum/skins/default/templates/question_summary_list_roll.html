@@ -1,13 +1,13 @@
     <div class="qstA">
         <h2>
-            <a href="{{ question.get_absolute_url }}">{{ question.get_question_title }}</a>
+            <a href="{{ question.get_absolute_url }}">{{ question.headline }}</a>
         </h2>
         <div class="stat">
             <table>
                 <tr>
                     <td><span class="num">{{ question.answer_count|intcomma }}</span> </td>
                     <td><span class="num">{{ question.score|intcomma }}</span> </td>
-                    <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
+                    <td><span class="num">{{ question.view_count|decorated_int|safe }}</span> </td>
                 </tr>  
                 <tr>
                     <td><span class="unit">{% trans "answers" %}</span></td>
@@ -49,7 +49,7 @@
         
         <div class="tags">
         {% for tag in question.tagname_list %}
-        <a href="{% url tag_questions tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
+        <a class="tag-link-{{ tag }}" href="{% url tag_questions tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
         {% endfor %}
         </div>
     </div>

@@ -1,13 +1,5 @@
 # encoding:utf-8
 import os.path
-from django.utils.translation import ugettext as _
-
-def check_local_setting(name, value):
-    local_vars = locals()
-    if name in local_vars and local_vars[name] == value:
-        return True
-    else:
-        return False
 
 SITE_SRC_ROOT = os.path.dirname(__file__)
 LOG_FILENAME = 'django.osqa.log'
@@ -16,16 +8,15 @@ LOG_FILENAME = 'django.osqa.log'
 import logging
 logging.basicConfig(
     filename=os.path.join(SITE_SRC_ROOT, 'log', LOG_FILENAME),
-    level=logging.DEBUG,
+    level=logging.ERROR,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )
 
 #ADMINS and MANAGERS
-ADMINS = (('Forum Admin', 'forum@example.com'),)
+ADMINS = ()
 MANAGERS = ADMINS
 
-DEBUG = True
-# DEBUG = False #false requires ALLOWED_HOSTS (http://ebanshi.cc/questions/2324345/django-1-5-url-deprecation-warning-causes-500-error-in-webfaction-apache-wsgi)
+DEBUG = False
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': True
 }
@@ -33,61 +24,69 @@ TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1',)
 
 
-#DATABASE_NAME = 'estafa2'
-#DATABASE_USER = 'root'
-#DATABASE_PASSWORD = ''
-#DATABASE_HOST = 'localhost'
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'osqa',
+#        'USER': 'root',
+#        'PASSWORD': '',
+#        'HOST': '',
+#        'PORT': '',
+#    }
+#}
 
-#DATABASE_NAME = os.environ["MYSQL_DATABASE"]
-#DATABASE_USER = os.environ["MYSQL_USERNAME"]
-#DATABASE_PASSWORD = os.environ["MYSQL_PASSWORD"]
-#DATABASE_HOST = os.environ["MYSQL_LOCATION"]
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'osqa',       # Or path to database file if using sqlite3.
+        'USER': 'root',                   # Not used with sqlite3.
+        'PASSWORD': '&MOVy1PV',          # Not used with sqlite3.
+        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',        # Set to empty string for default. Not used with sqlite3.
+    }
+} 
 
-DATABASE_NAME = 'osqa'
-DATABASE_USER = 'root'
-DATABASE_PASSWORD = '&MOVy1PV'
-#DATABASE_HOST = 'mysql'
-DATABASE_HOST = 'localhost'
-
-DATABASE_ENGINE = 'django.db.backends.mysql'
-DATABASE_PORT = '3306'
-
-
-#CACHE_BACKEND = 'file://%s' % os.path.join(os.path.dirname(__file__),'cache').replace('\\','/')
-CACHE_BACKEND = 'dummy://'
+CACHE_BACKEND = 'file://%s' % os.path.join(os.path.dirname(__file__),'cache').replace('\\','/')
+#CACHE_BACKEND = 'dummy://'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-APP_URL = 'http://' #used by email notif system and RSS
+# This should be equal to your domain name, plus the web application context.
+# This shouldn't be followed by a trailing slash.
+# I.e., http://www.yoursite.com or http://www.hostedsite.com/yourhostapp
+APP_URL = 'http://www.estafa2.com'
 
 #LOCALIZATIONS
-TIME_ZONE = 'America/New_York'
-
-###########################
-#
-#   this will allow running your forum with url like http://site.com/forum
-#
-#   FORUM_SCRIPT_ALIAS = 'forum/'
-#
-FORUM_SCRIPT_ALIAS = '' #no leading slash, default = '' empty string
-
+TIME_ZONE = 'Europe/Berlin'
 
 #OTHER SETTINGS
 
 USE_I18N = True
-LANGUAGE_CODE = 'en'
-EMAIL_VALIDATION = 'off' #string - on|off
-MIN_USERNAME_LENGTH = 1
-EMAIL_UNIQUE = False
-
-WIKI_ON = True
-FEEDBACK_SITE_URL = None #None or url
-EDITABLE_SCREEN_NAME = False #True or False - can user change screen name?
+LANGUAGE_CODE = 'es'
 
 DJANGO_VERSION = 1.1
-RESOURCE_REVISION=4
-
 OSQA_DEFAULT_SKIN = 'default'
 
-DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
+#DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
+DISABLED_MODULES = ['project_badges', 'localauth']
+#DISABLED_MODULES = [localauth]
 
-from forum.settings import *
+DEFAULT_FROM_EMAIL = 'messenger@localhost'
+SERVER_EMAIL = 'messenger@localhost'
+
+EMAIL_SUBJECT_PREFIX = 'Estafa2'
+EMAIL_HOST='smtp.oscargardiazabal.com'
+EMAIL_PORT='587'
+EMAIL_USE_TLS=True
+
+#if you set FORUM_SCRIPT_ALIAS= 'forum/'
+#then OSQA will run at url http://example.com/forum
+#FORUM_SCRIPT_ALIAS cannot have leading slash, otherwise it can be set to anything
+FORUM_SCRIPT_ALIAS = '' #no leading slash, default = '' empty string
+
+EMAIL_VALIDATION = 'off' #string - on|off
+MIN_USERNAME_LENGTH = 1
+EMAIL_UNIQUE = False #if True, email addresses must be unique in all accounts
+
+FEEDBACK_SITE_URL = None #None or url
+LOGIN_URL = '/%s%s%s' % (FORUM_SCRIPT_ALIAS,'account/','signin/')
+

@@ -1,77 +1,84 @@
+# -*- coding: utf-8 -*-
+
+import logging
+
+from datetime import datetime
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
-from django.core.paginator import Paginator
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.utils.translation import ugettext as _
 
-def render(template=None, tab=None):
-    def decorator(func):
-        def decorated(request, *args, **kwargs):
-            context = func(request, *args, **kwargs)
+from forum.modules import ui, decorate
+from forum.settings import ONLINE_USERS
+
+def login_required(func, request, *args, **kwargs):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('auth_signin'))
+    else:
+        return func(request, *args, **kwargs)
+
+def render(template=None, tab=None, tab_title='', weight=500, tabbed=True):
+    def decorator(func):        
+        def decorated(context, request, *args, **kwargs):
+            if request.user.is_authenticated():
+                ONLINE_USERS[request.user] = datetime.now()
+
+            if isinstance(context, HttpResponse):
+                return context
 
             if tab is not None:
                 context['tab'] = tab
 
-            return render_to_response(context.pop('template', template), context, context_instance=RequestContext(request))
-        return decorated
+            return render_to_response(context.pop('template', template), context,
+                                      context_instance=RequestContext(request))
+
+        if tabbed and tab and tab_title:
+            ui.register(ui.PAGE_TOP_TABS,
+                        ui.PageTab(tab, tab_title, lambda: reverse(func.__name__), weight=weight))
+            
+        return decorate.result.withfn(decorated, needs_params=True)(func)
+
     return decorator
 
-def list(paginate, default_page_size):
-    def decorator(func):
-        def decorated(request, *args, **kwargs):
-            context = func(request, *args, **kwargs)
+class CommandException(Exception):
+    pass
 
-            pagesize = request.utils.page_size(default_page_size)
-            page = int(request.GET.get('page', 1))
+class RefreshPageCommand(HttpResponse):
+    def __init__(self):
+        super(RefreshPageCommand, self).__init__(
+                content=simplejson.dumps({'commands': {'refresh_page': []}, 'success': True}),
+                mimetype="application/json")
 
-            big_list = context[paginate]
-            paginator = Paginator(big_list, pagesize)
+def command(func, request, *args, **kwargs):
+    try:
+        response = func(request, *args, **kwargs)
 
-            page_obj = paginator.page(page)
-            context[paginate] = page_obj.object_list
+        if isinstance(response, HttpResponse):
+            return response
 
-            base_path = context.get('base_path', None) or request.path
-            sort = request.utils.sort_method('')
+        response['success'] = True
+    except Exception, e:
+        import traceback
+        #traceback.print_exc()
 
-            context["pagination_context"] = {
-                'is_paginated' : True,
-                'pages': paginator.num_pages,
-                'page': page,
-                'has_previous': page_obj.has_previous(),
-                'has_next': page_obj.has_next(),
-                'previous': page_obj.previous_page_number(),
-                'next': page_obj.next_page_number(),
-                'base_url' : "%s%ssort=%s&" % (base_path, ('?' in base_path) and '&' or '?', sort),
-                'pagesize' : pagesize
-            }
-
-            context['sort_context'] = {
-                'base_url': "%s%ssort=" % (base_path, ('?' in base_path) and '&' or '?'),
-                'current': sort,
-            }
-
-            return context
-        return decorated
-    return decorator
-
-
-def command(func):
-    def decorated(request, *args, **kwargs):
-        try:
-            response = func(request, *args, **kwargs)
-            response['success'] = True
-        except Exception, e:
-            #import sys, traceback
-            #traceback.print_exc(file=sys.stdout)
-
+        if isinstance(e, CommandException):
             response = {
-                'success': False,
-                'error_message': str(e)
+            'success': False,
+            'error_message': e.message
+            }
+        else:
+            logging.error("%s: %s" % (func.__name__, str(e)))
+            logging.error(traceback.format_exc())
+            response = {
+            'success': False,
+            'error_message': _("We're sorry, but an unknown error ocurred.<br />Please try again in a while.")
             }
 
-        if request.is_ajax():
-            return HttpResponse(simplejson.dumps(response), mimetype="application/json")
-        else:
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    if request.is_ajax():
+        return HttpResponse(simplejson.dumps(response), mimetype="application/json")
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    return decorated

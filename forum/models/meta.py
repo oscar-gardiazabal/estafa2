@@ -1,75 +1,82 @@
+from django.utils.translation import ugettext as _
 from base import *
 
-class Vote(MetaContent, CancelableContent, UserContent):
-    VOTE_UP = +1
-    VOTE_DOWN = -1
-    VOTE_CHOICES = (
-        (VOTE_UP,   u'Up'),
-        (VOTE_DOWN, u'Down'),
-    )
+class Vote(models.Model):
+    user = models.ForeignKey(User, related_name="votes")
+    node = models.ForeignKey(Node, related_name="votes")
+    value = models.SmallIntegerField()
+    action = models.OneToOneField(Action, related_name="vote")
+    voted_at = models.DateTimeField(default=datetime.datetime.now)
 
-    vote           = models.SmallIntegerField(choices=VOTE_CHOICES)
-    voted_at       = models.DateTimeField(default=datetime.datetime.now)
-
-    active = ActiveObjectManager()
-
-    class Meta(MetaContent.Meta):
-        db_table = u'vote'
-
-    def __unicode__(self):
-        return '[%s] voted at %s: %s' %(self.user, self.voted_at, self.vote)
-
-    def _update_post_vote_count(self, diff):
-        post = self.node
-        field = self.vote == 1 and 'vote_up_count' or 'vote_down_count'
-        post.__dict__[field] = post.__dict__[field] + diff
-        post.save()
-
-    def cancel(self):
-        if super(Vote, self).cancel():
-            self._update_post_vote_count(-1)
-
-    def save(self, *args, **kwargs):
-        super(Vote, self).save(*args, **kwargs)
-        if self._is_new:
-            self._update_post_vote_count(1)
-
-    def is_upvote(self):
-        return self.vote == self.VOTE_UP
-
-    def is_downvote(self):
-        return self.vote == self.VOTE_DOWN
+    class Meta:
+        app_label = 'forum'
+        unique_together = ('user', 'node')
 
 
-class FlaggedItem(MetaContent, UserContent):
-    flagged_at     = models.DateTimeField(default=datetime.datetime.now)
-    reason         = models.CharField(max_length=300, null=True)
-    canceled       = models.BooleanField(default=False)
+class Flag(models.Model):
+    user = models.ForeignKey(User, related_name="flags")
+    node = models.ForeignKey(Node, related_name="flags")
+    reason = models.CharField(max_length=300)
+    action = models.OneToOneField(Action, related_name="flag")
+    flagged_at = models.DateTimeField(default=datetime.datetime.now)
 
-    active = ActiveObjectManager()
+    class Meta:
+        app_label = 'forum'
+        unique_together = ('user', 'node')
 
-    class Meta(MetaContent.Meta):
-        db_table = u'flagged_item'
 
-    def __unicode__(self):
-        return '[%s] flagged at %s' %(self.user, self.flagged_at)
+class Badge(BaseModel):
+    GOLD = 1
+    SILVER = 2
+    BRONZE = 3
 
-    def _update_post_flag_count(self, diff):
-        post = self.node
-        post.offensive_flag_count = post.offensive_flag_count + diff
-        post.save()
+    type        = models.SmallIntegerField()
+    cls         = models.CharField(max_length=50, null=True)
+    awarded_count = models.PositiveIntegerField(default=0)
+    
+    awarded_to    = models.ManyToManyField(User, through='Award', related_name='badges')
+
+    def get_handler(self):
+        from forum.badges import BadgesMeta
+        return BadgesMeta.by_id.get(self.id, None)
+
+    @property
+    def name(self):
+        cls = self.get_handler()
+        return cls and cls.name or _("Unknown")
+
+    @property
+    def description(self):
+        cls = self.get_handler()
+        return cls and cls.description or _("No description available")
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('badge', [], {'id': self.id, 'slug': slugify(self.name)})
 
     def save(self, *args, **kwargs):
-        super(FlaggedItem, self).save(*args, **kwargs)
-        if self._is_new:
-            self._update_post_flag_count(1)
-
-    def cancel(self):
-        if not self.canceled:
-            self.canceled = True
-            self.save()
-            self._update_post_flag_count(-1)
-            
+        if isinstance(self.awarded_count, models.expressions.ExpressionNode):
+            super(Badge, self).save(*args, **kwargs)
+            self.awarded_count = self.__class__.objects.filter(id=self.id).values_list('awarded_count', flat=True)[0]
+        else:
+            super(Badge, self).save(*args, **kwargs)
 
 
+    class Meta:
+        app_label = 'forum'
 
+
+class Award(models.Model):
+    user = models.ForeignKey(User)
+    badge = models.ForeignKey('Badge', related_name="awards")
+    node = models.ForeignKey(Node, null=True)
+
+    awarded_at = models.DateTimeField(default=datetime.datetime.now)
+
+    trigger = models.ForeignKey(Action, related_name="awards", null=True)
+    action = models.OneToOneField(Action, related_name="award")
+
+
+    class Meta:
+        unique_together = ('user', 'badge', 'node')
+        app_label = 'forum'

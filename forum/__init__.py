@@ -1,1 +1,5 @@
-__all__ = ['admin','auth','const','feed','forms','managers','models','sitemap','urls','views']
+class RequestHolder(object):
+    def __init__(self):
+        self.request = None
+
+REQUEST_HOLDER = RequestHolder()
