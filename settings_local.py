@@ -24,8 +24,8 @@ logging.basicConfig(
 ADMINS = (('Forum Admin', 'forum@example.com'),)
 MANAGERS = ADMINS
 
-#DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False #false requires ALLOWED_HOSTS (http://ebanshi.cc/questions/2324345/django-1-5-url-deprecation-warning-causes-500-error-in-webfaction-apache-wsgi)
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': True
 }
@@ -89,7 +89,5 @@ RESOURCE_REVISION=4
 OSQA_DEFAULT_SKIN = 'default'
 
 DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
-
-ALLOWED_HOSTS = ('estafa2.com','localhost','127.0.0.1',)
 
 from forum.settings import *
