@@ -68,8 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'django.contrib.markup',
-    'forum',
-    'south'
+    'forum'
 ]
 
 if DEBUG:
