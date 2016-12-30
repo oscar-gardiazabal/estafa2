@@ -24,7 +24,7 @@ class OsqaOpenIDStore(OpenIDStore):
             handle = association.handle,
             secret = base64.encodestring(association.secret),
             issued = association.issued,
-            lifetime = association.lifetime,
+            lifetime = association.issued,
             assoc_type = association.assoc_type
         )
         assoc.save()

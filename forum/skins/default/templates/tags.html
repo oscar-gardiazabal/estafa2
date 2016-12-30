@@ -8,6 +8,7 @@
        <script type="text/javascript">
        /*<![CDATA[*/
         $().ready(function(){
+            $("#nav_tags").attr('className',"on");
             $("#ipSearchTag").focus();
 
             var orderby = "{{ tab_id }}";
@@ -27,22 +28,25 @@
 <!-- Tabs -->
 <div class="tabBar">
     <div class="headQuestions">{% trans "Tag list" %}</div>
-    {{ tags.paginator.sort_tabs }}
+    <div class="tabsA">
+        <a id="sort_name" href="{% url tags %}?sort=name" class="off" title="{% trans "sorted alphabetically" %}">{% trans "by name" %}</a>
+        <a id="sort_used" href="{% url tags %}?sort=used" class="off" title="{% trans "sorted by frequency of tag use" %}">{% trans "by popularity" %}</a>
+    </div>
 </div>
 <div id="searchtags">
 <p>
 {% if stag %}
-    {% trans "All tags matching query" %} '<span class="darkred"><strong>{{ stag }}</strong></span>':
+    {% trans "All tags matching query" %} '<span class="darkred"><strong>{{ stag }}</strong></span>' {% trans "all tags - make this empty in english" %}:
 {% endif %}
-{% if not tags.paginator.count %}
+{% if not tags.object_list %}
     <span>{% trans "Nothing found" %}</span>
 {% endif %}
 </p>
-{% if tags.paginator.count %}
+{% if tags.object_list %}
 <ul class="tagsList tags">
-{% for tag in tags.paginator.page %}
+{% for tag in tags.object_list %}
    <li>
-    <a class="tag-link-{{ tag }}" href="{% url tag_questions tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">
+    <a href="{% url tag_questions tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">
         {{ tag }}
     </a>&nbsp;
     <span class="tag-number">&#215; {{ tag.used_count|intcomma }}</span>
@@ -57,7 +61,7 @@
 {% endblock %}
 {% block tail %}
 <div class="pager">
-    {{ tags.paginator.page_numbers }}
+    {% cnprog_paginator context %}
 </div>              
 {% endblock %}
 <!-- end tags.html -->

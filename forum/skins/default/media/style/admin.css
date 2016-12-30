@@ -2,7 +2,7 @@
     border-spacing: 10px;
 }
 
-#admin_form input[type="text"], #admin_form input[type="submit"], #admin_form textarea, .string_list_widget_button {
+#admin_form input[type="text"], #admin_form input[type="submit"], #admin_form textarea {
     line-height: 22px;
     font-size: 140%;
     font-family: sans-serif;
@@ -10,7 +10,7 @@
     color: black;
 }
 
-#admin_form input[type="text"], #admin_form input[type="submit"], .string_list_widget_button {
+#admin_form input[type="text"], #admin_form input[type="submit"] {
     height: 28px;
 }
 
@@ -18,18 +18,9 @@
     width: 550px;    
 }
 
-#admin_form th input[type="text"] {
+#admin_form th {
     text-align: left;
     vertical-align: top;
-    width: 125px;
-    padding: 2px 3px;
-    font-size: 12px;
-    height: auto;
-    line-height: 100%;
-}
-
-#admin_form th {
-
 }
 
 #admin_form td {
@@ -39,25 +30,4 @@
 #admin_page_description {
     color: gray;
     padding-bottom: 20px;
-}
-
-.string_list_widget input[type=text] {
-    width: 520px;
-}
-
-.string_list_widget_button {
-    width: 28px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.string_list_widget_button.add {
-    position: relative;
-    left: 554px;
-}
-
-table caption {
-    font-size: 120%;
-	padding: 3px 0;
-    text-align: left;
 }

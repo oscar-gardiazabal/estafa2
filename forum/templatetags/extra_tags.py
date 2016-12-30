@@ -5,31 +5,33 @@ import datetime
 import math
 import re
 import logging
-import random
 from django import template
-from django.utils.encoding import smart_unicode, force_unicode, smart_str
+from django.utils.encoding import smart_unicode
 from django.utils.safestring import mark_safe
-from django.utils import dateformat
+from forum.const import *
 from forum.models import Question, Answer, QuestionRevision, AnswerRevision, NodeRevision
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils import simplejson
-from forum import settings
+from django.conf import settings
 from django.template.defaulttags import url as default_url
 from forum import skins
-from forum.utils import html
-from extra_filters import decorated_int
-from django.core.urlresolvers import reverse
 
 register = template.Library()
 
 GRAVATAR_TEMPLATE = ('<img class="gravatar" width="%(size)s" height="%(size)s" '
-'src="https://secure.gravatar.com/avatar/%(gravatar_hash)s'
-'?s=%(size)s&amp;d=%(default)s&amp;r=%(rating)s" '
-'alt="%(username)s\'s gravatar image" />')
+                     'src="http://www.gravatar.com/avatar/%(gravatar_hash)s'
+                     '?s=%(size)s&amp;d=identicon&amp;r=PG" '
+                     'alt="%(username)s\'s gravatar image" />')
 
 @register.simple_tag
 def gravatar(user, size):
+    """
+    Creates an ``<img>`` for a user's Gravatar with a given size.
+
+    This tag can accept a User object, or a dict containing the
+    appropriate values.
+    """
     try:
         gravatar = user['gravatar']
         username = user['username']
@@ -37,25 +39,110 @@ def gravatar(user, size):
         gravatar = user.gravatar
         username = user.username
     return mark_safe(GRAVATAR_TEMPLATE % {
-    'size': size,
-    'gravatar_hash': gravatar,
-    'default': settings.GRAVATAR_DEFAULT_IMAGE,
-    'rating': settings.GRAVATAR_ALLOWED_RATING,
-    'username': template.defaultfilters.urlencode(username),
+        'size': size,
+        'gravatar_hash': gravatar,
+        'username': template.defaultfilters.urlencode(username),
     })
 
+MAX_FONTSIZE = 18
+MIN_FONTSIZE = 12
+@register.simple_tag
+def tag_font_size(max_size, min_size, current_size):
+    """
+    do a logarithmic mapping calcuation for a proper size for tagging cloud
+    Algorithm from http://blogs.dekoh.com/dev/2007/10/29/choosing-a-good-font-size-variation-algorithm-for-your-tag-cloud/
+    """
+    #avoid invalid calculation
+    if current_size == 0:
+        current_size = 1
+    try:
+        weight = (math.log10(current_size) - math.log10(min_size)) / (math.log10(max_size) - math.log10(min_size))
+    except:
+        weight = 0
+    return MIN_FONTSIZE + round((MAX_FONTSIZE - MIN_FONTSIZE) * weight)
 
+
+LEADING_PAGE_RANGE_DISPLAYED = TRAILING_PAGE_RANGE_DISPLAYED = 5
+LEADING_PAGE_RANGE = TRAILING_PAGE_RANGE = 4
+NUM_PAGES_OUTSIDE_RANGE = 1
+ADJACENT_PAGES = 2
+@register.inclusion_tag("paginator.html")
+def cnprog_paginator(context):
+    """
+    custom paginator tag
+    Inspired from http://blog.localkinegrinds.com/2007/09/06/digg-style-pagination-in-django/
+    """
+    if (context["is_paginated"]):
+        " Initialize variables "
+        in_leading_range = in_trailing_range = False
+        pages_outside_leading_range = pages_outside_trailing_range = range(0)
+
+        if (context["pages"] <= LEADING_PAGE_RANGE_DISPLAYED):
+            in_leading_range = in_trailing_range = True
+            page_numbers = [n for n in range(1, context["pages"] + 1) if n > 0 and n <= context["pages"]]
+        elif (context["page"] <= LEADING_PAGE_RANGE):
+            in_leading_range = True
+            page_numbers = [n for n in range(1, LEADING_PAGE_RANGE_DISPLAYED + 1) if n > 0 and n <= context["pages"]]
+            pages_outside_leading_range = [n + context["pages"] for n in range(0, -NUM_PAGES_OUTSIDE_RANGE, -1)]
+        elif (context["page"] > context["pages"] - TRAILING_PAGE_RANGE):
+            in_trailing_range = True
+            page_numbers = [n for n in range(context["pages"] - TRAILING_PAGE_RANGE_DISPLAYED + 1, context["pages"] + 1) if n > 0 and n <= context["pages"]]
+            pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
+        else:
+            page_numbers = [n for n in range(context["page"] - ADJACENT_PAGES, context["page"] + ADJACENT_PAGES + 1) if n > 0 and n <= context["pages"]]
+            pages_outside_leading_range = [n + context["pages"] for n in range(0, -NUM_PAGES_OUTSIDE_RANGE, -1)]
+            pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
+
+        extend_url = context.get('extend_url', '')
+        return {
+            "base_url": context["base_url"],
+            "is_paginated": context["is_paginated"],
+            "previous": context["previous"],
+            "has_previous": context["has_previous"],
+            "next": context["next"],
+            "has_next": context["has_next"],
+            "page": context["page"],
+            "pages": context["pages"],
+            "page_numbers": page_numbers,
+            "in_leading_range" : in_leading_range,
+            "in_trailing_range" : in_trailing_range,
+            "pages_outside_leading_range": pages_outside_leading_range,
+            "pages_outside_trailing_range": pages_outside_trailing_range,
+            "extend_url" : extend_url
+        }
+
+@register.inclusion_tag("pagesize.html")
+def cnprog_pagesize(context):
+    """
+    display the pagesize selection boxes for paginator
+    """
+    if (context["is_paginated"]):
+        return {
+            "base_url": context["base_url"],
+            "pagesize" : context["pagesize"],
+            "is_paginated": context["is_paginated"]
+        }
+
+@register.inclusion_tag("post_contributor_info.html")
+def post_contributor_info(post,contributor_type='original_author'):
+    """contributor_type: original_author|last_updater
+    """
+    if isinstance(post,Question):
+        post_type = 'question'
+    elif isinstance(post,Answer):
+        post_type = 'answer'
+    elif isinstance(post,(AnswerRevision, QuestionRevision, NodeRevision)):
+        post_type = 'revision'
+    return {
+        'post':post,
+        'post_type':post_type,
+        'wiki_on':settings.WIKI_ON,
+        'contributor_type':contributor_type
+    }
+        
 @register.simple_tag
 def get_score_badge(user):
-    return _get_score_badge(user)
-
-def _get_score_badge(user):
-    if user.is_suspended():
-        return _("(suspended)")
-
-    repstr = decorated_int(user.reputation, "")
-
-    BADGE_TEMPLATE = '<span class="score" title="%(reputation)s %(reputationword)s">%(repstr)s</span>'
+    BADGE_TEMPLATE = '<span class="score" title="%(reputation)s %(reputationword)s">%(reputation)s</span>'
     if user.gold > 0 :
         BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(gold)s %(badgesword)s">'
         '<span class="badge1">&#9679;</span>'
@@ -73,169 +160,185 @@ def _get_score_badge(user):
         '</span>')
     BADGE_TEMPLATE = smart_unicode(BADGE_TEMPLATE, encoding='utf-8', strings_only=False, errors='strict')
     return mark_safe(BADGE_TEMPLATE % {
-    'reputation' : user.reputation,
-    'repstr': repstr,
-    'gold' : user.gold,
-    'silver' : user.silver,
-    'bronze' : user.bronze,
-    'badgesword' : _('badges'),
-    'reputationword' : _('reputation points'),
+        'reputation' : user.reputation,
+        'gold' : user.gold,
+        'silver' : user.silver,
+        'bronze' : user.bronze,
+		'badgesword' : _('badges'),
+		'reputationword' : _('reputation points'),
     })
-
-# Usage: {% get_accept_rate node.author %}
+    
 @register.simple_tag
-def get_accept_rate(user):
-    # If the Show Accept Rate feature is not activated this tag should return a blank string
-    if not settings.SHOW_USER_ACCEPT_RATE:
-        return ""
-
-    # Freeze accept rate for users
-    freeze_accept_rate_for_users_users = settings.FREEZE_ACCEPT_RATE_FOR.value
-    if user.username in list(freeze_accept_rate_for_users_users):
-        freeze = True
-    else:
-        freeze = False
-
-    # We get the number of all user's answers.
-    total_answers_count = Answer.objects.filter(author=user).count()
-
-    # We get the number of the user's accepted answers.
-    accepted_answers_count = Answer.objects.filter(author=user, state_string__contains="(accepted)").count()
-
-    # In order to represent the accept rate in percentages we divide the number of the accepted answers to the
-    # total answers count and make a hundred multiplication.
-    try:
-        accept_rate = (float(accepted_answers_count) / float(total_answers_count) * 100)
-    except ZeroDivisionError:
-        accept_rate = 0
-
-    # If the user has more than one accepted answers the rate title will be in plural.
-    if accepted_answers_count > 1:
-        accept_rate_number_title = _('%(user)s has %(count)d accepted answers') % {
-            'user' :  smart_unicode(user.username),
-            'count' : int(accepted_answers_count)
-        }
-    # If the user has one accepted answer we'll be using singular.
-    elif accepted_answers_count == 1:
-        accept_rate_number_title = _('%s has one accepted answer') % smart_unicode(user.username)
-    # This are the only options. Otherwise there are no accepted answers at all.
-    else:
-        if freeze:
-            accept_rate_number_title = ""
-        else:
-            accept_rate_number_title = _('%s has no accepted answers') % smart_unicode(user.username)
-
-    html_output = """
-    <span title="%(accept_rate_title)s" class="accept_rate">%(accept_rate_label)s:</span>
-    <span title="%(accept_rate_number_title)s">%(accept_rate)d&#37;</span>
-    """ % {
-        'accept_rate_label' : _('accept rate'),
-        'accept_rate_title' : _('Rate of the user\'s accepted answers'),
-        'accept_rate' : 100 if freeze else int(accept_rate),
-        'accept_rate_number_title' : u'%s' % accept_rate_number_title,
-    }
-
-    return mark_safe(html_output)
-
+def get_score_badge_by_details(rep, gold, silver, bronze):
+    BADGE_TEMPLATE = '<span class="reputation-score" title="%(reputation)s %(repword)s">%(reputation)s</span>'
+    if gold > 0 :
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(gold)s %(badgeword)s">'
+        '<span class="badge1">&#9679;</span>'
+        '<span class="badgecount">%(gold)s</span>'
+        '</span>')
+    if silver > 0:
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(silver)s %(badgeword)s">'
+        '<span class="badge2">&#9679;</span>'
+        '<span class="badgecount">%(silver)s</span>'
+        '</span>')
+    if bronze > 0:
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(bronze)s %(badgeword)s">'
+        '<span class="badge3">&#9679;</span>'
+        '<span class="badgecount">%(bronze)s</span>'
+        '</span>')
+    BADGE_TEMPLATE = smart_unicode(BADGE_TEMPLATE, encoding='utf-8', strings_only=False, errors='strict')
+    return mark_safe(BADGE_TEMPLATE % {
+        'reputation' : rep,
+        'gold' : gold,
+        'silver' : silver,
+        'bronze' : bronze,
+		'repword' : _('reputation points'),
+		'badgeword' : _('badges'),
+    })      
+    
 @register.simple_tag
 def get_age(birthday):
     current_time = datetime.datetime(*time.localtime()[0:6])
     year = birthday.year
     month = birthday.month
     day = birthday.day
-    diff = current_time - datetime.datetime(year, month, day, 0, 0, 0)
+    diff = current_time - datetime.datetime(year,month,day,0,0,0)
     return diff.days / 365
 
 @register.simple_tag
-def diff_date(date, limen=2):
-    if not date:
-        return _('unknown')
+def get_total_count(up_count, down_count):
+    return up_count + down_count
 
-    now = datetime.datetime.now()
+@register.simple_tag
+def format_number(value):
+    strValue = str(value)
+    if len(strValue) <= 3:
+        return strValue
+    result = ''
+    first = ''
+    pattern = re.compile('(-?\d+)(\d{3})')
+    m = re.match(pattern, strValue)
+    while m != None:
+        first = m.group(1)
+        second = m.group(2)
+        result = ',' + second + result
+        strValue = first + ',' + second
+        m = re.match(pattern, strValue)
+    return first + result
+
+@register.simple_tag
+def convert2tagname_list(question):
+    question['tagnames'] = [name for name in question['tagnames'].split(u' ')]
+    return ''
+
+@register.simple_tag
+def diff_date(date, limen=2):
+    now = datetime.datetime.now()#datetime(*time.localtime()[0:6])#???
     diff = now - date
     days = diff.days
     hours = int(diff.seconds/3600)
     minutes = int(diff.seconds/60)
 
-    if date.year != now.year:
-        return dateformat.format(date, 'd M \'y, H:i')
-    elif days > 2:
-        return dateformat.format(date, 'd M, H:i')
-
+    if days > 2:
+        if date.year == now.year:
+            return date.strftime("%b %d at %H:%M")
+        else:
+            return date.strftime("%b %d '%y at %H:%M")
     elif days == 2:
         return _('2 days ago')
     elif days == 1:
         return _('yesterday')
     elif minutes >= 60:
-        return ungettext('%(hr)d ' + _("hour ago"), '%(hr)d ' + _("hours ago"), hours) % {'hr':hours}
-    elif diff.seconds >= 60:
-        return ungettext('%(min)d ' + _("min ago"), '%(min)d ' + _("mins ago"), minutes) % {'min':minutes}
+        return ungettext('%(hr)d hour ago','%(hr)d hours ago',hours) % {'hr':hours}
     else:
-        return ungettext('%(sec)d ' + _("sec ago"), '%(sec)d ' + _("secs ago"), diff.seconds) % {'sec':diff.seconds}
+        return ungettext('%(min)d min ago','%(min)d mins ago',minutes) % {'min':minutes}
+
+@register.simple_tag
+def get_latest_changed_timestamp():
+    try:
+        from time import localtime, strftime
+        from os import path
+        root = settings.SITE_SRC_ROOT
+        dir = (
+            root,
+            '%s/forum' % root,
+            '%s/templates' % root,
+        )
+        stamp = (path.getmtime(d) for d in dir)
+        latest = max(stamp)
+        timestr = strftime("%H:%M %b-%d-%Y %Z", localtime(latest))
+    except:
+        timestr = ''
+    return timestr
 
 @register.simple_tag
 def media(url):
     url = skins.find_media_source(url)
     if url:
-        # Create the URL prefix.
-        url_prefix = settings.FORCE_SCRIPT_NAME + '/m/'
-
-        # Make sure any duplicate forward slashes are replaced with a single
-        # forward slash.
-        url_prefix = re.sub("/+", "/", url_prefix)
-
-        url = url_prefix + url
-        return url
-
-@register.simple_tag
-def get_tag_font_size(tag):
-    occurrences_of_current_tag = tag.used_count
-
-    # Occurrences count settings
-    min_occurs = int(settings.TAGS_CLOUD_MIN_OCCURS)
-    max_occurs = int(settings.TAGS_CLOUD_MAX_OCCURS)
-
-    # Font size settings
-    min_font_size = int(settings.TAGS_CLOUD_MIN_FONT_SIZE)
-    max_font_size = int(settings.TAGS_CLOUD_MAX_FONT_SIZE)
-
-    # Calculate the font size of the tag according to the occurrences count
-    weight = (math.log(occurrences_of_current_tag)-math.log(min_occurs))/(math.log(max_occurs)-math.log(min_occurs))
-    font_size_of_current_tag = min_font_size + int(math.floor((max_font_size-min_font_size)*weight))
-
-    return font_size_of_current_tag
+        url = '///' + settings.FORUM_SCRIPT_ALIAS + '/m/' + url
+        return posixpath.normpath(url) + '?v=%d' % settings.RESOURCE_REVISION
 
 class ItemSeparatorNode(template.Node):
-    def __init__(self, separator):
+    def __init__(self,separator):
         sep = separator.strip()
-        if sep[0] == sep[-1] and sep[0] in ('\'', '"'):
+        if sep[0] == sep[-1] and sep[0] in ('\'','"'):
             sep = sep[1:-1]
         else:
             raise template.TemplateSyntaxError('separator in joinitems tag must be quoted')
         self.content = sep
-
-    def render(self, context):
+    def render(self,context):
         return self.content
 
-class BlockMediaUrlNode(template.Node):
-    def __init__(self, nodelist):
-        self.items = nodelist
+class JoinItemListNode(template.Node):
+    def __init__(self,separator=ItemSeparatorNode("''"), items=()):
+        self.separator = separator
+        self.items = items
+    def render(self,context):
+        out = []
+        empty_re = re.compile(r'^\s*$')
+        for item in self.items:
+            bit = item.render(context)
+            if not empty_re.search(bit):
+                out.append(bit)
+        return self.separator.render(context).join(out)
 
-    def render(self, context):
-        prefix = settings.APP_URL + 'm/'
+@register.tag(name="joinitems")
+def joinitems(parser,token):
+    try:
+        tagname,junk,sep_token = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError("joinitems tag requires 'using \"separator html\"' parameters")
+    if junk == 'using':
+        sep_node = ItemSeparatorNode(sep_token)
+    else:
+        raise template.TemplateSyntaxError("joinitems tag requires 'using \"separator html\"' parameters")
+    nodelist = []
+    while True:
+        nodelist.append(parser.parse(('separator','endjoinitems')))
+        next = parser.next_token()
+        if next.contents == 'endjoinitems':
+            break
+
+    return JoinItemListNode(separator=sep_node,items=nodelist)
+
+class BlockMediaUrlNode(template.Node):
+    def __init__(self,nodelist):
+        self.items = nodelist 
+    def render(self,context):
+        prefix = '///' + settings.FORUM_SCRIPT_ALIAS + 'm/'
         url = ''
         if self.items:
-            url += '/'
+            url += '/'     
         for item in self.items:
             url += item.render(context)
 
         url = skins.find_media_source(url)
         url = prefix + url
-        out = url
-        return out.replace(' ', '')
+        out = posixpath.normpath(url) + '?v=%d' % settings.RESOURCE_REVISION
+        return out.replace(' ','')
 
 @register.tag(name='blockmedia')
-def blockmedia(parser, token):
+def blockmedia(parser,token):
     try:
         tagname = token.split_contents()
     except ValueError:
@@ -248,109 +351,65 @@ def blockmedia(parser, token):
             break
     return BlockMediaUrlNode(nodelist)
 
+class FullUrlNode(template.Node):
+    def __init__(self, default_node):
+        self.default_node = default_node
+
+    def render(self, context):
+        domain = settings.APP_URL
+        #protocol = getattr(settings, "PROTOCOL", "http")
+        path = self.default_node.render(context)
+        return "%s%s" % (domain, path)
+
+@register.tag(name='fullurl')
+def fullurl(parser, token):
+    default_node = default_url(parser, token)
+    return FullUrlNode(default_node)
 
 @register.simple_tag
 def fullmedia(url):
-    domain = settings.APP_BASE_URL
+    domain = settings.APP_URL
     #protocol = getattr(settings, "PROTOCOL", "http")
     path = media(url)
     return "%s%s" % (domain, path)
 
-
-class SimpleVarNode(template.Node):
-    def __init__(self, name, value):
-        self.name = name
-        self.value = template.Variable(value)
+class UserVarNode(template.Node):
+    def __init__(self, tokens):
+        self.tokens = tokens
 
     def render(self, context):
-        context[self.name] = self.value.resolve(context)
-        return ''
+        return "{{ %s }}" % self.tokens
 
-class BlockVarNode(template.Node):
-    def __init__(self, name, block):
-        self.name = name
-        self.block = block
+@register.tag(name='user_var')
+def user_var(parser, token):
+    tokens = " ".join(token.split_contents()[1:])
+    return UserVarNode(tokens)
+
+
+class VariablesNode(template.Node):
+    def __init__(self, nodelist, var_name):
+        self.nodelist = nodelist
+        self.var_name = var_name
 
     def render(self, context):
-        source = self.block.render(context)
-        context[self.name] = source.strip()
+        source = self.nodelist.render(context)
+        context[self.var_name] = simplejson.loads(source)
         return ''
-
 
 @register.tag(name='var')
-def do_var(parser, token):
-    tokens = token.split_contents()[1:]
-
-    if not len(tokens) or not re.match('^\w+$', tokens[0]):
-        raise template.TemplateSyntaxError("Expected variable name")
-
-    if len(tokens) == 1:
-        nodelist = parser.parse(('endvar',))
-        parser.delete_first_token()
-        return BlockVarNode(tokens[0], nodelist)
-    elif len(tokens) == 3:
-        return SimpleVarNode(tokens[0], tokens[2])
-
-    raise template.TemplateSyntaxError("Invalid number of arguments")
-
-class DeclareNode(template.Node):
-    dec_re = re.compile('^\s*(\w+)\s*(:?=)\s*(.*)$')
-
-    def __init__(self, block):
-        self.block = block
-
-    def render(self, context):
-        source = self.block.render(context)
-
-        for line in source.splitlines():
-            m = self.dec_re.search(line)
-            if m:
-                clist = list(context)
-                clist.reverse()
-                d = {}
-                d['_'] = _
-                d['os'] = os
-                d['html'] = html
-                d['reverse'] = reverse
-                d['settings'] = settings
-                d['smart_str'] = smart_str
-                d['smart_unicode'] = smart_unicode
-                d['force_unicode'] = force_unicode
-                for c in clist:
-                    d.update(c)
-                try:
-                    command = m.group(3).strip()
-                    context[m.group(1).strip()] = eval(command, d)
-                except Exception, e:
-                    logging.error("Error in declare tag, when evaluating: %s" % m.group(3).strip())
-        return ''
-
-@register.tag(name='declare')
-def do_declare(parser, token):
-    nodelist = parser.parse(('enddeclare',))
-    parser.delete_first_token()
-    return DeclareNode(nodelist)
-
-# Usage: {% random 1 999 %}
-# Generates random number in the template
-class RandomNumberNode(template.Node):
-    # We get the limiting numbers
-    def __init__(self, int_from, int_to):
-        self.int_from = int(int_from)
-        self.int_to = int(int_to)
-
-    # We generate the random number using the standard python interface
-    def render(self, context):
-        return str(random.randint(self.int_from, self.int_to))
-
-@register.tag(name="random")
-def random_number(parser, token):
-    # Try to get the limiting numbers from the token
+def do_variables(parser, token):
     try:
-        tag_name, int_from, int_to = token.split_contents()
+        tag_name, arg = token.contents.split(None, 1)
     except ValueError:
-        # If we had no success -- raise an exception
-        raise template.TemplateSyntaxError, "%r tag requires exactly two arguments" % token.contents.split()[0]
+        msg = '"%s" tag requires arguments' % token.contents.split()[0]
+        raise template.TemplateSyntaxError(msg)
+    m = re.search(r'as (\w+)', arg)
+    if m:
+        var_name, = m.groups()
+    else:
+        msg = '"%s" tag had invalid arguments' % tag_name
+        raise template.TemplateSyntaxError(msg)
 
-    # Call the random Node
-    return RandomNumberNode(int_from, int_to)
+    nodelist = parser.parse(('endvar',))
+    parser.delete_first_token()
+    return VariablesNode(nodelist, var_name)

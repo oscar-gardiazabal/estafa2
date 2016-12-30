@@ -8,7 +8,7 @@ var providers_large = {
     },
     yahoo: {
         name: 'Yahoo',      
-        url: 'http://me.yahoo.com/'
+        url: 'http://yahoo.com/'
     },    
     aol: {
         name: 'AOL',     
@@ -57,6 +57,11 @@ var providers_small = {
         label: 'Your Verisign username',
         url: 'http://{username}.pip.verisignlabs.com/'
     },
+    vidoop: {
+        name: 'Vidoop',
+        label: 'Your Vidoop username',
+        url: 'http://{username}.myvidoop.com/'
+    },
     verisign: {
         name: 'Verisign',
         label: 'Your Verisign username',
@@ -96,7 +101,7 @@ var openid = {
         if (providers_small) {
         	openid_btns.append('<br/>');
 	        for (id in providers_small) {       
-	           	openid_btns.append(this.getBoxHTML(providers_small[id], 'small', '.png'));
+	           	openid_btns.append(this.getBoxHTML(providers_small[id], 'small', '.ico'));
 	        }
         }
 

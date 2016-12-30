@@ -1,14 +1,11 @@
 {% extends "user.html" %}
 
-{% load extra_tags question_list_tags i18n %}
+{% load extra_tags %}
+{% load question_list_tags %}
 {% block usercontent %}
 <div class="user-stats-table">
-{% if favorites %}
-    {% for favorite in favorites %}
-        {% question_list_item favorite.node favorite_count=yes signature_type=badges %}
+    {% for question in questions %}
+        {% question_list_item question favorite_count=yes signature_type=badges %}
     {% endfor %}
-{% else %}
-    {% trans "No favorite questions to display." %}
-{% endif %}
 </div>
 {% endblock %}

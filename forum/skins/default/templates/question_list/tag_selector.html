@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load extra_tags %}
 
-{% if show_interesting_tags %}
 {% if user_authenticated %}
 <div id="tagSelector" class="boxC">
 	<h3 class="subtitle">{% trans "Interesting tags" %}</h3>
@@ -10,7 +9,6 @@
         {% spaceless %}
         <span class="deletable-tag" id="interesting-tag-{{tag_name}}">
             <a rel="tag" 
-                class="tag-link-{{ tag_name }}"
                 title="{% blocktrans with tag as tagname %}see questions tagged '{{ tag_name }}'{% endblocktrans %}"
                 href="{% url tag_questions tag_name|urlencode %}">{{tag_name}}</a>
             <img class="delete-icon" 
@@ -28,7 +26,6 @@
         {% spaceless %}
         <span class="deletable-tag" id="ignored-tag-{{tag_name}}">
             <a rel="tag" 
-                class="tag-link-{{ tag_name }}"
                 title="{% blocktrans with tag as tagname %}see questions tagged '{{ tag_name }}'{% endblocktrans %}"
                 href="{% url tag_questions tag_name|urlencode %}">{{tag_name}}</a>
             <img class="delete-icon" 
@@ -40,12 +37,9 @@
     </div>
     <input id="ignoredTagInput" autocomplete="off" type="text"/>
     <input id="ignoredTagAdd" type="submit" value="{% trans "Add" %}"/>
-    {% comment %}
     <p id="hideIgnoredTagsControl">
     <input id="hideIgnoredTagsCb" type="checkbox" {% if request.user.hide_ignored_questions %}checked="checked"{% endif %} />
     <label id="hideIgnoredTagsLabel" for="hideIgnoredTagsCb">{% trans "keep ignored questions hidden" %}</label>
     <p>
-    {% endcomment %}
 </div>
-{% endif %}
 {% endif %}

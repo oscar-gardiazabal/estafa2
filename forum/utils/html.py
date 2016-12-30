@@ -1,11 +1,6 @@
 """Utilities for working with HTML."""
-#import html5lib
-from html5lib import sanitizer, serializer, tokenizer, treebuilders, treewalkers, HTMLParser
-from urllib import quote_plus
-from django.utils.html import strip_tags
-from forum.utils.html2text import HTML2Text
-from django.utils.safestring import mark_safe
-from forum import settings
+import html5lib
+from html5lib import sanitizer, serializer, tokenizer, treebuilders, treewalkers
 
 class HTMLSanitizerMixin(sanitizer.HTMLSanitizerMixin):
     acceptable_elements = ('a', 'abbr', 'acronym', 'address', 'b', 'big',
@@ -31,6 +26,11 @@ class HTMLSanitizerMixin(sanitizer.HTMLSanitizerMixin):
     allowed_svg_properties = ()
 
 class HTMLSanitizer(tokenizer.HTMLTokenizer, HTMLSanitizerMixin):
+    def __init__(self, stream, encoding=None, parseMeta=True, useChardet=True,
+                 lowercaseElementName=True, lowercaseAttrName=True):
+        tokenizer.HTMLTokenizer.__init__(self, stream, encoding, parseMeta,
+                                         useChardet, lowercaseElementName,
+                                         lowercaseAttrName)
 
     def __iter__(self):
         for token in tokenizer.HTMLTokenizer.__iter__(self):
@@ -40,7 +40,7 @@ class HTMLSanitizer(tokenizer.HTMLTokenizer, HTMLSanitizerMixin):
 
 def sanitize_html(html):
     """Sanitizes an HTML fragment."""
-    p = HTMLParser(tokenizer=HTMLSanitizer,
+    p = html5lib.HTMLParser(tokenizer=HTMLSanitizer,
                             tree=treebuilders.getTreeBuilder("dom"))
     dom_tree = p.parseFragment(html)
     walker = treewalkers.getTreeWalker("dom")
@@ -49,28 +49,3 @@ def sanitize_html(html):
                                   quote_attr_values=True)
     output_generator = s.serialize(stream)
     return u''.join(output_generator)
-
-def cleanup_urls(url):
-    return quote_plus(strip_tags(url))
-
-
-def html2text(s, ignore_tags=(), indent_width=4, page_width=80):
-    ignore_tags = [t.lower() for t in ignore_tags]
-    parser = HTML2Text(ignore_tags, indent_width, page_width)
-    parser.feed(s)
-    parser.close()
-    parser.generate()
-    return mark_safe(parser.result)
-
-def buildtag(name, content, **attrs):
-    return mark_safe('<%s %s>%s</%s>' % (name, " ".join('%s="%s"' % i for i in attrs.items()), unicode(content), name))
-
-def hyperlink(url, title, **attrs):
-    return mark_safe('<a href="%s" %s>%s</a>' % (url, " ".join('%s="%s"' % i for i in attrs.items()), title))
-
-def objlink(obj, **attrs):
-    return hyperlink(settings.APP_URL + obj.get_absolute_url(), unicode(obj), **attrs)
-
-    
-
-

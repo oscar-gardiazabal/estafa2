@@ -1,82 +1,79 @@
-# -*- coding: utf-8 -*-
-
-import cgi
-import logging
-
+import hashlib
+from time import time
+from datetime import datetime
 from urllib import urlopen,  urlencode
 from forum.authentication.base import AuthenticationConsumer, ConsumerTemplateContext, InvalidAuthentication
-
-from django.conf import settings as django_settings
-from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
 
 import settings
 
 try:
     from json import load as load_json
-except Exception:
+except:
     from django.utils.simplejson import JSONDecoder
 
     def load_json(json):
         decoder = JSONDecoder()
         return decoder.decode(json.read())
 
+REST_SERVER = 'http://api.facebook.com/restserver.php'
+
 class FacebookAuthConsumer(AuthenticationConsumer):
-
-    def prepare_authentication_request(self, request, redirect_to):
-        args = dict(
-            client_id=settings.FB_API_KEY,
-            redirect_uri="%s%s" % (django_settings.APP_URL, redirect_to),
-            scope="email"
-        )
-
-        facebook_api_authentication_url = "https://graph.facebook.com/oauth/authorize?" + urlencode(args)
-
-        return facebook_api_authentication_url
     
     def process_authentication_request(self, request):
-        try:
-            args = dict(client_id=settings.FB_API_KEY, redirect_uri="%s%s" % (django_settings.APP_URL, request.path))
+        API_KEY = str(settings.FB_API_KEY)
 
-            args["client_secret"] = settings.FB_APP_SECRET  #facebook APP Secret
+        if API_KEY in request.COOKIES:
+            if self.check_cookies_signature(request.COOKIES):
+                if self.check_session_expiry(request.COOKIES):
+                    return request.COOKIES[API_KEY + '_user']
+                else:
+                    raise InvalidAuthentication(_('Sorry, your Facebook session has expired, please try again'))
+            else:
+                raise InvalidAuthentication(_('The authentication with Facebook connect failed due to an invalid signature'))
+        else:
+            raise InvalidAuthentication(_('The authentication with Facebook connect failed, cannot find authentication tokens'))
 
-            args["code"] = request.GET.get("code", None)
-            response = cgi.parse_qs(urlopen("https://graph.facebook.com/oauth/access_token?" + urlencode(args)).read())
-            access_token = response["access_token"][-1]
+    def generate_signature(self, values):
+        keys = []
 
+        for key in sorted(values.keys()):
+            keys.append(key)
 
-            user_data = self.get_user_data(access_token)
-            assoc_key = user_data["id"]
+        signature = ''.join(['%s=%s' % (key,  values[key]) for key in keys]) + str(settings.FB_APP_SECRET)
+        return hashlib.md5(signature).hexdigest()
 
-            # Store the access token in cookie
-            request.session["access_token"] = access_token
-            request.session["assoc_key"] = assoc_key
+    def check_session_expiry(self, cookies):
+        return datetime.fromtimestamp(float(cookies[settings.FB_API_KEY+'_expires'])) > datetime.now()
 
-            # Return the association key
-            return assoc_key
-        except Exception, e:
-            logging.error("Problem during facebook authentication: %s" % e)
-            raise InvalidAuthentication(_("Something wrond happened during Facebook authentication, administrators will be notified"))
+    def check_cookies_signature(self, cookies):
+        API_KEY = str(settings.FB_API_KEY)
 
-    def get_user_data(self, access_token):
-        profile = load_json(urlopen("https://graph.facebook.com/me?" + urlencode(dict(access_token=access_token))))
+        values = {}
 
-        name = profile["name"]
+        for key in cookies.keys():
+            if (key.startswith(API_KEY + '_')):
+                values[key.replace(API_KEY + '_',  '')] = cookies[key]
 
-        # Check whether the length if the email is greater than 75, if it is -- just replace the email
-        # with a blank string variable, otherwise we're going to have trouble with the Django model.
-        # email = smart_unicode(profile['email'])
-        # if len(email) > 75:
-            # email = ''
+        return self.generate_signature(values) == cookies[API_KEY]
 
-        # If the name is longer than 30 characters - leave it blank
-        if len(name) > 30:
-            name = ''
+    def get_user_data(self, key):
+        request_data = {
+            'method': 'Users.getInfo',
+            'api_key': settings.FB_API_KEY,
+            'call_id': time(),
+            'v': '1.0',
+            'uids': key,
+            'fields': 'name,first_name,last_name,email',
+            'format': 'json',
+        }
 
-        # Return the user data.
+        request_data['sig'] = self.generate_signature(request_data)
+        fb_response = load_json(urlopen(REST_SERVER, urlencode(request_data)))[0]
+
         return {
-            'id' : profile['id'],
-            'username': name
+            'username': fb_response['first_name'] + ' ' + fb_response['last_name'],
+            'email': fb_response['email']
         }
 
 class FacebookAuthContext(ConsumerTemplateContext):
@@ -85,6 +82,6 @@ class FacebookAuthContext(ConsumerTemplateContext):
     weight = 100
     human_name = 'Facebook'
     code_template = 'modules/facebookauth/button.html'
-    extra_css = []
+    extra_css = ["http://www.facebook.com/css/connect/connect_button.css"]
 
     API_KEY = settings.FB_API_KEY

@@ -1,37 +1,28 @@
-{% load i18n extra_tags email_tags %}
+{% extends "email_base.html" %}
+{% load i18n %}
+{% load extra_tags %}
 
-{% declare %}
-    prefix = smart_str(settings.EMAIL_SUBJECT_PREFIX)
-    app_name = smart_str(settings.APP_SHORT_NAME)
+{% block content %}
+    <p>{% spaceless %}
+    {% blocktrans with settings.APP_SHORT_NAME as site_title %}
+    Hello, this is a {{site_title}} forum feedback message
+    {% endblocktrans %}
+    {% endspaceless %}</p>
 
-    exclude_greeting = True
-    exclude_finetune = True
-{% enddeclare %}
+    <p>
+        {% trans "Sender" %}:
+        {% if user.is_authenticated %}
+            {{ user.username }} <br /> {% trans "email" %}:{{ user.email }}
+        {% else %}
+            {% if name %}{{ name }}{% else %}{% trans "anonymous" %}{% endif %}
+            {% if email %}{% trans "email" %}:{{ email }}{% endif %}
+        {% endif %}
+        <br/>
+            ip: {{request.META.REMOTE_ADDR}}
+    </p>
 
-{% email %}
-    {% subject %}{% blocktrans %}{{ prefix }} Feedback message from {{ app_name }}{% endblocktrans %}{% endsubject %}
-
-    {% htmlcontent notifications/base.html %}
-        <p style="{{ p_style }}">
-            {% trans "Sender" %}:{% if name %}{{ name }}{% else %}{% trans "anonymous" %}{% endif %}<br />
-            {% trans "email" %}: {{ email }}
-            <br/>
-                ip: {{ ip }}
-        </p>
-
-        <blockquote>
+    <blockquote>
         {% trans "Message body:" %} {{ message }}
-        </blockquote>
+    </blockquote>
 
-    {% endhtmlcontent %}
-
-{% textcontent notifications/base_text.html %}
-{% trans "Sender" %}: {% if name %}{{ name|safe }}{% else %}{% trans "anonymous" %}{% endif %}
-{% trans "email" %}: {{ email|safe }}
-ip: {{ ip }}
-
-{% trans "Message body:" %} {{ message|safe }}
-{% endtextcontent %}
-
-{% endemail %}
-
+{% endblock %}

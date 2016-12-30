@@ -1,7 +1,6 @@
-{% spaceless %}
-{% load i18n extra_tags %}
-<h3 class="subtitle">{% trans "Follow this question" %}</h3>
-<strong>{% trans "By Email" %}:</strong>
+{% load i18n %}
+
+<h3 class="subtitle">{% trans "Subscription" %}:</h3>
 {% if request.user.is_authenticated %}
     <div class="subscription-status">
         {% if subscription %}
@@ -14,7 +13,7 @@
             <p>{% trans "You are not subscribed to this question." %}</p>
         {% endif %}
     </div>
-    <p><a class="ajax-command sidebar_button subscription_switch" href="{% url subscribe_simple id=question.id %}">
+    <p><a class="ajax-command sidebar_button subscription_switch" href="{% url subscribe id=question.id %}">
         {% if subscription %}
             {% trans "unsubscribe me" %}
         {% else %}
@@ -22,22 +21,10 @@
         {% endif %}
     </a></p>
     <p>
-        {% blocktrans with request.user.get_user_subscriptions_url as subscriptions_url %}
-            (you can adjust your notification settings on your <a href="{{ subscriptions_url }}">profile</a>)
+        {% blocktrans with request.user.get_profile_url as profile_url %}
+            (you can adjust your notification settings on your <a href="{{ profile_url }}?sort=email_subscriptions">profile</a>)
         {% endblocktrans %}
     </p>
 {% else %}
     <p>{% trans "Once you sign in you will be able to subscribe for any updates here" %}</p>
 {% endif %}
-<strong>{% trans "By RSS" %}:</strong>
-<p>
-    <a class="feed-icon" style="background-image:url('{% media "media/images/feed-icon-small.png" %}');"
-        href="{{ question.get_absolute_url }}?type=rss" title="{% trans "subscribe to answers" %}"></a>
-    {% trans "Answers" %}
-</p>
-<p>
-    <a class="feed-icon" style="background-image:url('{% media "media/images/feed-icon-small.png" %}');"
-        href="{{ question.get_absolute_url }}?type=rss&comments=yes" title="{% trans "subscribe to comments and answers" %}"></a>
-    {% trans "Answers and Comments" %}
-</p>
-{% endspaceless %}
