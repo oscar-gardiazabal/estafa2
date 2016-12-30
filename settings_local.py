@@ -90,4 +90,6 @@ OSQA_DEFAULT_SKIN = 'default'
 
 DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
 
+ALLOWED_HOSTS = ('estafa2.com','localhost','127.0.0.1',)
+
 from forum.settings import *
