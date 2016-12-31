@@ -3297,7 +3297,7 @@ msgstr ""
 
 #: forum/skins/default/templates/header.html:35
 msgid "questions"
-msgstr ""
+msgstr "denuncias"
 
 #: forum/skins/default/templates/header.html:36
 msgid "tags"
@@ -3944,7 +3944,7 @@ msgstr ""
 
 #: forum/skins/default/templates/search.html:20
 msgid "questions"
-msgstr ""
+msgstr "denuncias"
 
 #: forum/skins/default/templates/search.html:21
 msgid "tags"
