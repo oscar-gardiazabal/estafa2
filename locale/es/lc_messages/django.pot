@@ -568,6 +568,7 @@ msgid "%(user)s commented on %(post_desc)s"
 msgstr ""
 
 #: forum/actions/node.py:76
+#: forum/actions/page.py:23
 msgid "edited"
 msgstr ""
 
@@ -654,10 +655,6 @@ msgstr ""
 #: forum/actions/page.py:17
 #, python-format
 msgid "%(user)s created a new page titled %(page)s"
-msgstr ""
-
-#: forum/actions/page.py:23
-msgid "edited"
 msgstr ""
 
 #: forum/actions/page.py:36
