@@ -3286,7 +3286,7 @@ msgstr ""
 
 #: forum/skins/default/templates/header.html:20
 msgid "ask a question"
-msgstr ""
+msgstr "denunciar"
 
 #: forum/skins/default/templates/header.html:31
 msgid "search"
