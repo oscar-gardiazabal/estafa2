@@ -73,7 +73,7 @@ msgstr ""
 #: forum/skins/default/templates/index.html:14
 #: forum/skins/nuxeo/templates/index.html:14
 msgid "about"
-msgstr ""
+msgstr "about_2"
 
 #: forum/registry.py:28
 msgid "logout"
