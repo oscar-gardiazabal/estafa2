@@ -271,7 +271,7 @@ msgstr "medalla/"
 #: forum/urls.py:75
 #, fuzzy
 msgid "user/"
-msgstr "usuarios/"
+msgstr "usuarios2/"
 
 #: forum/urls.py:77
 msgid "flag/"
@@ -339,7 +339,7 @@ msgstr "unmark-tag/"
 #: forum/urls.py:106 forum/urls.py:107 forum/urls.py:108 forum/urls.py:109
 #: forum/urls.py:110 forum/urls.py:111 forum/urls.py:112 forum/urls.py:113
 msgid "users/"
-msgstr "usuarios/"
+msgstr "usuarios2/"
 
 #: forum/urls.py:104
 msgid "award/"
