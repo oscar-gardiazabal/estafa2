@@ -6057,7 +6057,7 @@ msgstr ""
 #: forum/skins/default/templates/sidebar/recent_awards.html:4
 #: forum/skins/nuxeo/templates/sidebar/recent_awards.html:4
 msgid "Recent awards"
-msgstr ""
+msgstr "Recent awards_2"
 
 #: forum/skins/default/templates/sidebar/recent_awards.html:15
 #: forum/skins/nuxeo/templates/sidebar/recent_awards.html:15
