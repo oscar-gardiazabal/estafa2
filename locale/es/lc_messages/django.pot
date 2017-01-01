@@ -1015,8 +1015,7 @@ msgstr "lo sentimos, no hay ningún usuario con ese nombre"
 #: forum/forms/general.py:51
 msgid "sorry, we have a serious error - user name is taken by several users"
 msgstr ""
-"lo sentimos, tenemos un problema, este nombre de usuario está ocupado por varios "
-"usuarios"
+"lo sentimos, tenemos un problema, este nombre de usuario está ocupado por varios usuarios"
 
 #: forum/forms/general.py:52
 msgid "user name can only consist of letters, empty space, hyphens and underscore"
