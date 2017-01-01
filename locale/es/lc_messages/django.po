@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -66,7 +66,7 @@ msgstr ""
 
 #: forum/registry.py:28
 msgid "login"
-msgstr ""
+msgstr "prueba"
 
 #: forum/registry.py:41
 msgid "administration"
@@ -568,7 +568,6 @@ msgid "%(user)s commented on %(post_desc)s"
 msgstr ""
 
 #: forum/actions/node.py:76
-#: forum/actions/page.py:23
 msgid "edited"
 msgstr ""
 
@@ -655,6 +654,10 @@ msgstr ""
 #: forum/actions/page.py:17
 #, python-format
 msgid "%(user)s created a new page titled %(page)s"
+msgstr ""
+
+#: forum/actions/page.py:23
+msgid "edited"
 msgstr ""
 
 #: forum/actions/page.py:36
@@ -3286,7 +3289,7 @@ msgstr ""
 
 #: forum/skins/default/templates/header.html:20
 msgid "ask a question"
-msgstr "denunciar"
+msgstr ""
 
 #: forum/skins/default/templates/header.html:31
 msgid "search"
@@ -3294,7 +3297,7 @@ msgstr ""
 
 #: forum/skins/default/templates/header.html:35
 msgid "questions"
-msgstr "denuncias"
+msgstr ""
 
 #: forum/skins/default/templates/header.html:36
 msgid "tags"
@@ -3941,7 +3944,7 @@ msgstr ""
 
 #: forum/skins/default/templates/search.html:20
 msgid "questions"
-msgstr "denuncias"
+msgstr ""
 
 #: forum/skins/default/templates/search.html:21
 msgid "tags"
@@ -4075,4 +4078,3 @@ msgstr ""
 #: forum/skins/default/templates/auth/auth_settings.html:34
 msgid "Create password"
 msgstr ""
-
