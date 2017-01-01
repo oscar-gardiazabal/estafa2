@@ -6,11 +6,12 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: Javier Candeira <javier@candeira.com>\n"
 "Language-Team: spanish\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: forum/feed.py:73 forum/models/page.py:24 forum/utils/pagination.py:167
 #: forum/views/readers.py:175 forum/views/readers.py:328
@@ -46,8 +47,8 @@ msgstr "Comentario de %(cauthor)s en el %(qora)s de %(pauthor)s"
 #: forum/skins/default/templates/question_list/item.html:15
 #: forum/skins/nuxeo/templates/osqaadmin/dashboard.html:24
 #: forum/skins/nuxeo/templates/osqaadmin/index.html:26
-#: forum/skins/nuxeo/templates/question_list/item.html:15
-#: forum/views/writers.py:260 forum_modules/akismet/startup.py:76
+#: forum/skins/nuxeo/templates/question_list/item.html:15 forum/views/writers.py:260
+#: forum_modules/akismet/startup.py:76
 msgid "answer"
 msgstr "solución"
 
@@ -55,21 +56,19 @@ msgstr "solución"
 #: forum/skins/default/templates/osqaadmin/dashboard.html:19
 #: forum/skins/default/templates/osqaadmin/index.html:21
 #: forum/skins/nuxeo/templates/osqaadmin/dashboard.html:19
-#: forum/skins/nuxeo/templates/osqaadmin/index.html:21
-#: forum/views/writers.py:91 forum_modules/akismet/startup.py:75
+#: forum/skins/nuxeo/templates/osqaadmin/index.html:21 forum/views/writers.py:91
+#: forum_modules/akismet/startup.py:75
 msgid "question"
 msgstr "pregunta"
 
-#: forum/registry.py:24 forum/registry.py:59
-#: forum/skins/default/templates/index.html:15
+#: forum/registry.py:24 forum/registry.py:59 forum/skins/default/templates/index.html:15
 #: forum/skins/default/templates/question_edit_tips.html:9
 #: forum/skins/nuxeo/templates/index.html:15
 #: forum/skins/nuxeo/templates/question_edit_tips.html:8
 msgid "faq"
 msgstr "preguntas frecuentes"
 
-#: forum/registry.py:25 forum/registry.py:60
-#: forum/skins/default/templates/index.html:14
+#: forum/registry.py:25 forum/registry.py:60 forum/skins/default/templates/index.html:14
 #: forum/skins/nuxeo/templates/index.html:14
 msgid "about"
 msgstr "acerca de"
@@ -84,7 +83,7 @@ msgstr "entrar"
 
 #: forum/registry.py:41
 msgid "administration"
-msgstr "administraci�n"
+msgstr "administración"
 
 #: forum/registry.py:54
 msgid "contact"
@@ -109,7 +108,7 @@ msgstr "opciones de acceso"
 
 #: forum/registry.py:90
 msgid "email notification settings"
-msgstr "opciones de notificaci�n por email"
+msgstr "opciones de notificación por email"
 
 #: forum/registry.py:97
 msgid "other preferences"
@@ -117,11 +116,11 @@ msgstr "otras preferencias"
 
 #: forum/registry.py:102
 msgid "Moderation tools"
-msgstr "Herramientas de moderaci�n"
+msgstr "Herramientas de moderación"
 
 #: forum/registry.py:104
 msgid "withdraw suspension"
-msgstr "retirar suspensi�n"
+msgstr "retirar suspensión"
 
 #: forum/registry.py:104
 msgid "suspend this user"
@@ -195,9 +194,9 @@ msgstr "editar/"
 msgid "revisions/"
 msgstr "versiones/"
 
-#: forum/urls.py:53 forum/urls.py:54 forum/urls.py:55 forum/urls.py:57
-#: forum/urls.py:58 forum/urls.py:61 forum/urls.py:62 forum/urls.py:63
-#: forum/urls.py:64 forum/urls.py:89 forum/urls.py:90 forum/urls.py:91
+#: forum/urls.py:53 forum/urls.py:54 forum/urls.py:55 forum/urls.py:57 forum/urls.py:58
+#: forum/urls.py:61 forum/urls.py:62 forum/urls.py:63 forum/urls.py:64 forum/urls.py:89
+#: forum/urls.py:90 forum/urls.py:91
 msgid "questions/"
 msgstr "denuncias/"
 
@@ -460,7 +459,7 @@ msgstr "cambiar_interfaz/"
 
 #: forum/urls.py:140
 msgid "statistics/"
-msgstr "estad�sticas/"
+msgstr "estadísticas/"
 
 #: forum/urls.py:141
 msgid "denormalize/"
@@ -495,14 +494,12 @@ msgid "new/"
 msgstr "nuevo/"
 
 #: forum/urls.py:153
-#, fuzzy
 msgid "tools/"
-msgstr "Herramientas"
+msgstr "Herramientas/"
 
 #: forum/urls.py:157
-#, fuzzy
 msgid "test_email_settings/"
-msgstr "Configuraci�n de correo"
+msgstr "Configuración de correo"
 
 #: forum/actions/meta.py:39
 #, python-format
@@ -511,11 +508,11 @@ msgstr "%(user)s %(vote_desc)s %(post_desc)s"
 
 #: forum/actions/meta.py:58
 msgid "voted up"
-msgstr "vot� positivamente"
+msgstr "votó  positivamente"
 
 #: forum/actions/meta.py:74
 msgid "voted down"
-msgstr "vot� negativamente"
+msgstr "votó  negativamente"
 
 #: forum/actions/meta.py:88
 msgid "liked"
@@ -528,10 +525,9 @@ msgstr "Sin indicar motivo"
 #: forum/actions/meta.py:121
 #, python-format
 msgid "%(user)s flagged %(post_desc)s: %(reason)s"
-msgstr "%(user)s denunci� %(post_desc)s: %(reason)s"
+msgstr "%(user)s denunció  %(post_desc)s: %(reason)s"
 
-#: forum/actions/meta.py:152 forum/actions/user.py:58
-#: forum/models/action.py:219
+#: forum/actions/meta.py:152 forum/actions/user.py:58 forum/models/action.py:219
 msgid "your"
 msgstr "su"
 
@@ -541,21 +537,19 @@ msgstr "su"
 
 #: forum/actions/meta.py:156
 #, python-format
-msgid ""
-"%(user)s accepted %(answerer)s answer on %(asker)s question %(question)s"
+msgid "%(user)s accepted %(answerer)s answer on %(asker)s question %(question)s"
 msgstr ""
-"%(user)s acept� la respuesta de %(answerer)s a la denuncia %(question)s de "
-"%(asker)s"
+"%(user)s aceptó  la respuesta de %(answerer)s a la denuncia %(question)s de %(asker)s"
 
 #: forum/actions/meta.py:172
 #, python-format
 msgid "%(user)s marked %(post_desc)s as favorite"
-msgstr "%(user)s marc� %(post_desc)s como favorita"
+msgstr "%(user)s marcó %(post_desc)s como favorita"
 
 #: forum/actions/meta.py:192
 #, python-format
 msgid "%(user)s deleted %(post_desc)s"
-msgstr "%(user)s borr� %(post_desc)s"
+msgstr "%(user)s borró  %(post_desc)s"
 
 #: forum/actions/meta.py:201
 msgid "flagged by multiple users: "
@@ -563,7 +557,7 @@ msgstr "denunciada por varios usuarios:"
 
 #: forum/actions/node.py:9 forum_modules/exporter/importer.py:496
 msgid "Initial revision"
-msgstr "Versi�n inicial"
+msgstr "Versión inicial"
 
 #: forum/actions/node.py:20 forum/templatetags/node_tags.py:257
 msgid "asked"
@@ -572,7 +566,7 @@ msgstr "denunciado"
 #: forum/actions/node.py:34
 #, python-format
 msgid "%(user)s asked %(question)s"
-msgstr "%(user)s pregunt� %(question)s"
+msgstr "%(user)s preguntó %(question)s"
 
 #: forum/actions/node.py:40 forum/templatetags/node_tags.py:258
 msgid "answered"
@@ -581,11 +575,11 @@ msgstr "respondido"
 #: forum/actions/node.py:55
 #, python-format
 msgid "%(user)s answered %(asker)s on %(question)s"
-msgstr "%(user)s respondi� a %(asker)s en %(question)s"
+msgstr "%(user)s respondió a %(asker)s en %(question)s"
 
 #: forum/actions/node.py:62
 msgid "commented"
-msgstr "coment�"
+msgstr "comentó"
 
 #: forum/actions/node.py:70
 #, python-format
@@ -594,12 +588,12 @@ msgstr "%(user)s hizo un comentario a %(post_desc)s"
 
 #: forum/actions/node.py:76 forum/actions/page.py:23
 msgid "edited"
-msgstr "edit�"
+msgstr "editó"
 
 #: forum/actions/node.py:88
 #, python-format
 msgid "%(user)s edited %(post_desc)s"
-msgstr "%(user)s edit� %(post_desc)s"
+msgstr "%(user)s editó %(post_desc)s"
 
 #: forum/actions/node.py:97
 msgid "retagged"
@@ -612,7 +606,7 @@ msgstr "Reetiquetar"
 #: forum/actions/node.py:110
 #, python-format
 msgid "%(user)s retagged %(post_desc)s"
-msgstr "%(user)s reetiquet� %(post_desc)s"
+msgstr "%(user)s reetiquetó %(post_desc)s"
 
 #: forum/actions/node.py:119
 msgid "reverted"
@@ -621,50 +615,48 @@ msgstr "deshizo"
 #: forum/actions/node.py:133
 #, python-format
 msgid ""
-"%(user)s reverted %(post_desc)s from revision %(initial)d (%(initial_sum)s) "
-"to revision %(final)d (%(final_sum)s)"
+"%(user)s reverted %(post_desc)s from revision %(initial)d (%(initial_sum)s) to "
+"revision %(final)d (%(final_sum)s)"
 msgstr ""
-"%(user)s deshizo los cambios en %(post_desc)s desde la versi�n %(initial)d "
-"(%(initial_sum)s) a la versi�n %(final)d (%(final_sum)s)"
+"%(user)s deshizo los cambios en %(post_desc)s desde la versión %(initial)d "
+"(%(initial_sum)s) a la versi n %(final)d (%(final_sum)s)"
 
 #: forum/actions/node.py:144
 msgid "closed"
-msgstr "cerr�"
+msgstr "cerrado"
 
 #: forum/actions/node.py:158
 #, python-format
 msgid "%(user)s closed %(post_desc)s: %(reason)s"
-msgstr "%(user)s cerr� %(post_desc)s: %(reason)s"
+msgstr "%(user)s cerró %(post_desc)s: %(reason)s"
 
-#: forum/actions/node.py:165 forum/actions/node.py:189
-#: forum/actions/node.py:206
+#: forum/actions/node.py:165 forum/actions/node.py:189 forum/actions/node.py:206
 msgid "converted"
 msgstr "convertido"
 
 #: forum/actions/node.py:183
 #, python-format
 msgid "%(user)s converted an answer to %(question)s into a comment"
-msgstr "%(user)s convirti� una respuesta a %(question)s en un comentario"
+msgstr "%(user)s convirtió una respuesta a %(question)s en un comentario"
 
 #: forum/actions/node.py:201
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s converted comment on %(question)s into an answer"
-msgstr "%(user)s convirti� una respuesta a %(question)s en un comentario"
+msgstr "%(user)s convirtió una respuesta a %(question)s en un comentario"
 
 #: forum/actions/node.py:225
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s converted comment on %(question)s to a new question"
-msgstr "%(user)s convirti� una respuesta a %(question)s en un comentario"
+msgstr "%(user)s convirtió una respuesta a %(question)s en un comentario"
 
 #: forum/actions/node.py:231
-#, fuzzy
 msgid "converted to question"
 msgstr "Responde la denuncia"
 
 #: forum/actions/node.py:256
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s converted an answer to %(question)s into a separate question"
-msgstr "%(user)s convirti� una respuesta a %(question)s en un comentario"
+msgstr "%(user)s convirtió una respuesta a %(question)s en un comentario"
 
 #: forum/actions/node.py:262
 msgid "wikified"
@@ -673,7 +665,7 @@ msgstr "transformado en wiki"
 #: forum/actions/node.py:274
 #, python-format
 msgid "%(user)s marked %(node)s as community wiki."
-msgstr "%(user)s transform� %(node)s en un wiki comunitario."
+msgstr "%(user)s transformó %(node)s en un wiki comunitario."
 
 #: forum/actions/page.py:6
 msgid "created"
@@ -682,12 +674,12 @@ msgstr "creada"
 #: forum/actions/page.py:17
 #, python-format
 msgid "%(user)s created a new page titled %(page)s"
-msgstr "%(user)s cre� una p�gina nueva titulada %(page)s"
+msgstr "%(user)s creó una p gina nueva titulada %(page)s"
 
 #: forum/actions/page.py:36
 #, python-format
 msgid "%(user)s edited the page titled %(page)s"
-msgstr "%(user)s edit� la p�gina titulada %(page)s"
+msgstr "%(user)s editó la p gina titulada %(page)s"
 
 #: forum/actions/page.py:42
 msgid "published"
@@ -696,7 +688,7 @@ msgstr "publicada"
 #: forum/actions/page.py:55
 #, python-format
 msgid "%(user)s published a new page titled %(page)s"
-msgstr "%(user)s ha publicado una nueva p�gina titulada %(page)s"
+msgstr "%(user)s ha publicado una nueva página titulada %(page)s"
 
 #: forum/actions/user.py:10
 msgid "joined"
@@ -716,24 +708,22 @@ msgid "has"
 msgstr "se ha"
 
 #: forum/actions/user.py:27
-#, fuzzy
 msgid "logged in"
-msgstr "No est�s conectado"
+msgstr "No estás conectado"
 
 #: forum/actions/user.py:30
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s %(have_has)s logged in"
-msgstr "%(user)s %(have_has)s unido a %(app_name)s"
+msgstr "%(user)s %(have_has)s logueado"
 
 #: forum/actions/user.py:36
-#, fuzzy
 msgid "validated e-mail"
 msgstr "validar tu email"
 
 #: forum/actions/user.py:46
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s %(have_has)s validated the e-mail %(email)s"
-msgstr "%(user)s %(have_has)s unido a %(app_name)s"
+msgstr "%(user)s %(have_has)s validado el email %(email)s"
 
 #: forum/actions/user.py:53
 msgid "edited profile"
@@ -774,61 +764,52 @@ msgstr "desconocido"
 
 #: forum/actions/user.py:88
 #, python-format
-msgid ""
-"%(user)s awarded an extra %(value)s reputation points to %(users)s: "
-"%(message)s"
-msgstr ""
-"%(user)s concedi� %(value)s puntos de karma extra a %(users)s: %(message)s"
+msgid "%(user)s awarded an extra %(value)s reputation points to %(users)s: %(message)s"
+msgstr "%(user)s concedió %(value)s puntos de karma extra a %(users)s: %(message)s"
 
 #: forum/actions/user.py:93
 #, python-format
-msgid ""
-"%(user)s penalised %(users)s in %(value)s reputation points: %(message)s"
-msgstr ""
-"%(user)s penaliz� a %(users)s con %(value)s puntos de karma menos: "
-"%(message)s"
+msgid "%(user)s penalised %(users)s in %(value)s reputation points: %(message)s"
+msgstr "%(user)s penalizó a %(users)s con %(value)s puntos de karma menos: %(message)s"
 
 #: forum/actions/user.py:101
-#, fuzzy
 msgid "gave reputation points"
 msgstr "puntos de karma"
 
 #: forum/actions/user.py:114
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Congratulations, you have been awarded an extra %(points)s reputation "
 "%(points_label)s on <a href=\"%(answer_url)s\">this</a> answer."
-msgstr "Felicidades, has recibido %s puntos extra de karma."
+msgstr ""
+"Enhorabuena, has sido premiado con %(points)s puntos de karma %(points_label)s en <a "
+"href=\"%(answer_url)s\">esta</a> respuesta."
 
 #: forum/actions/user.py:116
-#, fuzzy
 msgid "point"
 msgid_plural "points"
-msgstr[0] "Puntos"
+msgstr[0] "Punto"
 msgstr[1] "Puntos"
 
 #: forum/actions/user.py:125
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s awarded an extra %(value)s reputation points to %(users)s"
-msgstr ""
-"%(user)s concedi� %(value)s puntos de karma extra a %(users)s: %(message)s"
+msgstr "%(user)s premió con %(value)s puntos extra de karma a %(users)s"
 
 #: forum/actions/user.py:130
-#, fuzzy, python-format
+#, python-format
 msgid "%(user)s penalised %(users)s in %(value)s reputation points"
-msgstr ""
-"%(user)s penaliz� a %(users)s con %(value)s puntos de karma menos: "
-"%(message)s"
+msgstr "%(user)s penalizó a %(users)s en %(value)s puntos de karma"
 
 #: forum/actions/user.py:138
 msgid "was awarded"
-msgstr "recibi�"
+msgstr "recibió"
 
 #: forum/actions/user.py:166
 #, python-format
 msgid ""
-"Congratulations, you have received a badge '%(badge_name)s'. Check out <a "
-"href=\"%(profile_url)s\">your profile</a>."
+"Congratulations, you have received a badge '%(badge_name)s'. Check out <a href="
+"\"%(profile_url)s\">your profile</a>."
 msgstr ""
 "Felicidades, has recibido la medalla '%(badge_name)s'. Visita <a href="
 "\"%(profile_url)s\">tu perfil</a>."
@@ -836,7 +817,7 @@ msgstr ""
 #: forum/actions/user.py:188
 #, python-format
 msgid "%(user)s %(were_was)s awarded the %(badge_name)s badge"
-msgstr "%(user)s %(were_was)s recibi� la medalla %(badge_name)s"
+msgstr "%(user)s %(were_was)s recibió la medalla %(badge_name)s"
 
 #: forum/actions/user.py:190
 msgid "were"
@@ -852,12 +833,12 @@ msgstr "suspendido"
 
 #: forum/actions/user.py:213
 msgid "Your suspension has been removed."
-msgstr "Se te ha retirado la suspensi�n"
+msgstr "Se te ha retirado la suspensión"
 
 #: forum/actions/user.py:217
 #, python-format
 msgid "for %s days"
-msgstr "durante %s d�as"
+msgstr "durante %s días"
 
 #: forum/actions/user.py:219
 msgid "indefinetely"
@@ -866,7 +847,7 @@ msgstr "indefinidamente"
 #: forum/actions/user.py:221
 #, python-format
 msgid "%(user)s suspended %(users)s %(suspension)s: %(msg)s"
-msgstr "%(user)s suspendi� a %(users)s %(suspension)s: %(msg)s"
+msgstr "%(user)s suspendió a %(users)s %(suspension)s: %(msg)s"
 
 #: forum/actions/user.py:223 forum/views/users.py:240
 msgid "Bad behaviour"
@@ -874,32 +855,29 @@ msgstr "Mal comportamiento"
 
 #: forum/forms/admin.py:16
 msgid "Please input at least one ip address"
-msgstr "por favor introduce por lo menos una direcci�n IP"
+msgstr "por favor introduce por lo menos una dirección IP"
 
 #: forum/forms/admin.py:22
 #, python-format
 msgid "Invalid ip address: %s"
-msgstr "Direcci�n IP no v�lida: %s"
+msgstr "Dirección IP no válida: %s"
 
 #: forum/forms/admin.py:25
 msgid "Please use the dotted quad notation for the ip addresses"
 msgstr ""
-"Por favor, usar la notaci�n cu�druple separada por puntos para las "
-"direcciones IP"
+"Por favor, usar la notación cu druple separada por puntos para las direcciones IP"
 
 #: forum/forms/admin.py:32
 msgid "Allow ips"
 msgstr "Permitir IPs"
 
 #: forum/forms/admin.py:33
-msgid ""
-"Comma separated list of ips allowed to access the site while in maintenance"
+msgid "Comma separated list of ips allowed to access the site while in maintenance"
 msgstr ""
-"Lista de IPs separadas por comas desde las que se permite acceder al sitio "
-"mientras est� en mantenimiento"
+"Lista de IPs separadas por comas desde las que se permite acceder al sitio mientras "
+"está en mantenimiento"
 
-#: forum/forms/admin.py:37
-#: forum/skins/default/templates/users/karma_bonus.html:9
+#: forum/forms/admin.py:37 forum/skins/default/templates/users/karma_bonus.html:9
 #: forum/skins/nuxeo/templates/users/karma_bonus.html:9
 msgid "Message"
 msgstr "Mensaje"
@@ -907,7 +885,7 @@ msgstr "Mensaje"
 #: forum/forms/admin.py:38
 msgid "A message to display to your site visitors while in maintainance mode"
 msgstr ""
-"Un mensaje para mostrar a tus visitantes mientras el sitio est� en modo de "
+"Un mensaje para mostrar a tus visitantes mientras el sitio está en modo de "
 "mantenimiento"
 
 #: forum/forms/admin.py:43
@@ -934,19 +912,18 @@ msgstr ""
 msgid "Escaped"
 msgstr ""
 
-#: forum/forms/admin.py:75
-#: forum/skins/default/templates/osqaadmin/nodeman.html:285
+#: forum/forms/admin.py:75 forum/skins/default/templates/osqaadmin/nodeman.html:285
 #: forum/skins/nuxeo/templates/osqaadmin/nodeman.html:284
 msgid "Title"
-msgstr "T�tulo"
+msgstr "Título"
 
 #: forum/forms/admin.py:77
 msgid "Page URL"
-msgstr "URL de la p�gina"
+msgstr "URL de la página"
 
 #: forum/forms/admin.py:79
 msgid "Page Content"
-msgstr "Contenido de la P�gina"
+msgstr "Contenido de la Página"
 
 #: forum/forms/admin.py:80
 msgid "Mime Type"
@@ -977,14 +954,12 @@ msgid "Allow comments"
 msgstr "Permitir comentarios"
 
 #: forum/forms/admin.py:99
-#, fuzzy
 msgid "send validation email"
-msgstr "send-validation/"
+msgstr "enviar mail de validación"
 
 #: forum/forms/admin.py:104
-#, fuzzy
 msgid "email address"
-msgstr "Tu direcci�n de email"
+msgstr "Tu dirección de email"
 
 #: forum/forms/auth.py:21
 msgid "Your account email"
@@ -996,23 +971,22 @@ msgstr "No puedes dejar este campo en blanco"
 
 #: forum/forms/auth.py:24 forum/forms/general.py:105
 msgid "please enter a valid email address"
-msgstr "por favor introduce un email v�lido"
+msgstr "por favor introduce un email válido"
 
 #: forum/forms/auth.py:32
 msgid "Sorry, but this email is not on our database."
-msgstr "Lo sentimos, pero este email no est� en nuestra base de datos."
+msgstr "Lo sentimos, pero este email no está en nuestra base de datos."
 
 #: forum/forms/auth.py:40
 msgid "Current password"
-msgstr "Contrase�a actual"
+msgstr "Contraseña actual"
 
 #: forum/forms/auth.py:51
 msgid ""
-"Old password is incorrect.                     Please enter the correct "
-"password."
+"Old password is incorrect.                     Please enter the correct password."
 msgstr ""
-"La contrase�a antigua no es correcta.                     Por favor "
-"introduce la contrase�a correcta."
+"La contraseña antigua no es correcta.                     Por favor introduce la "
+"contrase a correcta."
 
 #: forum/forms/general.py:29
 msgid "this field is required"
@@ -1028,55 +1002,51 @@ msgstr "el nombre de usuario es obligatorio"
 
 #: forum/forms/general.py:48
 msgid "sorry, this name is taken, please choose another"
-msgstr "lo sentimos, este nombre est� ocupado, por favor elige otro"
+msgstr "lo sentimos, este nombre está ocupado, por favor elige otro"
 
 #: forum/forms/general.py:49
 msgid "sorry, this name is not allowed, please choose another"
-msgstr "lo sentimos, este nombre no est� permitido, por favor elige otro"
+msgstr "lo sentimos, este nombre no está permitido, por favor elige otro"
 
 #: forum/forms/general.py:50
 msgid "sorry, there is no user with this name"
-msgstr "lo sentimos, no hay ning�n usuario con ese nombre"
+msgstr "lo sentimos, no hay ningún usuario con ese nombre"
 
 #: forum/forms/general.py:51
 msgid "sorry, we have a serious error - user name is taken by several users"
 msgstr ""
-"lo sentimos, tenemos un problema, este nombre de usuario est� ocupado por "
-"varios usuarios"
+"lo sentimos, tenemos un problema, este nombre de usuario está ocupado por varios "
+"usuarios"
 
 #: forum/forms/general.py:52
-#, fuzzy
-msgid ""
-"user name can only consist of letters, empty space, hyphens and underscore"
-msgstr ""
-"el nombre de usuario s�lo puede contener letras, espacios y guiones bajos"
+msgid "user name can only consist of letters, empty space, hyphens and underscore"
+msgstr "el nombre de usuario sólo puede contener letras, espacios y guiones bajos"
 
 #: forum/forms/general.py:53
 #, python-format
 msgid "user name is to short, please use at least %d characters"
 msgstr ""
-"el nombre de usuario es demasiado corto, por favor utiliza al menos %d "
-"caracteres"
+"el nombre de usuario es demasiado corto, por favor utiliza al menos %d caracteres"
 
 #: forum/forms/general.py:103
 msgid "your email address"
-msgstr "Tu direcci�n de email"
+msgstr "Tu dirección de email"
 
 #: forum/forms/general.py:104
 msgid "email address is required"
-msgstr "es necesaria la direcci�n de email"
+msgstr "es necesaria la dirección de email"
 
 #: forum/forms/general.py:106
 msgid "this email is already used by someone else, please choose another"
-msgstr "este email ya est� siendo usado por otro usuario, por favor elige otro"
+msgstr "este email ya está siendo usado por otro usuario, por favor elige otro"
 
 #: forum/forms/general.py:131
 msgid "choose password"
-msgstr "Elige contrase�a"
+msgstr "Elige contraseña"
 
 #: forum/forms/general.py:132
 msgid "password is required"
-msgstr "es necesaria la contrase�a"
+msgstr "es necesaria la contraseña"
 
 #: forum/forms/general.py:135
 msgid "retype password"
@@ -1084,16 +1054,14 @@ msgstr "Vuelve a escribirla"
 
 #: forum/forms/general.py:136
 msgid "please, retype your password"
-msgstr "por favor, vuelve a escribir la contrase�a"
+msgstr "por favor, vuelve a escribir la contraseña"
 
 #: forum/forms/general.py:137
 msgid "sorry, entered passwords did not match, please try again"
 msgstr ""
-"lo sentimos, las 2 contrase�as introducidas no coinciden, por favor "
-"int�ntalo de nuevo"
+"lo sentimos, las 2 contraseñas introducidas no coinciden, por favor inténtalo de nuevo"
 
-#: forum/forms/qanda.py:23
-#: forum/skins/default/templates/sidebar/markdown_help.html:12
+#: forum/forms/qanda.py:23 forum/skins/default/templates/sidebar/markdown_help.html:12
 #: forum/skins/default/templates/sidebar/markdown_help.html:17
 #: forum/skins/nuxeo/templates/sidebar/markdown_help.html:12
 #: forum/skins/nuxeo/templates/sidebar/markdown_help.html:17
@@ -1103,13 +1071,12 @@ msgstr "Denuncia"
 #: forum/forms/qanda.py:24
 msgid "please enter a descriptive title for your question"
 msgstr ""
-"escribe aqu� la denuncia (abajo puedes introducir m�s detalles si son "
-"necesarios)"
+"escribe aquí la denuncia (abajo puedes introducir m s detalles si son necesarios)"
 
 #: forum/forms/qanda.py:31
 #, python-format
 msgid "title must be must be at least %s characters"
-msgstr "la denuncia debe tener como m�nimo %s caracteres"
+msgstr "la denuncia debe tener como mínimo %s caracteres"
 
 #: forum/forms/qanda.py:40
 msgid "content"
@@ -1118,15 +1085,14 @@ msgstr "Contenido"
 #: forum/forms/qanda.py:55
 #, python-format
 msgid "question content must be at least %s characters"
-msgstr "el contenido de la denuncia debe tener como m�nimo %s caracteres"
+msgstr "el contenido de la denuncia debe tener como mínimo %s caracteres"
 
 #: forum/forms/qanda.py:68
 #, python-format
 msgid "answer content must be at least %s characters"
-msgstr "el contenido de la respuesta debe tener como m�nimo %s caracteres"
+msgstr "el contenido de la respuesta debe tener como mínimo %s caracteres"
 
-#: forum/forms/qanda.py:80 
-#: forum/skins/default/templates/header.html:36
+#: forum/forms/qanda.py:80 forum/skins/default/templates/header.html:36
 msgid "radio tags"
 msgstr "denunciados"
 
@@ -1144,39 +1110,38 @@ msgstr "estafadores"
 #: forum/forms/qanda.py:82
 #, python-format
 msgid ""
-"Tags are short keywords, with no spaces within. At least %(min)s and up to "
-"%(max)s tags can be used."
+"Tags are short keywords, with no spaces within. At least %(min)s and up to %(max)s "
+"tags can be used."
 msgstr ""
-"Introduce en min�sculas y en una palabra el nombre del �rgano estafador."
+"Tags son pequeñas keywords, sin espacios. Al menos %(min)s hasta %(max)s tags pueden "
+"usarse."
 
 #: forum/forms/qanda.py:100
 #, python-format
 msgid "please use between %(min)s and %(max)s tags"
 msgstr "por favor utiliza entre %(min)s y %(max)s etiquetas"
 
-#: forum/forms/qanda.py:106 
+#: forum/forms/qanda.py:106
 #, python-format
 msgid "please use between %(min)s and %(max)s characters in you tags"
-msgstr ""
-"por favor utiliza entre %(min)s y %(max)s car�cteres para cada etiqueta"
+msgstr "por favor utiliza entre %(min)s y %(max)s carácteres para cada etiqueta"
 
 #: forum/forms/qanda.py:108
 #, fuzzy
 msgid ""
-"please use following characters in tags: letters , numbers, and characters '."
-"#-_'"
+"please use following characters in tags: letters , numbers, and characters '.#-_'"
 msgstr ""
-"por favor utiliza los siguientes caracteres en las etiquetas: letras 'a-z', "
-"n�meros, y caracteres '.-_'"
+"por favor utiliza los siguientes caracteres en las etiquetas: letras 'a-z', n�meros, "
+"y caracteres '.-_'"
 
 #: forum/forms/qanda.py:118
 #, python-format
 msgid ""
-"You don't have enough reputation to create new tags. The following tags do "
-"not exist yet: %s"
+"You don't have enough reputation to create new tags. The following tags do not exist "
+"yet: %s"
 msgstr ""
-"No tienes suficiente reputaci�n para crear nuevas etiquetas. Las siguientes "
-"etiquetas a�n no existen: %s"
+"No tienes suficiente reputación para crear nuevas etiquetas. Las siguientes etiquetas "
+"a n no existen: %s"
 
 #: forum/forms/qanda.py:128
 #: forum/skins/default/templates/question_summary_list_roll.html:26
@@ -1188,23 +1153,23 @@ msgstr "wiki comunitario"
 
 #: forum/forms/qanda.py:129
 msgid ""
-"if you choose community wiki option, the question and answer do not generate "
-"points and name of author will not be shown"
+"if you choose community wiki option, the question and answer do not generate points "
+"and name of author will not be shown"
 msgstr ""
-"si eliges la opci�n 'wiki comunitario', todos los usuarios podr�n editar la "
-"denuncia y las respuestas, y no se mostrar� el nombre del autor"
+"si eliges la opci n 'wiki comunitario', todos los usuarios podrán editar la denuncia "
+"y las respuestas, y no se mostrar  el nombre del autor"
 
 #: forum/forms/qanda.py:147
 msgid "update summary:"
-msgstr "resumen de la actualizaci�n:"
+msgstr "resumen de la actualización:"
 
 #: forum/forms/qanda.py:148
 msgid ""
-"enter a brief summary of your revision (e.g. fixed spelling, grammar, "
-"improved style, this field is optional)"
+"enter a brief summary of your revision (e.g. fixed spelling, grammar, improved style, "
+"this field is optional)"
 msgstr ""
-"introduce un resumen breve de tus cambios (ej. correcci�n ortogr�fica, "
-"gram�tica, estilo mejorado). Este campo es opcional."
+"introduce un resumen breve de tus cambios (ej. correcci�n ortogr�fica, gram�tica, "
+"estilo mejorado). Este campo es opcional."
 
 #: forum/forms/qanda.py:152
 msgid "Your message:"
@@ -1242,8 +1207,7 @@ msgstr "Fecha de nacimiento"
 msgid "will not be shown, used to calculate age, format: YYYY-MM-DD"
 msgstr "no ser� mostrada, usada para calcular la edad, formato: AAAA-MM-DD"
 
-#: forum/forms/qanda.py:306
-#: forum/skins/default/templates/account_settings.html:21
+#: forum/forms/qanda.py:306 forum/skins/default/templates/account_settings.html:21
 #: forum/skins/default/templates/osqaadmin/moderation.html:69
 #: forum/skins/nuxeo/templates/account_settings.html:21
 #: forum/skins/nuxeo/templates/osqaadmin/moderation.html:68
@@ -1270,26 +1234,25 @@ msgstr "Sin notificaciones"
 #, python-format
 msgid ""
 "\n"
-"                    The e-mail settings of this community are not configured "
-"yet. We strongly recommend you to\n"
-"                    do that from the <a href=\"%(email_settings_url)s\">e-"
-"mail settings page</a> as soon as possible.\n"
+"                    The e-mail settings of this community are not configured yet. We "
+"strongly recommend you to\n"
+"                    do that from the <a href=\"%(email_settings_url)s\">e-mail "
+"settings page</a> as soon as possible.\n"
 "                    "
 msgstr ""
 
 #: forum/middleware/admin_messages.py:47
 msgid ""
 "\n"
-"                       Please, configure your APP_URL setting from the local "
-"settings file.\n"
+"                       Please, configure your APP_URL setting from the local settings "
+"file.\n"
 "                    "
 msgstr ""
 
 #: forum/middleware/anon_user.py:35
 #, python-format
 msgid "First time here? Check out the <a href=\"%s\">FAQ</a>!"
-msgstr ""
-"�Por primera vez aqu�? Lee las <a href=\"%s\">Preguntas Frecuentes</a>."
+msgstr "�Por primera vez aqu�? Lee las <a href=\"%s\">Preguntas Frecuentes</a>."
 
 #: forum/models/action.py:216
 msgid "You"
@@ -1305,8 +1268,8 @@ msgstr "en %(link)s"
 msgid "%(user)s %(node_name)s %(node_desc)s"
 msgstr "%(user)s %(node_name)s %(node_desc)s"
 
-#: forum/models/comment.py:6 forum/views/commands.py:247
-#: forum/views/commands.py:273 forum_modules/akismet/startup.py:77
+#: forum/models/comment.py:6 forum/views/commands.py:247 forum/views/commands.py:273
+#: forum_modules/akismet/startup.py:77
 msgid "comment"
 msgstr "comentar"
 
@@ -1378,12 +1341,11 @@ msgstr "Desactivar la aceptaci�n de respuestas"
 #: forum/settings/accept.py:9
 #, fuzzy
 msgid ""
-"Disable accepting answers feature. If you re-enable it in the future, "
-"currently accepted answers will still be marked as accepted."
+"Disable accepting answers feature. If you re-enable it in the future, currently "
+"accepted answers will still be marked as accepted."
 msgstr ""
-"Deshabilitar la posibilidad de aceptar respuestas. Si la habilitas en el "
-"futuro, las respuestas actualmente aceptadas seguir�n marcadas como "
-"aceptadas."
+"Deshabilitar la posibilidad de aceptar respuestas. Si la habilitas en el futuro, las "
+"respuestas actualmente aceptadas seguir�n marcadas como aceptadas."
 
 #: forum/settings/accept.py:13
 msgid "Maximum accepted answers per question"
@@ -1392,8 +1354,7 @@ msgstr "N�mero m�ximo de respuestas aceptadas por denuncia"
 #: forum/settings/accept.py:14
 msgid "How many accepted answers are allowed per question. Use 0 for no limit."
 msgstr ""
-"Cu�ntas respuestas aceptadas se permiten por denuncia. Utiliza 0 para no "
-"poner l�mite."
+"Cu�ntas respuestas aceptadas se permiten por denuncia. Utiliza 0 para no poner l�mite."
 
 #: forum/settings/accept.py:17
 msgid "Maximum accepted answers per user/question"
@@ -1402,11 +1363,11 @@ msgstr "N�mero m�ximo de respuestas aceptadas por usuario/denuncia"
 #: forum/settings/accept.py:18
 #, fuzzy
 msgid ""
-"If more than one accpeted answer is allowed, how many can be accepted per "
-"single user per question."
+"If more than one accpeted answer is allowed, how many can be accepted per single user "
+"per question."
 msgstr ""
-"Si se permite m�s de una soluci�n aceptada, cu�ntas respuestas se pueden "
-"aceptar por usuario y por denuncia."
+"Si se permite m�s de una soluci�n aceptada, cu�ntas respuestas se pueden aceptar por "
+"usuario y por denuncia."
 
 #: forum/settings/accept.py:21
 #, fuzzy
@@ -1450,8 +1411,7 @@ msgstr "T�tulo de la aplicaci�n"
 
 #: forum/settings/basic.py:23
 msgid "The title of your application that will show in the browsers title bar"
-msgstr ""
-"El t�tulo de tu aplicaci�n que saldr� en la barra de t�tulos del navegador"
+msgstr "El t�tulo de tu aplicaci�n que saldr� en la barra de t�tulos del navegador"
 
 #: forum/settings/basic.py:26
 msgid "Application short name"
@@ -1487,11 +1447,11 @@ msgstr "Direcci�n de soporte"
 
 #: forum/settings/basic.py:44
 msgid ""
-"The URL provided for users to get support. It can be http: or mailto: or "
-"whatever your preferred support scheme is."
+"The URL provided for users to get support. It can be http: or mailto: or whatever "
+"your preferred support scheme is."
 msgstr ""
-"La URL que se ofrece para servicio a los usuarios. Puede ser http: o mailto: "
-"o lo que sea el canal escogido para el servicio."
+"La URL que se ofrece para servicio a los usuarios. Puede ser http: o mailto: o lo que "
+"sea el canal escogido para el servicio."
 
 #: forum/settings/basic.py:48
 msgid "Contact URL"
@@ -1499,11 +1459,11 @@ msgstr "Direcci�n de contacto"
 
 #: forum/settings/basic.py:49
 msgid ""
-"The URL provided for users to contact you. It can be http: or mailto: or "
-"whatever your preferred contact scheme is."
+"The URL provided for users to contact you. It can be http: or mailto: or whatever "
+"your preferred contact scheme is."
 msgstr ""
-"La URL que se ofrece para que los usuarios se pongan en contaco. Puede ser "
-"http: o mailto: o lo que se prefiera como canal de contacto."
+"La URL que se ofrece para que los usuarios se pongan en contaco. Puede ser http: o "
+"mailto: o lo que se prefiera como canal de contacto."
 
 #: forum/settings/email.py:7
 msgid "Email settings"
@@ -1536,11 +1496,11 @@ msgstr "Puerto de email"
 
 #: forum/settings/email.py:22
 msgid ""
-"The port on which your SMTP server is listening to. Usually this is 25, but "
-"can be something else."
+"The port on which your SMTP server is listening to. Usually this is 25, but can be "
+"something else."
 msgstr ""
-"El puerto en el que escucha tu servidor SMTP. Normalmente es 25, pero puede "
-"ser diferente."
+"El puerto en el que escucha tu servidor SMTP. Normalmente es 25, pero puede ser "
+"diferente."
 
 #: forum/settings/email.py:26
 msgid "Email User"
@@ -1573,11 +1533,10 @@ msgstr "Remitente para los emails de la web"
 
 #: forum/settings/email.py:43
 msgid ""
-"The address that will show up on the 'from' field on emails sent by your "
-"website."
+"The address that will show up on the 'from' field on emails sent by your website."
 msgstr ""
-"La direcci�n que se mostrar� en el campo 'de' de los correos mandados por tu "
-"sitio web."
+"La direcci�n que se mostrar� en el campo 'de' de los correos mandados por tu sitio "
+"web."
 
 #: forum/settings/email.py:47
 #, fuzzy
@@ -1587,11 +1546,10 @@ msgstr "Remitente para los emails de la web"
 #: forum/settings/email.py:48
 #, fuzzy
 msgid ""
-"The address that will show up on the 'reply-to' field on emails sent by your "
-"website."
+"The address that will show up on the 'reply-to' field on emails sent by your website."
 msgstr ""
-"La direcci�n que se mostrar� en el campo 'de' de los correos mandados por tu "
-"sitio web."
+"La direcci�n que se mostrar� en el campo 'de' de los correos mandados por tu sitio "
+"web."
 
 #: forum/settings/email.py:52
 #, fuzzy
@@ -1601,14 +1559,13 @@ msgstr "Prefijo del asunto de los mails"
 #: forum/settings/email.py:53
 #, fuzzy
 msgid ""
-"Every email sent through your website will have the subject prefixed by this "
-"string. It's usually a good idea to have such a prefix so your users can "
-"easily set up a filter on their email clients."
+"Every email sent through your website will have the subject prefixed by this string. "
+"It's usually a good idea to have such a prefix so your users can easily set up a "
+"filter on their email clients."
 msgstr ""
-"Todos los correos enviados desde tu sitio web tendr�n en el asunto un "
-"prefijo determinado por estas palabras. Normalmente es buena idea tener ese "
-"prefijo para que los usuarios puedan organizar f�cilmente un filtro en sus "
-"clientes de correo."
+"Todos los correos enviados desde tu sitio web tendr�n en el asunto un prefijo "
+"determinado por estas palabras. Normalmente es buena idea tener ese prefijo para que "
+"los usuarios puedan organizar f�cilmente un filtro en sus clientes de correo."
 
 #: forum/settings/email.py:57
 msgid "Email Footer Text"
@@ -1616,15 +1573,15 @@ msgstr "Pie de p�gina del email"
 
 #: forum/settings/email.py:58
 msgid ""
-"Email footer text, usually \"CAN SPAM\" compliance, or the physical address "
-"of the organization running the website. See <a href=\"http://en.wikipedia."
-"org/wiki/CAN-SPAM_Act_of_2003\">this Wikipedia article</a> for more info."
+"Email footer text, usually \"CAN SPAM\" compliance, or the physical address of the "
+"organization running the website. See <a href=\"http://en.wikipedia.org/wiki/CAN-"
+"SPAM_Act_of_2003\">this Wikipedia article</a> for more info."
 msgstr ""
 "Texto del pie de los mensajes de correo, normalmente con instrucciones de "
-"desuscripci�n para cumplir con las legislaciones contra el correo basura, o "
-"la direcci�n f�sica de la organizaci�n que opera el sitio web. Consulte <a "
-"href='http://es.wikipedia.org/wiki/Spam#Legislaci.C3.B3n'>la legislaci�n "
-"'anti-spam' de su pa�s</a> para m�s informaci�n."
+"desuscripci�n para cumplir con las legislaciones contra el correo basura, o la "
+"direcci�n f�sica de la organizaci�n que opera el sitio web. Consulte <a href='http://"
+"es.wikipedia.org/wiki/Spam#Legislaci.C3.B3n'>la legislaci�n 'anti-spam' de su pa�s</"
+"a> para m�s informaci�n."
 
 #: forum/settings/email.py:62
 #, fuzzy
@@ -1644,8 +1601,8 @@ msgstr "Estilo de p�rrafo del email"
 #: forum/settings/email.py:68
 msgid "A valid css string to be used to style email paragraphs (the P tag)."
 msgstr ""
-"Una cadena de CSS v�lida que se usar� para vestir los p�rrafos de los "
-"mensajes (la etiqueta P)."
+"Una cadena de CSS v�lida que se usar� para vestir los p�rrafos de los mensajes (la "
+"etiqueta P)."
 
 #: forum/settings/email.py:72
 #, fuzzy
@@ -1655,16 +1612,15 @@ msgstr "Estilo de los enlaces en el email"
 #: forum/settings/email.py:73
 msgid "A valid css string to be used to style email links (the A tag)."
 msgstr ""
-"Una cadena de CSS v�lida que se usar� para vestir los enlaces de los "
-"mensajes (la etiqueta A)."
+"Una cadena de CSS v�lida que se usar� para vestir los enlaces de los mensajes (la "
+"etiqueta A)."
 
 #: forum/settings/email.py:77
 msgid "Send digest only to active users"
 msgstr ""
 
 #: forum/settings/email.py:78
-msgid ""
-"If checked the daily digest won't be sent to users that have been suspended."
+msgid "If checked the daily digest won't be sent to users that have been suspended."
 msgstr ""
 
 #: forum/settings/email.py:82
@@ -1673,8 +1629,8 @@ msgstr ""
 
 #: forum/settings/email.py:83
 msgid ""
-"If checked the daily digest won't be sent to users that haven't validated "
-"their emails."
+"If checked the daily digest won't be sent to users that haven't validated their "
+"emails."
 msgstr ""
 
 #: forum/settings/extkeys.py:4
@@ -1682,8 +1638,7 @@ msgid "External Keys"
 msgstr "Claves externas"
 
 #: forum/settings/extkeys.py:4
-msgid ""
-"Keys for various external providers that your application may optionally use."
+msgid "Keys for various external providers that your application may optionally use."
 msgstr "Claves de varios proveedores externos que tu aplicaci�n puede usar."
 
 #: forum/settings/extkeys.py:7
@@ -1692,11 +1647,11 @@ msgstr "C�digo de Google Sitemap"
 
 #: forum/settings/extkeys.py:8
 msgid ""
-"This is the code you get when you register your site at <a href='https://www."
-"google.com/webmasters/tools/'>Google webmaster central</a>."
+"This is the code you get when you register your site at <a href='https://www.google."
+"com/webmasters/tools/'>Google webmaster central</a>."
 msgstr ""
-"Este es el c�digo que se obtiene al registrar un sitio en <a href='https://"
-"www.google.com/webmasters/tools/'>Google webmaster central</a>."
+"Este es el c�digo que se obtiene al registrar un sitio en <a href='https://www.google."
+"com/webmasters/tools/'>Google webmaster central</a>."
 
 #: forum/settings/extkeys.py:12
 msgid "Google analytics key"
@@ -1704,11 +1659,11 @@ msgstr "Clave de Google Analytics"
 
 #: forum/settings/extkeys.py:13
 msgid ""
-"Your Google analytics key. You can get one at the <a href='http://www.google."
-"com/analytics/'>Google analytics official website</a>"
+"Your Google analytics key. You can get one at the <a href='http://www.google.com/"
+"analytics/'>Google analytics official website</a>"
 msgstr ""
-"Tu clave de Google analytics. Puedes obtener una en el <a href='http://www."
-"google.com/analytics/'>sitio oficial de Google analytics</a>"
+"Tu clave de Google analytics. Puedes obtener una en el <a href='http://www.google.com/"
+"analytics/'>sitio oficial de Google analytics</a>"
 
 #: forum/settings/form.py:5
 msgid "Form settings"
@@ -1731,11 +1686,10 @@ msgid "Limit tag creation"
 msgstr "Limitar la creaci�n de etiquetas"
 
 #: forum/settings/form.py:14
-msgid ""
-"Limit tag creation to super users, staff or users with a minimum reputation."
+msgid "Limit tag creation to super users, staff or users with a minimum reputation."
 msgstr ""
-"Limitar la creaci�n de etiquetas a superusuarios, encargados del sitio o "
-"usuarios con un m�nimo de reputaci�n."
+"Limitar la creaci�n de etiquetas a superusuarios, encargados del sitio o usuarios con "
+"un m�nimo de reputaci�n."
 
 #: forum/settings/form.py:20
 msgid "Minimum number of characters for a question's title"
@@ -1743,11 +1697,10 @@ msgstr "N�mero m�nimo de caracteres para el t�tulo de una denuncia."
 
 #: forum/settings/form.py:21
 msgid ""
-"The minimum number of characters a user must enter into the title field of a "
-"question."
+"The minimum number of characters a user must enter into the title field of a question."
 msgstr ""
-"El n�mero m�nimo de caracteres que un usuario debe introducir en el campo "
-"del t�tulo de una decnuncia."
+"El n�mero m�nimo de caracteres que un usuario debe introducir en el campo del t�tulo "
+"de una decnuncia."
 
 #: forum/settings/form.py:28
 msgid "Minimum number of characters for a question's content"
@@ -1755,11 +1708,11 @@ msgstr "N�mero m�nimo de caracteres para el contenido de una denuncia."
 
 #: forum/settings/form.py:29
 msgid ""
-"The minimum number of characters a user must enter into the content field of "
-"a question."
+"The minimum number of characters a user must enter into the content field of a "
+"question."
 msgstr ""
-"El n�mero m�nimo de caracteres que un usuario debe introducir en el campo "
-"del contenido de una denuncia."
+"El n�mero m�nimo de caracteres que un usuario debe introducir en el campo del "
+"contenido de una denuncia."
 
 #: forum/settings/form.py:36
 msgid "Empty question content"
@@ -1806,23 +1759,16 @@ msgid "Minimum number of characters for a comment"
 msgstr "N�mero m�nimo de caracteres de un comentario"
 
 #: forum/settings/form.py:70
-msgid ""
-"The minimum number of characters a user must enter into the body of a "
-"comment."
-msgstr ""
-"El n�mero m�nimo de caracteres que un usuario debe introducir en un "
-"comentario"
+msgid "The minimum number of characters a user must enter into the body of a comment."
+msgstr "El n�mero m�nimo de caracteres que un usuario debe introducir en un comentario"
 
 #: forum/settings/form.py:73
 msgid "Maximum length of comment"
 msgstr "Longitud m�xima del comentario"
 
 #: forum/settings/form.py:74
-msgid ""
-"The maximum number of characters a user can enter into the body of a comment."
-msgstr ""
-"El n�mero m�ximo de caracteres que un usuario puede introducir en un "
-"comentario"
+msgid "The maximum number of characters a user can enter into the body of a comment."
+msgstr "El n�mero m�ximo de caracteres que un usuario puede introducir en un comentario"
 
 #: forum/settings/form.py:77
 msgid "Allow markdown in comments"
@@ -1830,8 +1776,7 @@ msgstr "Permitir markdown en los comentarios"
 
 #: forum/settings/form.py:78
 msgid "Allow users to use markdown in comments."
-msgstr ""
-"Si se permite a los usuarios que usen formato de markdown en sus comentarios."
+msgstr "Si se permite a los usuarios que usen formato de markdown en sus comentarios."
 
 #: forum/settings/form.py:82
 msgid "Show author gravatar in comments"
@@ -1859,19 +1804,15 @@ msgstr "Configurar el karma m�nimo"
 
 #: forum/settings/minrep.py:4
 msgid ""
-"Configure the minimum reputation required to perform certain actions on your "
-"site."
-msgstr ""
-"Configurar el karma m�nimo necesario para realizar ciertas acciones en tu "
-"web."
+"Configure the minimum reputation required to perform certain actions on your site."
+msgstr "Configurar el karma m�nimo necesario para realizar ciertas acciones en tu web."
 
 #: forum/settings/minrep.py:7
 msgid "Show captcha if user with less reputation than"
 msgstr ""
 
 #: forum/settings/minrep.py:8
-msgid ""
-"If the user has less reputation, captcha is used to when adding new content."
+msgid "If the user has less reputation, captcha is used to when adding new content."
 msgstr ""
 
 #: forum/settings/minrep.py:11
@@ -1881,8 +1822,8 @@ msgstr "Karma m�nimo para votar"
 #: forum/settings/minrep.py:12
 msgid "The minimum reputation an user must have to be allowed to vote up."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"votar positivamente."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita votar "
+"positivamente."
 
 #: forum/settings/minrep.py:15
 msgid "Minimum reputation to vote down"
@@ -1905,19 +1846,16 @@ msgid "Minimum reputation to comment"
 msgstr "Karma m�nimo para comentar"
 
 #: forum/settings/minrep.py:24
-msgid ""
-"The minimum reputation an user must have to be allowed to comment a post."
+msgid "The minimum reputation an user must have to be allowed to comment a post."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"comentar."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita comentar."
 
 #: forum/settings/minrep.py:27
 msgid "Minimum reputation to like a comment"
 msgstr "Karma m�nimo para decir 'me gusta' de un comentario"
 
 #: forum/settings/minrep.py:28
-msgid ""
-"The minimum reputation an user must have to be allowed to \"like\" a comment."
+msgid "The minimum reputation an user must have to be allowed to \"like\" a comment."
 msgstr "Karma m�nimo para decir 'me gusta' de un comentario."
 
 #: forum/settings/minrep.py:31
@@ -1925,21 +1863,18 @@ msgid "Minimum reputation to upload"
 msgstr "Karma m�nimo para subir ficheros"
 
 #: forum/settings/minrep.py:32
-msgid ""
-"The minimum reputation an user must have to be allowed to upload a file."
+msgid "The minimum reputation an user must have to be allowed to upload a file."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"subir un archivo."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita subir un "
+"archivo."
 
 #: forum/settings/minrep.py:35
 msgid "Minimum reputation to create tags"
 msgstr "Karma m�nimo para crear etiquetas"
 
 #: forum/settings/minrep.py:36
-msgid ""
-"The minimum reputation an user must have to be allowed to create new tags."
-msgstr ""
-"Karma m�nimo que debe tener un usuario para poder crear nuevas etiquetas."
+msgid "The minimum reputation an user must have to be allowed to create new tags."
+msgstr "Karma m�nimo que debe tener un usuario para poder crear nuevas etiquetas."
 
 #: forum/settings/minrep.py:39
 msgid "Minimum reputation to close own question"
@@ -1947,8 +1882,7 @@ msgstr "Reputaci�n m�nima para cerrar una denuncia propia"
 
 #: forum/settings/minrep.py:40
 msgid ""
-"The minimum reputation an user must have to be allowed to close his own "
-"question."
+"The minimum reputation an user must have to be allowed to close his own question."
 msgstr "Reputaci�n m�nima para cerrar una denuncia propia."
 
 #: forum/settings/minrep.py:43
@@ -1957,8 +1891,8 @@ msgstr ""
 
 #: forum/settings/minrep.py:44
 msgid ""
-"If checked the same permissions as the ones to close question will be "
-"required to reopen it."
+"If checked the same permissions as the ones to close question will be required to "
+"reopen it."
 msgstr ""
 
 #: forum/settings/minrep.py:48
@@ -1967,8 +1901,7 @@ msgstr "Reputaci�n m�nima para reabrir las propias denuncias"
 
 #: forum/settings/minrep.py:49
 msgid ""
-"The minimum reputation an user must have to be allowed to reopen his own "
-"question."
+"The minimum reputation an user must have to be allowed to reopen his own question."
 msgstr "Reputaci�n m�nima para reabrir una denuncia propia."
 
 #: forum/settings/minrep.py:52
@@ -1977,11 +1910,10 @@ msgstr "Reputaci�n m�nima para reetiquetar las denuncias de otros"
 
 #: forum/settings/minrep.py:53
 msgid ""
-"The minimum reputation an user must have to be allowed to retag others "
-"questions."
+"The minimum reputation an user must have to be allowed to retag others questions."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"reetiquetar las denuncias de otros."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita reetiquetar "
+"las denuncias de otros."
 
 #: forum/settings/minrep.py:56
 msgid "Minimum reputation to edit wiki posts"
@@ -1989,11 +1921,10 @@ msgstr "Reputaci�n m�nima para editar notas convertidas en wiki"
 
 #: forum/settings/minrep.py:57
 msgid ""
-"The minimum reputation an user must have to be allowed to edit community "
-"wiki posts."
+"The minimum reputation an user must have to be allowed to edit community wiki posts."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"editar notas en modo wiki comunitario."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita editar notas "
+"en modo wiki comunitario."
 
 #: forum/settings/minrep.py:60
 msgid "Minimum reputation to mark post as community wiki"
@@ -2001,44 +1932,41 @@ msgstr "Reputaci�n m�nima para transformar un texto en wiki comunitario"
 
 #: forum/settings/minrep.py:61
 msgid ""
-"The minimum reputation an user must have to be allowed to mark a post as "
-"community wiki."
+"The minimum reputation an user must have to be allowed to mark a post as community "
+"wiki."
 msgstr ""
-"Reputaci�n m�nima que un usuario debe tener para poder transformar un texto "
-"en wiki comunitario."
+"Reputaci�n m�nima que un usuario debe tener para poder transformar un texto en wiki "
+"comunitario."
 
 #: forum/settings/minrep.py:64
 msgid "Minimum reputation to edit others posts"
 msgstr "Reputaci�n m�nima para editar las notas de los dem�s"
 
 #: forum/settings/minrep.py:65
-msgid ""
-"The minimum reputation an user must have to be allowed to edit others posts."
+msgid "The minimum reputation an user must have to be allowed to edit others posts."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"editar las notas de los dem�s."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita editar las "
+"notas de los dem�s."
 
 #: forum/settings/minrep.py:68
 msgid "Minimum reputation to close others posts"
 msgstr "Reputaci�n m�nima para cerrar las notas de los dem�s"
 
 #: forum/settings/minrep.py:69
-msgid ""
-"The minimum reputation an user must have to be allowed to close others posts."
+msgid "The minimum reputation an user must have to be allowed to close others posts."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"cerrar las notas de los dem�s."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita cerrar las "
+"notas de los dem�s."
 
 #: forum/settings/minrep.py:72
 msgid "Minimum reputation to delete comments"
 msgstr "Reputaci�n m�nima para borrar comentarios"
 
 #: forum/settings/minrep.py:73
-msgid ""
-"The minimum reputation an user must have to be allowed to delete comments."
+msgid "The minimum reputation an user must have to be allowed to delete comments."
 msgstr ""
-"El m�nimo de reputaci�n que debe tener un usuario para que se le permita "
-"borrar comentarios."
+"El m�nimo de reputaci�n que debe tener un usuario para que se le permita borrar "
+"comentarios."
 
 #: forum/settings/minrep.py:76
 msgid "Minimum reputation to convert answers to comment"
@@ -2046,11 +1974,11 @@ msgstr "Karma m�nimo para convertir respuestas en comentarios"
 
 #: forum/settings/minrep.py:77
 msgid ""
-"The minimum reputation an user must have to be allowed to convert an answer "
-"into a comment."
+"The minimum reputation an user must have to be allowed to convert an answer into a "
+"comment."
 msgstr ""
-"Karma m�nimo que debe tener un usuario para poder convertir una respuesta en "
-"un comentario."
+"Karma m�nimo que debe tener un usuario para poder convertir una respuesta en un "
+"comentario."
 
 #: forum/settings/minrep.py:80
 #, fuzzy
@@ -2060,11 +1988,11 @@ msgstr "Reputaci�n m�nima para borrar comentarios"
 #: forum/settings/minrep.py:81
 #, fuzzy
 msgid ""
-"The minimum reputation an user must have to be allowed to convert comments "
-"into an answer."
+"The minimum reputation an user must have to be allowed to convert comments into an "
+"answer."
 msgstr ""
-"Karma m�nimo que debe tener un usuario para poder convertir una respuesta en "
-"un comentario."
+"Karma m�nimo que debe tener un usuario para poder convertir una respuesta en un "
+"comentario."
 
 #: forum/settings/minrep.py:84
 #, fuzzy
@@ -2074,11 +2002,11 @@ msgstr "Karma m�nimo para convertir respuestas en comentarios"
 #: forum/settings/minrep.py:85
 #, fuzzy
 msgid ""
-"The minimum reputation an user must have to be allowed to convert an answer "
-"into a question."
+"The minimum reputation an user must have to be allowed to convert an answer into a "
+"question."
 msgstr ""
-"Karma m�nimo que debe tener un usuario para poder convertir una respuesta en "
-"un comentario."
+"Karma m�nimo que debe tener un usuario para poder convertir una respuesta en un "
+"comentario."
 
 #: forum/settings/minrep.py:88
 msgid "Minimum reputation to view offensive flags"
@@ -2087,8 +2015,8 @@ msgstr "Reputaci�n m�nima para ver mensajes denunciados."
 #: forum/settings/minrep.py:89
 msgid "The minimum reputation an user must have to view offensive flags."
 msgstr ""
-"El m�nimo de reputaci�n que pudebeede tener un usuario para que se le "
-"permita ver mensajes denunciados."
+"El m�nimo de reputaci�n que pudebeede tener un usuario para que se le permita ver "
+"mensajes denunciados."
 
 #: forum/settings/moderation.py:8
 msgid "Moderation settings"
@@ -2105,8 +2033,8 @@ msgstr "Respuestas y Comentarios"
 
 #: forum/settings/moderation.py:12
 msgid ""
-"If you check, the canned comments feature will be activated, allowing "
-"moderators to use canned patterns for their comments."
+"If you check, the canned comments feature will be activated, allowing moderators to "
+"use canned patterns for their comments."
 msgstr ""
 
 #: forum/settings/moderation.py:20
@@ -2117,12 +2045,12 @@ msgstr "comentar"
 #: forum/settings/moderation.py:21
 msgid ""
 "\n"
-"<p>Create some canned comments to be used for easier moderation. You can "
-"access the {{ post }} and {{ settings }} variables.</p>\n"
-"<p>If you want to access the current post author username you can use "
-"{{ post.author }}, for the question title use {{ post.title }}.</p>\n"
-"<p>To get the application title use {{ settings.APP_TITLE }}. All settings "
-"are accessible through the settings object.</p>\n"
+"<p>Create some canned comments to be used for easier moderation. You can access the "
+"{{ post }} and {{ settings }} variables.</p>\n"
+"<p>If you want to access the current post author username you can use {{ post."
+"author }}, for the question title use {{ post.title }}.</p>\n"
+"<p>To get the application title use {{ settings.APP_TITLE }}. All settings are "
+"accessible through the settings object.</p>\n"
 msgstr ""
 
 #: forum/settings/moderation.py:32
@@ -2131,8 +2059,7 @@ msgstr "Motivos de denuncia"
 
 #: forum/settings/moderation.py:33
 msgid "Create some flag reasons to use in the flag post popup."
-msgstr ""
-"Puedes escribir m�s opciones para razones que dar para denunciar un mensaje."
+msgstr "Puedes escribir m�s opciones para razones que dar para denunciar un mensaje."
 
 #: forum/settings/moderation.py:41
 msgid "Close Reasons"
@@ -2140,8 +2067,7 @@ msgstr "Motivos de cierre"
 
 #: forum/settings/moderation.py:42
 msgid "Create some close reasons to use in the close question popup."
-msgstr ""
-"Puedes escribir m�s opciones para razones que dar para cerrar una denuncia."
+msgstr "Puedes escribir m�s opciones para razones que dar para cerrar una denuncia."
 
 #: forum/settings/moderation.py:48
 msgid "Position it in the \"More\" menu"
@@ -2164,11 +2090,10 @@ msgid "Reputation gains and losses config"
 msgstr "Configuraci�n de ganancias y p�rdidas de reputaci�n"
 
 #: forum/settings/repgain.py:4
-msgid ""
-"Configure the reputation points a user may gain or lose upon certain actions."
+msgid "Configure the reputation points a user may gain or lose upon certain actions."
 msgstr ""
-"Configura los puntos de reputaci�n que un usuario puede ganar o perder con "
-"ciertas acciones."
+"Configura los puntos de reputaci�n que un usuario puede ganar o perder con ciertas "
+"acciones."
 
 #: forum/settings/repgain.py:7
 msgid "Initial reputation"
@@ -2181,8 +2106,7 @@ msgstr "La reputaci�n inicial que gana un usuario cuando se registra."
 #: forum/settings/repgain.py:12
 msgid "Maximum reputation a user can gain in one day for being upvoted."
 msgstr ""
-"La reputaci�n ?axima que puede ganar un usuario en un d�a por recibir votos "
-"positivos."
+"La reputaci�n ?axima que puede ganar un usuario en un d�a por recibir votos positivos."
 
 #: forum/settings/repgain.py:15
 #, fuzzy
@@ -2192,8 +2116,7 @@ msgstr "Requerir un email validado para..."
 #: forum/settings/repgain.py:16
 #, fuzzy
 msgid "Reputation a user gains for validating his e-mail."
-msgstr ""
-"Reputaci�n que gana un usuario cuando se le acepta una de sus respuestas."
+msgstr "Reputaci�n que gana un usuario cuando se le acepta una de sus respuestas."
 
 #: forum/settings/repgain.py:19
 msgid "Rep gain by upvoted"
@@ -2201,8 +2124,7 @@ msgstr "Karma ganado por votos positivos"
 
 #: forum/settings/repgain.py:20
 msgid "Reputation a user gains for having one of his posts up voted."
-msgstr ""
-"Reputaci�n que gana un usuario por recibir un voto positivo a un mensaje."
+msgstr "Reputaci�n que gana un usuario por recibir un voto positivo a un mensaje."
 
 #: forum/settings/repgain.py:23
 msgid "Rep lost by downvoted"
@@ -2210,8 +2132,7 @@ msgstr "Karma perido por votos negativos"
 
 #: forum/settings/repgain.py:24
 msgid "Reputation a user loses for having one of his posts down voted."
-msgstr ""
-"Reputaci�n que pierde un usuario por recibir un voto negativo a un mensaje."
+msgstr "Reputaci�n que pierde un usuario por recibir un voto negativo a un mensaje."
 
 #: forum/settings/repgain.py:27
 msgid "Rep lost by downvoting"
@@ -2227,19 +2148,16 @@ msgstr "Reputaci�n ganada por soluci�n aceptada"
 
 #: forum/settings/repgain.py:33
 msgid "Reputation a user gains for having one of his answers accepted."
-msgstr ""
-"Reputaci�n que gana un usuario cuando se le acepta una de sus respuestas."
+msgstr "Reputaci�n que gana un usuario cuando se le acepta una de sus respuestas."
 
 #: forum/settings/repgain.py:36
 msgid "Rep gain by accepting answer"
 msgstr "Karma ganado por aceptar respuesta"
 
 #: forum/settings/repgain.py:37
-msgid ""
-"Reputation a user gains for accepting an answer to one of his questions."
+msgid "Reputation a user gains for accepting an answer to one of his questions."
 msgstr ""
-"Reputaci�n que gana un usuario por aceptar una respuesta a una de sus "
-"denuncias."
+"Reputaci�n que gana un usuario por aceptar una respuesta a una de sus denuncias."
 
 #: forum/settings/repgain.py:40
 msgid "Rep lost by post flagged"
@@ -2248,8 +2166,7 @@ msgstr "Karma perdido por nota denunciada."
 #: forum/settings/repgain.py:41
 msgid "Reputation a user loses by having one of his posts flagged."
 msgstr ""
-"Reputaci�n que pierde un usuario por recibir una denuncia a uno de sus "
-"mensajes."
+"Reputaci�n que pierde un usuario por recibir una denuncia a uno de sus mensajes."
 
 #: forum/settings/repgain.py:44
 msgid "Rep lost by post flagged and hidden"
@@ -2257,11 +2174,11 @@ msgstr "Karma perdido por nota denunciada y oculta"
 
 #: forum/settings/repgain.py:45
 msgid ""
-"Reputation a user loses by having the last revision of one of his posts "
-"flagged the enough number of times to hide the post."
+"Reputation a user loses by having the last revision of one of his posts flagged the "
+"enough number of times to hide the post."
 msgstr ""
-"Reputaci�n que pierde un usuario por recibir el n�mero necesario de "
-"denuncias para ocultar la �ltima revisi�n de una de sus notas."
+"Reputaci�n que pierde un usuario por recibir el n�mero necesario de denuncias para "
+"ocultar la �ltima revisi�n de una de sus notas."
 
 #: forum/settings/repgain.py:48
 msgid "Rep lost by post flagged and deleted"
@@ -2269,11 +2186,11 @@ msgstr "Karma perdido por nota denunciada y borrada"
 
 #: forum/settings/repgain.py:49
 msgid ""
-"Reputation a user loses by having the last revision of one of his posts "
-"flagged the enough number of times to delete the post."
+"Reputation a user loses by having the last revision of one of his posts flagged the "
+"enough number of times to delete the post."
 msgstr ""
-"Reputaci�n que pierde un usuario por recibir el n�mero necesario de "
-"denuncias para borrar la �ltima revisi�n de una de sus notas."
+"Reputaci�n que pierde un usuario por recibir el n�mero necesario de denuncias para "
+"borrar la �ltima revisi�n de una de sus notas."
 
 #: forum/settings/sidebar.py:10
 msgid "Show the Welcome box"
@@ -2282,16 +2199,15 @@ msgstr "Mostrar la caja de bienvenida"
 #: forum/settings/sidebar.py:11
 msgid "Do you want to show the welcome box when a user first visits your site."
 msgstr ""
-"�Quieres mostrar la caja de bienvenida cuando un usuario visita tu sitio por "
-"primera vez?"
+"�Quieres mostrar la caja de bienvenida cuando un usuario visita tu sitio por primera "
+"vez?"
 
 #: forum/settings/sidebar.py:15
 msgid "Show interesting tags in the sidebar"
 msgstr ""
 
 #: forum/settings/sidebar.py:16
-msgid ""
-"Check this if you want to see the interesting tags container in the sidebar."
+msgid "Check this if you want to see the interesting tags container in the sidebar."
 msgstr ""
 
 #: forum/settings/sidebar.py:20
@@ -2299,11 +2215,10 @@ msgid "Application intro"
 msgstr "Presentaci�n de la aplicaci�n"
 
 #: forum/settings/sidebar.py:21
-msgid ""
-"The introductory page that is visible in the sidebar for anonymous users."
+msgid "The introductory page that is visible in the sidebar for anonymous users."
 msgstr ""
-"La p�gina de presentaci�n que es visible en la barra lateral para los "
-"usuarios an�nimos."
+"La p�gina de presentaci�n que es visible en la barra lateral para los usuarios "
+"an�nimos."
 
 #: forum/settings/sidebar.py:76
 msgid "Upper block rendering mode"
@@ -2345,8 +2260,8 @@ msgstr ""
 
 #: forum/settings/sitemaps.py:13
 msgid ""
-"Used in the Questions Sitemap <changefreq> tag and specifies the content "
-"change frequency."
+"Used in the Questions Sitemap <changefreq> tag and specifies the content change "
+"frequency."
 msgstr ""
 
 #: forum/settings/static.py:17
@@ -2400,8 +2315,8 @@ msgid ""
 "Some piece of content that goes under the search bar and can be used for "
 "announcements, etc."
 msgstr ""
-"Un fragmento de contenido que va bajo la barra de contenidos y se puede usar "
-"para anuncios, etc."
+"Un fragmento de contenido que va bajo la barra de contenidos y se puede usar para "
+"anuncios, etc."
 
 #: forum/settings/static.py:53
 msgid "Announcement bar"
@@ -2497,11 +2412,11 @@ msgstr "Carpeta donde se almacenan los ficheros que se suben"
 
 #: forum/settings/upload.py:9
 msgid ""
-"The filesystem path where uploaded files will be stored. Please note that "
-"this folder must exist."
+"The filesystem path where uploaded files will be stored. Please note that this folder "
+"must exist."
 msgstr ""
-"El directorio del disco donde se almacenar�n los ficheros que se suban. "
-"N�tese que esta carpeta debe existir."
+"El directorio del disco donde se almacenar�n los ficheros que se suban. N�tese que "
+"esta carpeta debe existir."
 
 #: forum/settings/upload.py:12
 msgid "Uploaded files alias"
@@ -2509,11 +2424,11 @@ msgstr "Alias para subida de ficheros"
 
 #: forum/settings/upload.py:13
 msgid ""
-"The url alias for uploaded files. Notice that if you change this setting, "
-"you'll need to restart your site."
+"The url alias for uploaded files. Notice that if you change this setting, you'll need "
+"to restart your site."
 msgstr ""
-"El URL que hace de alias para la subida de ficheros. N�tese que si se cambia "
-"esta configuraci�n ser� necesario reiniciar el sitio."
+"El URL que hace de alias para la subida de ficheros. N�tese que si se cambia esta "
+"configuraci�n ser� necesario reiniciar el sitio."
 
 #: forum/settings/upload.py:16
 msgid "Max file size"
@@ -2555,11 +2470,11 @@ msgstr "Forzar URL �nica"
 
 #: forum/settings/urls.py:18
 msgid ""
-"Redirect the request in case there is a mismatch between the slug in the url "
-"and the actual slug"
+"Redirect the request in case there is a mismatch between the slug in the url and the "
+"actual slug"
 msgstr ""
-"Redirigir la petici�n en caso de que exista una diferencia entre el texto "
-"del slug en la URL y el slug de verdad."
+"Redirigir la petici�n en caso de que exista una diferencia entre el texto del slug en "
+"la URL y el slug de verdad."
 
 #: forum/settings/users.py:7
 msgid "Users settings"
@@ -2584,8 +2499,8 @@ msgstr ""
 
 #: forum/settings/users.py:16
 msgid ""
-"If you check this the greeting will be stored in a cookie and the users "
-"won't be notified on logout."
+"If you check this the greeting will be stored in a cookie and the users won't be "
+"notified on logout."
 msgstr ""
 
 #: forum/settings/users.py:20
@@ -2644,8 +2559,7 @@ msgstr "gestionar"
 msgid "update"
 msgstr "actualizar"
 
-#: forum/settings/users.py:29
-#: forum/skins/default/templates/auth/auth_settings.html:12
+#: forum/settings/users.py:29 forum/skins/default/templates/auth/auth_settings.html:12
 #: forum/skins/nuxeo/templates/auth/auth_settings.html:12
 msgid "remove"
 msgstr "quitar"
@@ -2660,11 +2574,11 @@ msgstr "Nombres de usuario no permitidos"
 
 #: forum/settings/users.py:32
 msgid ""
-"A comma separated list of disabled usernames (usernames not allowed during a "
-"new user registration)."
+"A comma separated list of disabled usernames (usernames not allowed during a new user "
+"registration)."
 msgstr ""
-"Lista separada por comas de nombres de usuario que no se permiten (nombes "
-"que no se permiten durante el registro de un nuevo usuario)."
+"Lista separada por comas de nombres de usuario que no se permiten (nombes que no se "
+"permiten durante el registro de un nuevo usuario)."
 
 #: forum/settings/users.py:36
 #, fuzzy
@@ -2681,8 +2595,7 @@ msgid "Show user accept rate"
 msgstr "aceptar respuestas"
 
 #: forum/settings/users.py:43
-msgid ""
-"If you check this the user accept rate will be displayed on the user posts."
+msgid "If you check this the user accept rate will be displayed on the user posts."
 msgstr ""
 
 #: forum/settings/users.py:49
@@ -2701,8 +2614,7 @@ msgstr "Longitud m�nima del nombre de usuario"
 
 #: forum/settings/users.py:55
 msgid ""
-"The usernames that are longer than this will be truncated and ... will be "
-"appended."
+"The usernames that are longer than this will be truncated and ... will be appended."
 msgstr ""
 
 #: forum/settings/users.py:58
@@ -2712,8 +2624,8 @@ msgstr "Mostrar rombos de est�tus"
 #: forum/settings/users.py:59
 msgid "Show status \"diamonds\" next to moderators or superusers usernames."
 msgstr ""
-"Mostrar \"rombos\" de est�tus junto a los nombres de usuario de los "
-"moderadores o superusuarios."
+"Mostrar \"rombos\" de est�tus junto a los nombres de usuario de los moderadores o "
+"superusuarios."
 
 #: forum/settings/users.py:64
 msgid "Force unique email"
@@ -2729,11 +2641,10 @@ msgstr "Requerir un email validado para..."
 
 #: forum/settings/users.py:70
 msgid ""
-"Which actions in this site, users without a valid email will be prevented "
-"from doing."
+"Which actions in this site, users without a valid email will be prevented from doing."
 msgstr ""
-"Acciones que se les impedir�n a los usuarios sin una direcci�n de correo "
-"electr�nico validada."
+"Acciones que se les impedir�n a los usuarios sin una direcci�n de correo electr�nico "
+"validada."
 
 #: forum/settings/users.py:72
 msgid "ask questions"
@@ -2765,11 +2676,11 @@ msgstr "Guardar los mensajes pendientes por X minutos"
 
 #: forum/settings/users.py:83
 msgid ""
-"How much time in minutes a post should be kept in session until the user "
-"logs in or validates the email."
+"How much time in minutes a post should be kept in session until the user logs in or "
+"validates the email."
 msgstr ""
-"Cu�nto tiempo (en minutos) se deber�a guardar un mensaje hasta que el "
-"usuario se registra o valida su direcci�n de correo."
+"Cu�nto tiempo (en minutos) se deber�a guardar un mensaje hasta que el usuario se "
+"registra o valida su direcci�n de correo."
 
 #: forum/settings/users.py:87
 msgid "Warn about pending posts afer X minutes"
@@ -2777,39 +2688,37 @@ msgstr "Avisar de mensajes pendientes tras X minutos"
 
 #: forum/settings/users.py:88
 msgid ""
-"How much time in minutes a user that just logged in or validated his email "
-"should be warned about a pending post instead of publishing it automatically."
+"How much time in minutes a user that just logged in or validated his email should be "
+"warned about a pending post instead of publishing it automatically."
 msgstr ""
-"Cu�nto tiempo en minutos se deber�a avisar a un usuario que acaba de "
-"registrarse o validar su correo electronico de que tiene un mensaje "
-"pendiente en vez de publicarlo autom�ticamente."
+"Cu�nto tiempo en minutos se deber�a avisar a un usuario que acaba de registrarse o "
+"validar su correo electronico de que tiene un mensaje pendiente en vez de publicarlo "
+"autom�ticamente."
 
 #: forum/settings/users.py:92
 msgid "suitable for display on all websites with any audience type."
-msgstr ""
-"apropiado para mostrar en todos los sitios web con todo tipo de p�blicos"
+msgstr "apropiado para mostrar en todos los sitios web con todo tipo de p�blicos"
 
 #: forum/settings/users.py:93
 msgid ""
-"may contain rude gestures, provocatively dressed individuals, the lesser "
-"swear words, or mild violence."
+"may contain rude gestures, provocatively dressed individuals, the lesser swear words, "
+"or mild violence."
 msgstr ""
-"puede contener gestos obscenos, individuos vestidos provocativamente, "
-"exabruptos menores, o violencia suave."
+"puede contener gestos obscenos, individuos vestidos provocativamente, exabruptos "
+"menores, o violencia suave."
 
 #: forum/settings/users.py:94
 msgid ""
-"may contain such things as harsh profanity, intense violence, nudity, or "
-"hard drug use."
+"may contain such things as harsh profanity, intense violence, nudity, or hard drug "
+"use."
 msgstr ""
-"puede contener cosas como groser�as obscenas, violencia intensa, desnudez o "
-"uso de drogas duras."
+"puede contener cosas como groser�as obscenas, violencia intensa, desnudez o uso de "
+"drogas duras."
 
 #: forum/settings/users.py:95
 msgid "may contain hardcore sexual imagery or extremely disturbing violence."
 msgstr ""
-"puede contener im�genes sexuales 'hardcore' o violencia extremadamente "
-"preocupante."
+"puede contener im�genes sexuales 'hardcore' o violencia extremadamente preocupante."
 
 #: forum/settings/users.py:99
 msgid "Gravatar rating"
@@ -2817,16 +2726,16 @@ msgstr "Rating del gravatar"
 
 #: forum/settings/users.py:100
 msgid ""
-"Gravatar allows users to self-rate their images so that they can indicate if "
-"an image is appropriate for a certain audience."
+"Gravatar allows users to self-rate their images so that they can indicate if an image "
+"is appropriate for a certain audience."
 msgstr ""
-"Gravatar permite que los usuarios califiquen sus avatares para indicar si "
-"una imagen es apropiada para cierto p�blico."
+"Gravatar permite que los usuarios califiquen sus avatares para indicar si una imagen "
+"es apropiada para cierto p�blico."
 
 #: forum/settings/users.py:106
 msgid ""
-"(mystery-man) a simple, cartoon-style silhouetted outline of a person (does "
-"not vary by email hash)"
+"(mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary "
+"by email hash)"
 msgstr ""
 "(mystery-man) una silueta caricaturesca de una persona que no var�a seg�n su "
 "direcci�n de correo electr�nico"
@@ -2848,10 +2757,8 @@ msgid "Gravatar default"
 msgstr "Gravatar por defecto"
 
 #: forum/settings/users.py:114
-msgid ""
-"Gravatar has a number of built in options which you can also use as defaults."
-msgstr ""
-"Graatar tiene una serie de opciones incluidas que puedes usar por defecto."
+msgid "Gravatar has a number of built in options which you can also use as defaults."
+msgstr "Graatar tiene una serie de opciones incluidas que puedes usar por defecto."
 
 #: forum/settings/view.py:5
 msgid "View settings"
@@ -2883,8 +2790,8 @@ msgstr ""
 
 #: forum/settings/view.py:20
 msgid ""
-"The number of characters that are going to be displayed in order to get the "
-"content summary."
+"The number of characters that are going to be displayed in order to get the content "
+"summary."
 msgstr ""
 
 #: forum/settings/view.py:24
@@ -2892,11 +2799,10 @@ msgid "Recent tags block size"
 msgstr "Recent tags block size"
 
 #: forum/settings/view.py:25
-msgid ""
-"The number of tags to display in the recent tags block in the front page."
+msgid "The number of tags to display in the recent tags block in the front page."
 msgstr ""
-"El n�mero de etiquetas que se muestran en el bloque de etiquetas recientes "
-"de la p�gina principal."
+"El n�mero de etiquetas que se muestran en el bloque de etiquetas recientes de la "
+"p�gina principal."
 
 #: forum/settings/view.py:28
 #, fuzzy
@@ -2904,16 +2810,15 @@ msgid "Show tags in a cloud"
 msgstr "Mostrar rombos de est�tus"
 
 #: forum/settings/view.py:29
-msgid ""
-"If selected the tags in the recent tags widget will be displayed in a cloud."
+msgid "If selected the tags in the recent tags widget will be displayed in a cloud."
 msgstr ""
 
 #: forum/settings/view.py:33
 msgid "Tags cloud min occurs"
 msgstr ""
 
-#: forum/settings/view.py:34 forum/settings/view.py:38
-#: forum/settings/view.py:42 forum/settings/view.py:46
+#: forum/settings/view.py:34 forum/settings/view.py:38 forum/settings/view.py:42
+#: forum/settings/view.py:46
 msgid "Used to calculate the font size of the tags in the cloud widget."
 msgstr ""
 
@@ -2934,11 +2839,10 @@ msgid "Recent awards block size"
 msgstr "Recent awards block size"
 
 #: forum/settings/view.py:50
-msgid ""
-"The number of awards to display in the recent awards block in the front page."
+msgid "The number of awards to display in the recent awards block in the front page."
 msgstr ""
-"El n�mero de medallas que se muestran en el bloque de medallas recientes en "
-"la p�gina principal."
+"El n�mero de medallas que se muestran en el bloque de medallas recientes en la p�gina "
+"principal."
 
 #: forum/settings/view.py:53
 #, fuzzy
@@ -2947,8 +2851,8 @@ msgstr "Actividad reciente"
 
 #: forum/settings/view.py:54
 msgid ""
-"If you check this the latest activity will be updated when editing only the "
-"tags of a question."
+"If you check this the latest activity will be updated when editing only the tags of a "
+"question."
 msgstr ""
 
 #: forum/settings/view.py:57
@@ -2957,11 +2861,11 @@ msgstr "Limit related tags block"
 
 #: forum/settings/view.py:58
 msgid ""
-"Limit related tags block size in questions list pages. Set to 0 to display "
-"all all tags."
+"Limit related tags block size in questions list pages. Set to 0 to display all all "
+"tags."
 msgstr ""
-"Limita el tama�o del bloque de etiquetas relacionadas en las p�ginas de "
-"listas de denuncias. Poner a 0 para mostrar todas las etiquetas."
+"Limita el tama�o del bloque de etiquetas relacionadas en las p�ginas de listas de "
+"denuncias. Poner a 0 para mostrar todas las etiquetas."
 
 #: forum/settings/voting.py:4
 msgid "Voting rules"
@@ -2978,8 +2882,8 @@ msgstr "Karma m�nimo para votar"
 
 #: forum/settings/voting.py:8
 msgid ""
-"The user reputation is added to the static MAX_VOTES_PER_DAY option. Users "
-"with higher reputation can vote more."
+"The user reputation is added to the static MAX_VOTES_PER_DAY option. Users with "
+"higher reputation can vote more."
 msgstr ""
 
 #: forum/settings/voting.py:11
@@ -3005,20 +2909,17 @@ msgstr "M�ximo de denuncias por d�a"
 #: forum/settings/voting.py:20
 #, fuzzy
 msgid "The maximum number of times an can flag a post per day."
-msgstr ""
-"El n�mero m�ximo de veces que un usuario puede denunciar un mensaje en un "
-"d�a."
+msgstr "El n�mero m�ximo de veces que un usuario puede denunciar un mensaje en un d�a."
 
 #: forum/settings/voting.py:23
 msgid "Flag count to hide post"
 msgstr "N�mero de denuncias para ocultar mensaje"
 
 #: forum/settings/voting.py:24
-msgid ""
-"How many times a post needs to be flagged to be hidden from the main page."
+msgid "How many times a post needs to be flagged to be hidden from the main page."
 msgstr ""
-"Cu�ntas denuncias tiene que recibir un mensaje para que se oculte de la "
-"p�gina principal."
+"Cu�ntas denuncias tiene que recibir un mensaje para que se oculte de la p�gina "
+"principal."
 
 #: forum/settings/voting.py:27
 msgid "Flag count to delete post"
@@ -3034,37 +2935,29 @@ msgstr "D�as para cancelar un voto"
 
 #: forum/settings/voting.py:32
 msgid "How many days an user can cancel a vote after he originaly casted it."
-msgstr ""
-"Cu�ntos d�as tiene un usuario para cacelar su voto tras haberlo emitido."
+msgstr "Cu�ntos d�as tiene un usuario para cacelar su voto tras haberlo emitido."
 
-#: forum/skins/default/templates/401.html:3
-#: forum/skins/default/templates/401.html:28
-#: forum/skins/nuxeo/templates/401.html:3
-#: forum/skins/nuxeo/templates/401.html:28
+#: forum/skins/default/templates/401.html:3 forum/skins/default/templates/401.html:28
+#: forum/skins/nuxeo/templates/401.html:3 forum/skins/nuxeo/templates/401.html:28
 msgid "Not logged in"
 msgstr "No est�s conectado"
 
-#: forum/skins/default/templates/401.html:32
-#: forum/skins/nuxeo/templates/401.html:32
+#: forum/skins/default/templates/401.html:32 forum/skins/nuxeo/templates/401.html:32
 msgid "You are not logged in..."
 msgstr "No est�s conectado..."
 
-#: forum/skins/default/templates/401.html:34
-#: forum/skins/nuxeo/templates/401.html:34
+#: forum/skins/default/templates/401.html:34 forum/skins/nuxeo/templates/401.html:34
 #, fuzzy
 msgid "...and the resource you're trying to access is protected."
 msgstr "...y el recurso al que intentas acceder est� protegido."
 
-#: forum/skins/default/templates/401.html:36
-#: forum/skins/nuxeo/templates/401.html:36
+#: forum/skins/default/templates/401.html:36 forum/skins/nuxeo/templates/401.html:36
 msgid "Redirecting to the login page."
 msgstr "Redireccionando a la p�gina de acceso."
 
-#: forum/skins/default/templates/401.html:39
-#: forum/skins/nuxeo/templates/401.html:39
+#: forum/skins/default/templates/401.html:39 forum/skins/nuxeo/templates/401.html:39
 msgid "If you're not automatically redirected in 5 seconds, please click"
-msgstr ""
-"Si no eres redirigido autom�ticamente en 5 segundos, por favor haz click"
+msgstr "Si no eres redirigido autom�ticamente en 5 segundos, por favor haz click"
 
 #: forum/skins/default/templates/401.html:40
 #: forum/skins/default/templates/auth/signin.html:106
@@ -3075,139 +2968,104 @@ msgstr ""
 msgid "here"
 msgstr "aqu�"
 
-#: forum/skins/default/templates/403.html:3
-#: forum/skins/default/templates/403.html:11
-#: forum/skins/nuxeo/templates/403.html:3
-#: forum/skins/nuxeo/templates/403.html:11
+#: forum/skins/default/templates/403.html:3 forum/skins/default/templates/403.html:11
+#: forum/skins/nuxeo/templates/403.html:3 forum/skins/nuxeo/templates/403.html:11
 msgid "Forbidden"
 msgstr "Prohibido"
 
-#: forum/skins/default/templates/403.html:15
-#: forum/skins/nuxeo/templates/403.html:15
+#: forum/skins/default/templates/403.html:15 forum/skins/nuxeo/templates/403.html:15
 msgid "Sorry, you don't have permissions to access this page."
 msgstr "Lo sentimos, no tienes permiso para acceder a esta p�gina."
 
-#: forum/skins/default/templates/403.html:17
-#: forum/skins/default/templates/404.html:26
-#: forum/skins/nuxeo/templates/403.html:17
-#: forum/skins/nuxeo/templates/404.html:26
+#: forum/skins/default/templates/403.html:17 forum/skins/default/templates/404.html:26
+#: forum/skins/nuxeo/templates/403.html:17 forum/skins/nuxeo/templates/404.html:26
 msgid "This might have happened for the following reasons:"
 msgstr "Esto puede haber ocurrido por las siguientes razones:"
 
-#: forum/skins/default/templates/403.html:19
-#: forum/skins/nuxeo/templates/403.html:19
-msgid ""
-"you followed a link on an email, but you're currently logged in as another "
-"user;"
+#: forum/skins/default/templates/403.html:19 forum/skins/nuxeo/templates/403.html:19
+msgid "you followed a link on an email, but you're currently logged in as another user;"
 msgstr ""
-"has hecho click en un enlace de un email, pero est�s conectado con un "
-"usuario diferente del destinatario de ese email;"
+"has hecho click en un enlace de un email, pero est�s conectado con un usuario "
+"diferente del destinatario de ese email;"
 
-#: forum/skins/default/templates/403.html:20
-#: forum/skins/nuxeo/templates/403.html:20
+#: forum/skins/default/templates/403.html:20 forum/skins/nuxeo/templates/403.html:20
 msgid "there are errors in the url, please confirm it;"
 msgstr "hay errores en la direcci�n (URL), por favor verif�cala;"
 
-#: forum/skins/default/templates/403.html:21
-#: forum/skins/nuxeo/templates/403.html:21
+#: forum/skins/default/templates/403.html:21 forum/skins/nuxeo/templates/403.html:21
 msgid "if you believe you shouldn't bee seeing this error, please"
 msgstr "si crees que este error no deber�a haber ocurrido, por favor"
 
-#: forum/skins/default/templates/403.html:23
-#: forum/skins/default/templates/404.html:31
-#: forum/skins/nuxeo/templates/403.html:23
-#: forum/skins/nuxeo/templates/404.html:31
+#: forum/skins/default/templates/403.html:23 forum/skins/default/templates/404.html:31
+#: forum/skins/nuxeo/templates/403.html:23 forum/skins/nuxeo/templates/404.html:31
 msgid "report this problem"
 msgstr "informa de este problema"
 
-#: forum/skins/default/templates/403.html:29
-#: forum/skins/nuxeo/templates/403.html:29
+#: forum/skins/default/templates/403.html:29 forum/skins/nuxeo/templates/403.html:29
 msgid "to home page"
 msgstr "a la p�gina inicial"
 
-#: forum/skins/default/templates/403.html:30
-#: forum/skins/default/templates/404.html:41
-#: forum/skins/nuxeo/templates/403.html:30
-#: forum/skins/nuxeo/templates/404.html:41
+#: forum/skins/default/templates/403.html:30 forum/skins/default/templates/404.html:41
+#: forum/skins/nuxeo/templates/403.html:30 forum/skins/nuxeo/templates/404.html:41
 msgid "see all questions"
 msgstr "ver todas las denuncias"
 
-#: forum/skins/default/templates/403.html:31
-#: forum/skins/default/templates/404.html:42
-#: forum/skins/nuxeo/templates/403.html:31
-#: forum/skins/nuxeo/templates/404.html:42
+#: forum/skins/default/templates/403.html:31 forum/skins/default/templates/404.html:42
+#: forum/skins/nuxeo/templates/403.html:31 forum/skins/nuxeo/templates/404.html:42
 msgid "see all tags"
 msgstr "ver todas las etiquetas"
 
-#: forum/skins/default/templates/404.html:4
-#: forum/skins/nuxeo/templates/404.html:4
+#: forum/skins/default/templates/404.html:4 forum/skins/nuxeo/templates/404.html:4
 msgid "404 Error"
 msgstr "Error 404"
 
-#: forum/skins/default/templates/404.html:20
-#: forum/skins/nuxeo/templates/404.html:20
+#: forum/skins/default/templates/404.html:20 forum/skins/nuxeo/templates/404.html:20
 msgid "404 Not Found"
 msgstr "P�gina no encontrada (error 404)"
 
-#: forum/skins/default/templates/404.html:24
-#: forum/skins/nuxeo/templates/404.html:24
+#: forum/skins/default/templates/404.html:24 forum/skins/nuxeo/templates/404.html:24
 msgid "Sorry, could not find the page you requested."
 msgstr "Lo siento, no he encontrado la p�gina que has pedido."
 
-#: forum/skins/default/templates/404.html:28
-#: forum/skins/nuxeo/templates/404.html:28
+#: forum/skins/default/templates/404.html:28 forum/skins/nuxeo/templates/404.html:28
 msgid "this question or answer has been deleted;"
 msgstr "esta denuncia o respuesta ha sido borrada;"
 
-#: forum/skins/default/templates/404.html:29
-#: forum/skins/nuxeo/templates/404.html:29
+#: forum/skins/default/templates/404.html:29 forum/skins/nuxeo/templates/404.html:29
 msgid "url has error - please check it;"
-msgstr ""
-"la direcci�n de la p�gina (URL) tiene alg�n error - por favor compru�bala;"
+msgstr "la direcci�n de la p�gina (URL) tiene alg�n error - por favor compru�bala;"
 
-#: forum/skins/default/templates/404.html:30
-#: forum/skins/nuxeo/templates/404.html:30
+#: forum/skins/default/templates/404.html:30 forum/skins/nuxeo/templates/404.html:30
 msgid "if you believe this error 404 should not have occurred, please"
 msgstr "si crees que este error 404 no deber�a haber ocurrido, por favor"
 
-#: forum/skins/default/templates/404.html:40
-#: forum/skins/default/templates/500.html:27
-#: forum/skins/nuxeo/templates/404.html:40
-#: forum/skins/nuxeo/templates/500.html:27
+#: forum/skins/default/templates/404.html:40 forum/skins/default/templates/500.html:27
+#: forum/skins/nuxeo/templates/404.html:40 forum/skins/nuxeo/templates/500.html:27
 msgid "back to previous page"
 msgstr "volver a la p�gina anterior"
 
-#: forum/skins/default/templates/500.html:22
-#: forum/skins/nuxeo/templates/500.html:22
+#: forum/skins/default/templates/500.html:22 forum/skins/nuxeo/templates/500.html:22
 msgid "sorry, system error"
 msgstr "lo siento, error del sistema"
 
-#: forum/skins/default/templates/500.html:24
-#: forum/skins/nuxeo/templates/500.html:24
+#: forum/skins/default/templates/500.html:24 forum/skins/nuxeo/templates/500.html:24
 msgid "system error log is recorded, error will be fixed as soon as possible"
-msgstr ""
-"el error de sistema ha sido registrado y ser� corregido lo antes posible"
+msgstr "el error de sistema ha sido registrado y ser� corregido lo antes posible"
 
-#: forum/skins/default/templates/500.html:25
-#: forum/skins/nuxeo/templates/500.html:25
+#: forum/skins/default/templates/500.html:25 forum/skins/nuxeo/templates/500.html:25
 msgid "please report the error to the site administrators if you wish"
-msgstr ""
-"por favor informa del error a los administradores de la web si lo deseas"
+msgstr "por favor informa del error a los administradores de la web si lo deseas"
 
-#: forum/skins/default/templates/500.html:28
-#: forum/skins/nuxeo/templates/500.html:28
+#: forum/skins/default/templates/500.html:28 forum/skins/nuxeo/templates/500.html:28
 msgid "see latest questions"
 msgstr "ver las �ltimas denuncias"
 
-#: forum/skins/default/templates/500.html:29
-#: forum/skins/nuxeo/templates/500.html:29
+#: forum/skins/default/templates/500.html:29 forum/skins/nuxeo/templates/500.html:29
 msgid "see tags"
 msgstr "ver etiquetas"
 
-#: forum/skins/default/templates/503.html:6
-#: forum/skins/default/templates/503.html:17
-#: forum/skins/nuxeo/templates/503.html:6
-#: forum/skins/nuxeo/templates/503.html:17
+#: forum/skins/default/templates/503.html:6 forum/skins/default/templates/503.html:17
+#: forum/skins/nuxeo/templates/503.html:6 forum/skins/nuxeo/templates/503.html:17
 msgid "System down for maintenance"
 msgstr "P�gina cerrada temporalmente por mantenimiento"
 
@@ -3237,16 +3095,14 @@ msgstr "Editar respuesta"
 
 #: forum/skins/default/templates/answer_edit.html:20
 #: forum/skins/default/templates/answer_edit.html:23
-#: forum/skins/default/templates/ask.html:27
-#: forum/skins/default/templates/ask.html:30
+#: forum/skins/default/templates/ask.html:27 forum/skins/default/templates/ask.html:30
 #: forum/skins/default/templates/question.html:47
 #: forum/skins/default/templates/question.html:50
 #: forum/skins/default/templates/question_edit.html:20
 #: forum/skins/default/templates/question_edit.html:23
 #: forum/skins/nuxeo/templates/answer_edit.html:19
 #: forum/skins/nuxeo/templates/answer_edit.html:22
-#: forum/skins/nuxeo/templates/ask.html:45
-#: forum/skins/nuxeo/templates/ask.html:48
+#: forum/skins/nuxeo/templates/ask.html:45 forum/skins/nuxeo/templates/ask.html:48
 #: forum/skins/nuxeo/templates/question.html:39
 #: forum/skins/nuxeo/templates/question.html:42
 #: forum/skins/nuxeo/templates/question_edit.html:19
@@ -3259,8 +3115,7 @@ msgstr "ocultar vista previa"
 #: forum/skins/default/templates/question.html:50
 #: forum/skins/default/templates/question_edit.html:23
 #: forum/skins/nuxeo/templates/answer_edit.html:22
-#: forum/skins/nuxeo/templates/ask.html:48
-#: forum/skins/nuxeo/templates/question.html:42
+#: forum/skins/nuxeo/templates/ask.html:48 forum/skins/nuxeo/templates/question.html:42
 #: forum/skins/nuxeo/templates/question_edit.html:22
 msgid "show preview"
 msgstr "mostrar vista previa"
@@ -3374,43 +3229,36 @@ msgstr "S� claro y conciso"
 msgid "see frequently asked questions"
 msgstr "lee las preguntas frecuentes"
 
-#: forum/skins/default/templates/ask.html:4
-#: forum/skins/default/templates/ask.html:93
-#: forum/skins/nuxeo/templates/ask.html:4
-#: forum/skins/nuxeo/templates/ask.html:112
+#: forum/skins/default/templates/ask.html:4 forum/skins/default/templates/ask.html:93
+#: forum/skins/nuxeo/templates/ask.html:4 forum/skins/nuxeo/templates/ask.html:112
 msgid "Ask a question"
 msgstr "Denunciar estafa"
 
-#: forum/skins/default/templates/ask.html:101
-#: forum/skins/nuxeo/templates/ask.html:165
+#: forum/skins/default/templates/ask.html:101 forum/skins/nuxeo/templates/ask.html:165
 msgid "You are welcome to start submitting your question anonymously."
 msgstr "Puedes empezar a publicar tu denuncia an�nimamente."
 
-#: forum/skins/default/templates/ask.html:102
-#: forum/skins/nuxeo/templates/ask.html:166
+#: forum/skins/default/templates/ask.html:102 forum/skins/nuxeo/templates/ask.html:166
 msgid ""
 "\n"
-"                    After submiting your question, you will be redirected to "
-"the login/signup page.\n"
-"                    Your question will be saved in the current session and "
-"will be published after you login with your existing account,\n"
+"                    After submiting your question, you will be redirected to the "
+"login/signup page.\n"
+"                    Your question will be saved in the current session and will be "
+"published after you login with your existing account,\n"
 "                    or signup for a new account"
 msgstr ""
 "\n"
 "                    Despu�s de enviarla ser�s redirigido a una p�gina para "
 "identificarte o registrarte.\n"
-"                    Tu denuncia no se publicar� hasta que te identifiques o "
-"te registres"
+"                    Tu denuncia no se publicar� hasta que te identifiques o te "
+"registres"
 
-#: forum/skins/default/templates/ask.html:106
-#: forum/skins/nuxeo/templates/ask.html:170
+#: forum/skins/default/templates/ask.html:106 forum/skins/nuxeo/templates/ask.html:170
 msgid "and validate your email."
 msgstr "y validar tu email."
 
-#: forum/skins/default/templates/ask.html:111
-#: forum/skins/nuxeo/templates/ask.html:175
-msgid ""
-"Remember, your question will not be published until you validate your email."
+#: forum/skins/default/templates/ask.html:111 forum/skins/nuxeo/templates/ask.html:175
+msgid "Remember, your question will not be published until you validate your email."
 msgstr "Recuerda, tu denuncia no se publicar� hasta que valides tu email."
 
 #: forum/skins/default/templates/ask.html:112
@@ -3420,42 +3268,33 @@ msgstr "Recuerda, tu denuncia no se publicar� hasta que valides tu email."
 msgid "Send me a validation link."
 msgstr "Enviadme un enlace para validar mi email."
 
-#: forum/skins/default/templates/ask.html:147
-#: forum/skins/nuxeo/templates/ask.html:148
+#: forum/skins/default/templates/ask.html:147 forum/skins/nuxeo/templates/ask.html:148
 msgid "(required)"
 msgstr "(obligatorio)"
 
-#: forum/skins/default/templates/ask.html:163
-#: forum/skins/nuxeo/templates/ask.html:182
+#: forum/skins/default/templates/ask.html:163 forum/skins/nuxeo/templates/ask.html:182
 msgid "Login/signup to post your question"
-msgstr ""
-"Enviar la denuncia (despu�s debes identificarte o registrarte para "
-"publicarla)"
+msgstr "Enviar la denuncia (despu�s debes identificarte o registrarte para publicarla)"
 
-#: forum/skins/default/templates/ask.html:165
-#: forum/skins/nuxeo/templates/ask.html:184
+#: forum/skins/default/templates/ask.html:165 forum/skins/nuxeo/templates/ask.html:184
 msgid "Ask your question"
 msgstr "Enviar la denuncia"
 
 #: forum/skins/default/templates/badge.html:7
-#: forum/skins/default/templates/badge.html:18
-#: forum/skins/nuxeo/templates/badge.html:7
+#: forum/skins/default/templates/badge.html:18 forum/skins/nuxeo/templates/badge.html:7
 #: forum/skins/nuxeo/templates/badge.html:18
 msgid "Badge"
 msgstr "Medalla"
 
-#: forum/skins/default/templates/badge.html:27
-#: forum/skins/nuxeo/templates/badge.html:27
+#: forum/skins/default/templates/badge.html:27 forum/skins/nuxeo/templates/badge.html:27
 msgid "The users have been awarded with badges:"
 msgstr "usuarios han recibido esta reputaci�n:"
 
-#: forum/skins/default/templates/badges.html:6
-#: forum/skins/nuxeo/templates/badges.html:6
+#: forum/skins/default/templates/badges.html:6 forum/skins/nuxeo/templates/badges.html:6
 msgid "Badges summary"
 msgstr "Medallas"
 
-#: forum/skins/default/templates/badges.html:9
-#: forum/skins/nuxeo/templates/badges.html:9
+#: forum/skins/default/templates/badges.html:9 forum/skins/nuxeo/templates/badges.html:9
 msgid "Badges"
 msgstr "Medallas"
 
@@ -3467,12 +3306,12 @@ msgstr "La comunidad te da medallas por tus den�ncias, soluciones aportadas y 
 #: forum/skins/default/templates/badges.html:14
 #: forum/skins/nuxeo/templates/badges.html:14
 msgid ""
-"Below is the list of available badges and number of times each type of badge "
-"has been awarded.\n"
+"Below is the list of available badges and number of times each type of badge has been "
+"awarded.\n"
 "    "
 msgstr ""
-"A continuaci�n sigue la lista de medallas disponibles y el n�mero de veces "
-"que se ha otorgado cada reputaci�n.\n"
+"A continuaci�n sigue la lista de medallas disponibles y el n�mero de veces que se ha "
+"otorgado cada reputaci�n.\n"
 "    "
 
 #: forum/skins/default/templates/badges.html:39
@@ -3493,15 +3332,12 @@ msgstr "oro"
 #: forum/skins/default/templates/badges.html:45
 #: forum/skins/nuxeo/templates/badges.html:47
 msgid "gold badge description"
-msgstr ""
-"Para obtener una medalla de oro es necesario demostrar amplios conocimientos."
+msgstr "Para obtener una medalla de oro es necesario demostrar amplios conocimientos."
 
 #: forum/skins/default/templates/badges.html:49
 #: forum/skins/nuxeo/templates/badges.html:51
-msgid ""
-"silver badge: occasionally awarded for the very high quality contributions"
-msgstr ""
-"medalla de plata:  otorgada ocasionalmente por las contribuciones de calidad"
+msgid "silver badge: occasionally awarded for the very high quality contributions"
+msgstr "medalla de plata:  otorgada ocasionalmente por las contribuciones de calidad"
 
 #: forum/skins/default/templates/badges.html:50
 #: forum/skins/nuxeo/templates/badges.html:52
@@ -3512,8 +3348,8 @@ msgstr "plata"
 #: forum/skins/nuxeo/templates/badges.html:55
 msgid "silver badge description"
 msgstr ""
-"Obtener una medalla de plata requiere paciencia. Si has recibido una es "
-"porque has contribuido significativamente."
+"Obtener una medalla de plata requiere paciencia. Si has recibido una es porque has "
+"contribuido significativamente."
 
 #: forum/skins/default/templates/badges.html:56
 #: forum/skins/nuxeo/templates/badges.html:58
@@ -3561,8 +3397,7 @@ msgid "Ok"
 msgstr "Ok"
 
 #: forum/skins/default/templates/base_content.html:48
-#: forum/skins/nuxeo/templates/base_content.html:43
-#: forum/templatetags/node_tags.py:189
+#: forum/skins/nuxeo/templates/base_content.html:43 forum/templatetags/node_tags.py:189
 #, fuzzy
 msgid "word"
 msgstr "Contrase�a"
@@ -3574,8 +3409,7 @@ msgid "words"
 msgstr "Contrase�a"
 
 #: forum/skins/default/templates/base_content.html:50
-#: forum/skins/nuxeo/templates/base_content.html:45
-#: forum/templatetags/node_tags.py:188
+#: forum/skins/nuxeo/templates/base_content.html:45 forum/templatetags/node_tags.py:188
 #, fuzzy
 msgid "character"
 msgstr "caracteres restantes"
@@ -3587,24 +3421,20 @@ msgid "characters"
 msgstr "caracteres restantes"
 
 #: forum/skins/default/templates/close.html:6
-#: forum/skins/default/templates/close.html:16
-#: forum/skins/nuxeo/templates/close.html:6
+#: forum/skins/default/templates/close.html:16 forum/skins/nuxeo/templates/close.html:6
 #: forum/skins/nuxeo/templates/close.html:16
 msgid "Close question"
 msgstr "Cerrar denuncia"
 
-#: forum/skins/default/templates/close.html:19
-#: forum/skins/nuxeo/templates/close.html:19
+#: forum/skins/default/templates/close.html:19 forum/skins/nuxeo/templates/close.html:19
 msgid "Close the question"
 msgstr "Cerrar la denuncia"
 
-#: forum/skins/default/templates/close.html:26
-#: forum/skins/nuxeo/templates/close.html:25
+#: forum/skins/default/templates/close.html:26 forum/skins/nuxeo/templates/close.html:25
 msgid "Reasons"
 msgstr "Motivos"
 
-#: forum/skins/default/templates/close.html:29
-#: forum/skins/nuxeo/templates/close.html:28
+#: forum/skins/default/templates/close.html:29 forum/skins/nuxeo/templates/close.html:28
 msgid "OK to close"
 msgstr "Estoy de acuerdo con cerrarla"
 
@@ -3628,14 +3458,14 @@ msgstr "Env�anos tus comentarios"
 #, python-format
 msgid ""
 "\n"
-"            <span class='big strong'>Dear %(user_name)s</span>, we look "
-"forward to hearing your feedback. \n"
+"            <span class='big strong'>Dear %(user_name)s</span>, we look forward to "
+"hearing your feedback. \n"
 "            Please type and send us your message below.\n"
 "            "
 msgstr ""
 "\n"
-"            <span class='big strong'>%(user_name)s</span>, esperamos recibir "
-"tus comentarios. \n"
+"            <span class='big strong'>%(user_name)s</span>, esperamos recibir tus "
+"comentarios. \n"
 "            Por favor escribe tu mensaje a continuaci�n y env�anoslo.\n"
 "            "
 
@@ -3643,14 +3473,14 @@ msgstr ""
 #: forum/skins/nuxeo/templates/feedback.html:24
 msgid ""
 "\n"
-"            <span class='big strong'>Dear visitor</span>, we look forward to "
-"hearing your feedback.\n"
+"            <span class='big strong'>Dear visitor</span>, we look forward to hearing "
+"your feedback.\n"
 "            Please type and send us your message below.\n"
 "            "
 msgstr ""
 "\n"
-"            <span class='big strong'>Estimado visitante</span>, esperamos "
-"recibir tus comentarios.\n"
+"            <span class='big strong'>Estimado visitante</span>, esperamos recibir tus "
+"comentarios.\n"
 "            Por favor escribe tu mensaje a continuaci�n y env�anoslo.\n"
 "            "
 
@@ -3689,29 +3519,26 @@ msgstr "buscar"
 
 #: forum/skins/default/templates/header.html:35
 #: forum/skins/default/templates/search.html:20
-#: forum/skins/nuxeo/templates/header.html:52
-#: forum/skins/nuxeo/templates/search.html:19 forum/views/readers.py:93
-#: forum/views/readers.py:95 forum/views/readers.py:168
+#: forum/skins/nuxeo/templates/header.html:52 forum/skins/nuxeo/templates/search.html:19
+#: forum/views/readers.py:93 forum/views/readers.py:95 forum/views/readers.py:168
 #: forum/views/users.py:343
 msgid "questions"
 msgstr "denuncias"
 
 #: forum/skins/default/templates/header.html:37
 #: forum/skins/default/templates/search.html:22
-#: forum/skins/nuxeo/templates/header.html:54
-#: forum/skins/nuxeo/templates/search.html:21 forum/views/users.py:58
+#: forum/skins/nuxeo/templates/header.html:54 forum/skins/nuxeo/templates/search.html:21
+#: forum/views/users.py:58
 msgid "users"
 msgstr "miembros"
 
-#: forum/skins/default/templates/index.html:11
-#: forum/skins/nuxeo/templates/index.html:11
+#: forum/skins/default/templates/index.html:11 forum/skins/nuxeo/templates/index.html:11
 msgid "welcome to "
 msgstr "bienvenidos a "
 
 #: forum/skins/default/templates/logout.html:6
 #: forum/skins/default/templates/logout.html:16
-#: forum/skins/nuxeo/templates/logout.html:6
-#: forum/skins/nuxeo/templates/logout.html:16
+#: forum/skins/nuxeo/templates/logout.html:6 forum/skins/nuxeo/templates/logout.html:16
 msgid "Logout"
 msgstr "Salir"
 
@@ -3740,17 +3567,15 @@ msgstr "Sintaxis del formato Markdown"
 #: forum/skins/default/templates/markdown_help.html:16
 #: forum/skins/nuxeo/templates/markdown_help.html:16
 msgid ""
-"This document describes some of the more important parts of Markdown (for "
-"writers, that is).  There's a lot more to the syntax than is mentioned here, "
-"though.  To get the full syntax documentation, go to John Gruber's <a href="
-"\"http://daringfireball.net/projects/markdown/syntax\" rel=\"nofollow"
-"\">Markdown Syntax</a> page"
+"This document describes some of the more important parts of Markdown (for writers, "
+"that is).  There's a lot more to the syntax than is mentioned here, though.  To get "
+"the full syntax documentation, go to John Gruber's <a href=\"http://daringfireball."
+"net/projects/markdown/syntax\" rel=\"nofollow\">Markdown Syntax</a> page"
 msgstr ""
-"Este documento describe algunas de las partes m�s importantes del formato "
-"Markdown.  Adem�s de lo que se explica aqu� hay mucho m�s.  Puedes conocer "
-"la sintaxis completa en la p�gina de John Gruber <a href=\"http://"
-"daringfireball.net/projects/markdown/syntax\" rel=\"nofollow\">Sintaxis de "
-"Markdown</a> (en ingl�s)."
+"Este documento describe algunas de las partes m�s importantes del formato Markdown.  "
+"Adem�s de lo que se explica aqu� hay mucho m�s.  Puedes conocer la sintaxis completa "
+"en la p�gina de John Gruber <a href=\"http://daringfireball.net/projects/markdown/"
+"syntax\" rel=\"nofollow\">Sintaxis de Markdown</a> (en ingl�s)."
 
 #: forum/skins/default/templates/markdown_help.html:20
 #: forum/skins/nuxeo/templates/markdown_help.html:20
@@ -3760,11 +3585,11 @@ msgstr "Cabeceras"
 #: forum/skins/default/templates/markdown_help.html:22
 #: forum/skins/nuxeo/templates/markdown_help.html:22
 msgid ""
-"For top-level headers underline the text with equal signs.  For second-level "
-"headers use dashes to underline."
+"For top-level headers underline the text with equal signs.  For second-level headers "
+"use dashes to underline."
 msgstr ""
-"Para los encabezamientos principales subraya el texto con el signo igual.  "
-"Para los encabezamientos de segundo nivel utiliza guiones para subrayar."
+"Para los encabezamientos principales subraya el texto con el signo igual.  Para los "
+"encabezamientos de segundo nivel utiliza guiones para subrayar."
 
 #: forum/skins/default/templates/markdown_help.html:26
 #: forum/skins/default/templates/markdown_help.html:30
@@ -3791,15 +3616,14 @@ msgstr "Esto es un H2"
 #: forum/skins/default/templates/markdown_help.html:45
 #: forum/skins/nuxeo/templates/markdown_help.html:45
 msgid ""
-"If you would rather, you can prefix headers with a hash (#) symbol instead.  "
-"The number of hash symbols indicates the header level.  For example, a "
-"single hash indicates a header level of one while two indicates the second "
-"header level:"
+"If you would rather, you can prefix headers with a hash (#) symbol instead.  The "
+"number of hash symbols indicates the header level.  For example, a single hash "
+"indicates a header level of one while two indicates the second header level:"
 msgstr ""
-"Si lo prefieres, puedes marcar los encabezamientos usando una almohadilla "
-"(#) como prefijo.  El n�mero de almohadillas indica el nivel del "
-"encabezamiento.  Por ejemplo, una �nica almohadilla indica un encabezamiento "
-"de primer nivel mientras que dos indican uno de segundo nivel:"
+"Si lo prefieres, puedes marcar los encabezamientos usando una almohadilla (#) como "
+"prefijo.  El n�mero de almohadillas indica el nivel del encabezamiento.  Por ejemplo, "
+"una �nica almohadilla indica un encabezamiento de primer nivel mientras que dos "
+"indican uno de segundo nivel:"
 
 #: forum/skins/default/templates/markdown_help.html:67
 #: forum/skins/default/templates/markdown_help.html:70
@@ -3811,12 +3635,11 @@ msgstr "Esto es un H3"
 #: forum/skins/default/templates/markdown_help.html:75
 #: forum/skins/nuxeo/templates/markdown_help.html:75
 msgid ""
-"Which you choose is a matter of style.  Whichever you thinks looks better in "
-"the text document.  In both cases, the final, fully formatted, document "
-"looks the same."
+"Which you choose is a matter of style.  Whichever you thinks looks better in the text "
+"document.  In both cases, the final, fully formatted, document looks the same."
 msgstr ""
-"Lo que elijas es una cuesti�n de preferencia.  En ambos casos el documento "
-"formateado queda igual."
+"Lo que elijas es una cuesti�n de preferencia.  En ambos casos el documento formateado "
+"queda igual."
 
 #: forum/skins/default/templates/markdown_help.html:80
 #: forum/skins/nuxeo/templates/markdown_help.html:80
@@ -3848,18 +3671,18 @@ msgstr "Enlaces"
 msgid ""
 "\n"
 "                There are two parts to every link.\n"
-"                The first is the actual text that the user will see and it "
-"is surrounded by brackets.\n"
-"                The second is address of the page you wish to link to and it "
-"is surrounded in parenthesis.\n"
+"                The first is the actual text that the user will see and it is "
+"surrounded by brackets.\n"
+"                The second is address of the page you wish to link to and it is "
+"surrounded in parenthesis.\n"
 "                "
 msgstr ""
 "\n"
 "                Los enlaces tienen dos partes.\n"
-"                La primera es el texto que el usuario ver�, y se escribe "
-"entre corchetes.\n"
-"                La segunda es la direcci�n de la p�gina hacia la que quieres "
-"enlazar y se escribe entre par�ntesis.\n"
+"                La primera es el texto que el usuario ver�, y se escribe entre "
+"corchetes.\n"
+"                La segunda es la direcci�n de la p�gina hacia la que quieres enlazar "
+"y se escribe entre par�ntesis.\n"
 "               "
 
 #: forum/skins/default/templates/markdown_help.html:103
@@ -3882,11 +3705,11 @@ msgstr "Formato"
 #: forum/skins/default/templates/markdown_help.html:114
 #: forum/skins/nuxeo/templates/markdown_help.html:114
 msgid ""
-"To indicate bold text surround the text with two star (*) symbols or two "
-"underscore (_) symbols:"
+"To indicate bold text surround the text with two star (*) symbols or two underscore "
+"(_) symbols:"
 msgstr ""
-"Para indicar texto en negrita, escr�belo entre dos asteriscos (**) o dos "
-"guiones bajos (__):"
+"Para indicar texto en negrita, escr�belo entre dos asteriscos (**) o dos guiones "
+"bajos (__):"
 
 #: forum/skins/default/templates/markdown_help.html:118
 #: forum/skins/default/templates/markdown_help.html:121
@@ -3905,11 +3728,10 @@ msgstr "Esto tambi�n es negrita"
 #: forum/skins/default/templates/markdown_help.html:134
 #: forum/skins/nuxeo/templates/markdown_help.html:134
 msgid ""
-"To indicate italicized text surround the text with a single star (*) symbol "
-"or underscore (_) symbol:"
+"To indicate italicized text surround the text with a single star (*) symbol or "
+"underscore (_) symbol:"
 msgstr ""
-"Para indicar cursiva escribe el texto entre un �nico asterisco (*) o gui�n "
-"bajo (_):"
+"Para indicar cursiva escribe el texto entre un �nico asterisco (*) o gui�n bajo (_):"
 
 #: forum/skins/default/templates/markdown_help.html:138
 #: forum/skins/default/templates/markdown_help.html:141
@@ -3928,11 +3750,11 @@ msgstr "Esto tambi�n es cursiva"
 #: forum/skins/default/templates/markdown_help.html:154
 #: forum/skins/nuxeo/templates/markdown_help.html:154
 msgid ""
-"To indicate italicized and bold text surround the text with three star (*) "
-"symbol or underscore (_) symbol:"
+"To indicate italicized and bold text surround the text with three star (*) symbol or "
+"underscore (_) symbol:"
 msgstr ""
-"Para indicar cursiva y negrita escribe el texto entre tres asteriscos (***) "
-"o guiones bajos (___):"
+"Para indicar cursiva y negrita escribe el texto entre tres asteriscos (***) o guiones "
+"bajos (___):"
 
 #: forum/skins/default/templates/markdown_help.html:158
 #: forum/skins/default/templates/markdown_help.html:161
@@ -3956,11 +3778,11 @@ msgstr "Bloques de cita"
 #: forum/skins/default/templates/markdown_help.html:178
 #: forum/skins/nuxeo/templates/markdown_help.html:178
 msgid ""
-"To create an indented area use the right angle bracket (&gt;) character "
-"before each line to be included in the blockquote."
+"To create an indented area use the right angle bracket (&gt;) character before each "
+"line to be included in the blockquote."
 msgstr ""
-"Para indentar un texto utiliza el signo 'mayor que' (&gt;) antes de cada "
-"l�nea que forme parte de la cita."
+"Para indentar un texto utiliza el signo 'mayor que' (&gt;) antes de cada l�nea que "
+"forme parte de la cita."
 
 #: forum/skins/default/templates/markdown_help.html:182
 #: forum/skins/default/templates/markdown_help.html:186
@@ -3983,11 +3805,11 @@ msgstr "Esto es parte del mismo bloque de cita."
 #: forum/skins/default/templates/markdown_help.html:191
 #: forum/skins/nuxeo/templates/markdown_help.html:191
 msgid ""
-"Rather than putting it in front of each line to include in the block quote "
-"you can put it at the beginning and end the quote with a newline."
+"Rather than putting it in front of each line to include in the block quote you can "
+"put it at the beginning and end the quote with a newline."
 msgstr ""
-"En lugar de ponerlo delante de cada l�nea puedes ponerlo al principio y al "
-"final del bloque usando un salto de l�nea."
+"En lugar de ponerlo delante de cada l�nea puedes ponerlo al principio y al final del "
+"bloque usando un salto de l�nea."
 
 #: forum/skins/default/templates/markdown_help.html:196
 #: forum/skins/default/templates/markdown_help.html:200
@@ -4011,13 +3833,12 @@ msgstr "Listas"
 #: forum/skins/default/templates/markdown_help.html:209
 #: forum/skins/nuxeo/templates/markdown_help.html:209
 msgid ""
-"To create a numbered list in Markdown, prefix each item in the list with a "
-"number followed by a period and space.  The number you use actually doesn't "
-"matter."
+"To create a numbered list in Markdown, prefix each item in the list with a number "
+"followed by a period and space.  The number you use actually doesn't matter."
 msgstr ""
-"Para crear una lista numerada con Markdown, escribe delante de cada elemento "
-"de la lista un prefijo con un n�mero, un punto y un espacio. El n�mero que "
-"utilices no importa."
+"Para crear una lista numerada con Markdown, escribe delante de cada elemento de la "
+"lista un prefijo con un n�mero, un punto y un espacio. El n�mero que utilices no "
+"importa."
 
 #: forum/skins/default/templates/markdown_help.html:213
 #: forum/skins/default/templates/markdown_help.html:214
@@ -4037,11 +3858,10 @@ msgstr "Elemento"
 #: forum/skins/default/templates/markdown_help.html:227
 #: forum/skins/nuxeo/templates/markdown_help.html:227
 msgid ""
-"To create a bulleted list, prefix each item in the list with a star (*) "
-"character."
+"To create a bulleted list, prefix each item in the list with a star (*) character."
 msgstr ""
-"Para crear una lista de puntos, escribe cada elemento de la lista con el "
-"prefijo asterisco (*)."
+"Para crear una lista de puntos, escribe cada elemento de la lista con el prefijo "
+"asterisco (*)."
 
 #: forum/skins/default/templates/markdown_help.html:231
 #: forum/skins/default/templates/markdown_help.html:237
@@ -4072,17 +3892,17 @@ msgstr "Mucho m�s"
 #: forum/skins/default/templates/markdown_help.html:247
 #: forum/skins/nuxeo/templates/markdown_help.html:247
 msgid ""
-"There's a lot more to the Markdown syntax than is mentioned here.  But for "
-"creative writers, this covers a lot of the necessities.  To find out more "
-"about Markdown than you'd ever want to really know, <a href=\"http://"
-"daringfireball.net/projects/markdown/syntax\" target=\"_blank\" rel="
-"\"nofollow\">go to the Markdown page where it all started</a>."
+"There's a lot more to the Markdown syntax than is mentioned here.  But for creative "
+"writers, this covers a lot of the necessities.  To find out more about Markdown than "
+"you'd ever want to really know, <a href=\"http://daringfireball.net/projects/markdown/"
+"syntax\" target=\"_blank\" rel=\"nofollow\">go to the Markdown page where it all "
+"started</a>."
 msgstr ""
-"La sintaxis de Markdown permite muchas m�s cosas adem�s de las descritas "
-"aqu�.  Pero �stas cubren muchas de las necesidades habituales.  Para saber "
-"m�s del formato Markdown puedes ir a <a href=\"http://daringfireball.net/"
-"projects/markdown/syntax\" target=\"_blank\" rel=\"nofollow\">la p�gina de "
-"Markdown donde empez� todo</a> (en ingl�s)."
+"La sintaxis de Markdown permite muchas m�s cosas adem�s de las descritas aqu�.  Pero "
+"�stas cubren muchas de las necesidades habituales.  Para saber m�s del formato "
+"Markdown puedes ir a <a href=\"http://daringfireball.net/projects/markdown/syntax\" "
+"target=\"_blank\" rel=\"nofollow\">la p�gina de Markdown donde empez� todo</a> (en "
+"ingl�s)."
 
 #: forum/skins/default/templates/notarobot.html:3
 #: forum/skins/nuxeo/templates/notarobot.html:3
@@ -4218,8 +4038,7 @@ msgstr "ver denuncias etiquetadas '%(tagname)s'"
 #: forum/skins/default/templates/question.html:138
 #: forum/skins/nuxeo/templates/question.html:135
 #, python-format
-msgid ""
-"The question has been closed for the following reason \"%(close_reason)s\" by"
+msgid "The question has been closed for the following reason \"%(close_reason)s\" by"
 msgstr ""
 "La denuncia ha sido cerrado por el siguiente motivo \"%(close_reason)s\" "
 "por                    La denuncia ha sido cerrado por la siguiente raz�n "
@@ -4247,9 +4066,7 @@ msgstr "�S� el primero en responder a esta denuncia!"
 #: forum/skins/default/templates/question.html:266
 #: forum/skins/nuxeo/templates/question.html:267
 msgid "Login/Signup to Post Your Answer"
-msgstr ""
-"Enviar la respuesta (despu�s debes identificarte o registrarte para "
-"publicarla)"
+msgstr "Enviar la respuesta (despu�s debes identificarte o registrarte para publicarla)"
 
 #: forum/skins/default/templates/question.html:269
 #: forum/skins/nuxeo/templates/question.html:270
@@ -4354,17 +4171,15 @@ msgstr "los que editan etiquetas reciben medallas"
 #: forum/skins/default/templates/question_list/item.html:15
 #: forum/skins/nuxeo/templates/question_summary_list_roll.html:13
 #: forum/skins/nuxeo/templates/question_list/count.html:15
-#: forum/skins/nuxeo/templates/question_list/item.html:15
-#: forum/views/users.py:54
+#: forum/skins/nuxeo/templates/question_list/item.html:15 forum/views/users.py:54
 msgid "answers"
 msgstr "soluciones"
 
 #: forum/skins/default/templates/question_summary_list_roll.html:14
 #: forum/skins/default/templates/question_list/item.html:11
 #: forum/skins/nuxeo/templates/question_summary_list_roll.html:14
-#: forum/skins/nuxeo/templates/question_list/item.html:11
-#: forum/views/commands.py:96 forum/views/readers.py:57
-#: forum/views/readers.py:58 forum/views/readers.py:311
+#: forum/skins/nuxeo/templates/question_list/item.html:11 forum/views/commands.py:96
+#: forum/views/readers.py:57 forum/views/readers.py:58 forum/views/readers.py:311
 #: forum/views/users.py:53 forum/views/users.py:54 forum/views/users.py:382
 msgid "votes"
 msgstr "casos"
@@ -4390,8 +4205,7 @@ msgstr "suscribirse al RSS de denuncias"
 
 #: forum/skins/default/templates/reopen.html:6
 #: forum/skins/default/templates/reopen.html:16
-#: forum/skins/nuxeo/templates/reopen.html:6
-#: forum/skins/nuxeo/templates/reopen.html:16
+#: forum/skins/nuxeo/templates/reopen.html:6 forum/skins/nuxeo/templates/reopen.html:16
 msgid "Reopen question"
 msgstr "Reabrir la denuncia"
 
@@ -4437,8 +4251,7 @@ msgstr "Hist�rico de versiones"
 msgid "click to hide/show revision"
 msgstr "haz click para ocultar/mostrar la versi�n"
 
-#: forum/skins/default/templates/search.html:7
-#: forum/skins/nuxeo/templates/search.html:7
+#: forum/skins/default/templates/search.html:7 forum/skins/nuxeo/templates/search.html:7
 #, python-format
 msgid ""
 "\n"
@@ -4474,13 +4287,11 @@ msgstr "Est�s suscrito a esta denuncia."
 msgid "You are not subscribed to this question."
 msgstr "No est�s suscrito a esta denuncia."
 
-#: forum/skins/default/templates/subscription_status.html:19
-#: forum/views/commands.py:520
+#: forum/skins/default/templates/subscription_status.html:19 forum/views/commands.py:520
 msgid "unsubscribe me"
 msgstr "dar de baja mi suscripci�n"
 
-#: forum/skins/default/templates/subscription_status.html:21
-#: forum/views/commands.py:520
+#: forum/skins/default/templates/subscription_status.html:21 forum/views/commands.py:520
 msgid "subscribe me"
 msgstr "suscribirme"
 
@@ -4499,8 +4310,7 @@ msgstr ""
 
 #: forum/skins/default/templates/subscription_status.html:30
 msgid "Once you sign in you will be able to subscribe for any updates here"
-msgstr ""
-"Una vez que entres podr�s suscribirte desde aqu� para recibir actualizaciones"
+msgstr "Una vez que entres podr�s suscribirte desde aqu� para recibir actualizaciones"
 
 #: forum/skins/default/templates/subscription_status.html:32
 #: forum/skins/nuxeo/templates/subscription_status.html:33
@@ -4527,20 +4337,16 @@ msgstr "suscribirme a los comentarios y a las respuestas"
 msgid "Answers and Comments"
 msgstr "Respuestas y Comentarios"
 
-#: forum/skins/default/templates/tags.html:6
-#: forum/skins/default/templates/tags.html:29
-#: forum/skins/nuxeo/templates/tags.html:6
-#: forum/skins/nuxeo/templates/tags.html:29
+#: forum/skins/default/templates/tags.html:6 forum/skins/default/templates/tags.html:29
+#: forum/skins/nuxeo/templates/tags.html:6 forum/skins/nuxeo/templates/tags.html:29
 msgid "Tag list"
 msgstr "Ranking"
 
-#: forum/skins/default/templates/tags.html:35
-#: forum/skins/nuxeo/templates/tags.html:35
+#: forum/skins/default/templates/tags.html:35 forum/skins/nuxeo/templates/tags.html:35
 msgid "All tags matching query"
 msgstr "Todas las etiquetas que coinciden con la b�squeda"
 
-#: forum/skins/default/templates/tags.html:38
-#: forum/skins/nuxeo/templates/tags.html:38
+#: forum/skins/default/templates/tags.html:38 forum/skins/nuxeo/templates/tags.html:38
 msgid "Nothing found"
 msgstr "No se ha encontrado nada"
 
@@ -4554,21 +4360,17 @@ msgstr "Opciones de acceso"
 #: forum/skins/default/templates/auth/auth_settings.html:9
 #: forum/skins/nuxeo/templates/auth/auth_settings.html:9
 msgid ""
-"These are the external authentication providers currently associated with "
-"your account."
-msgstr ""
-"Estas son las cuentas externas que est�n asociadas con este usuario "
-"actualmente"
+"These are the external authentication providers currently associated with your "
+"account."
+msgstr "Estas son las cuentas externas que est�n asociadas con este usuario actualmente"
 
 #: forum/skins/default/templates/auth/auth_settings.html:17
 #: forum/skins/nuxeo/templates/auth/auth_settings.html:17
 msgid ""
-"You currently have no external authentication provider associated with your "
-"account."
+"You currently have no external authentication provider associated with your account."
 msgstr ""
-"Actualmente no tienes cuentas externas asociadas con este usuario. Puedes "
-"a�adirlas para conectarte f�cilmente usando por ejemplo tu cuenta de "
-"Facebook o Google."
+"Actualmente no tienes cuentas externas asociadas con este usuario. Puedes a�adirlas "
+"para conectarte f�cilmente usando por ejemplo tu cuenta de Facebook o Google."
 
 #: forum/skins/default/templates/auth/auth_settings.html:20
 #: forum/skins/nuxeo/templates/auth/auth_settings.html:20
@@ -4583,11 +4385,11 @@ msgstr "Aqu� puedes cambiar tu contrase�a.  �Aseg�rate de recordarla!"
 #: forum/skins/default/templates/auth/auth_settings.html:26
 #: forum/skins/nuxeo/templates/auth/auth_settings.html:26
 msgid ""
-"You can set up a password for your account, so you can login using standard "
-"username and password!"
+"You can set up a password for your account, so you can login using standard username "
+"and password!"
 msgstr ""
-"Puedes configurar una contrase�a para tu cuenta, para poder entrar usando "
-"usuario y contrase�a."
+"Puedes configurar una contrase�a para tu cuenta, para poder entrar usando usuario y "
+"contrase�a."
 
 #: forum/skins/default/templates/auth/auth_settings.html:34
 #: forum/skins/nuxeo/templates/auth/auth_settings.html:33
@@ -4612,10 +4414,10 @@ msgstr "�sta es tu primera conexi�n a trav�s de "
 #: forum/skins/default/templates/auth/complete.html:19
 #: forum/skins/nuxeo/templates/auth/complete.html:19
 msgid ""
-"Please choose your screen name and confirm your email address. A valid email "
-"address is necessary to receive notifications about activity in the areas of "
-"this community you're most interested in, and will help you become an "
-"involved participant in this community."
+"Please choose your screen name and confirm your email address. A valid email address "
+"is necessary to receive notifications about activity in the areas of this community "
+"you're most interested in, and will help you become an involved participant in this "
+"community."
 msgstr ""
 
 #: forum/skins/default/templates/auth/complete.html:22
@@ -4652,8 +4454,7 @@ msgstr "%(prefix)s Valida tu email en %(app_name)s"
 #: forum/skins/nuxeo/templates/auth/mail_validation.html:14
 msgid "Please use the following link to help us verify your email address:"
 msgstr ""
-"Por favor haz click en este enlace para que podamos verificar tu direcci�n "
-"de email:"
+"Por favor haz click en este enlace para que podamos verificar tu direcci�n de email:"
 
 #: forum/skins/default/templates/auth/mail_validation.html:16
 #: forum/skins/default/templates/auth/welcome_email.html:26
@@ -4669,19 +4470,19 @@ msgstr "Validar mi direcci�n de email"
 #: forum/skins/nuxeo/templates/auth/temp_login_email.html:19
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:28
 msgid ""
-"If the above link is not clickable, copy and paste this url into your web "
-"browser's address bar:"
+"If the above link is not clickable, copy and paste this url into your web browser's "
+"address bar:"
 msgstr ""
-"si el enlace de arriba no es clicable, por favor copie y pegue este URL en "
-"la barra de direcciones de su navegador:"
+"si el enlace de arriba no es clicable, por favor copie y pegue este URL en la barra "
+"de direcciones de su navegador:"
 
 #: forum/skins/default/templates/auth/mail_validation.html:24
 #: forum/skins/default/templates/auth/welcome_email.html:40
 #: forum/skins/nuxeo/templates/auth/mail_validation.html:24
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:40
 msgid ""
-"Copy and paste this url into your web browser's address bar to help us "
-"verify your email address:"
+"Copy and paste this url into your web browser's address bar to help us verify your "
+"email address:"
 msgstr ""
 "Copie y pegue esta direcci�n en la barra de direcciones de su navegador para "
 "ayudarnos a verificar su direcci�n de correo electr�nico:"
@@ -4711,16 +4512,14 @@ msgstr "O bien..."
 #: forum/skins/nuxeo/templates/auth/signin.html:39
 msgid ""
 "\n"
-"        External login services use <b><a href=\"http://openid.net/"
-"\">OpenID</a></b> technology, where your password always stays confidential "
-"between\n"
-"        you and your login provider and you don't have to remember another "
-"one.\n"
+"        External login services use <b><a href=\"http://openid.net/\">OpenID</a></b> "
+"technology, where your password always stays confidential between\n"
+"        you and your login provider and you don't have to remember another one.\n"
 "    "
 msgstr ""
 "\n"
-"        Haz click para identificarte a trav�s de tu cuenta en cualquiera de "
-"estas webs.  Es lo m�s f�cil y seguro:\n"
+"        Haz click para identificarte a trav�s de tu cuenta en cualquiera de estas "
+"webs.  Es lo m�s f�cil y seguro:\n"
 "    "
 
 #: forum/skins/default/templates/auth/signin.html:48
@@ -4787,11 +4586,8 @@ msgstr "%(prefix)s Enlace de acceso temporal"
 #: forum/skins/default/templates/auth/temp_login_email.html:15
 #: forum/skins/nuxeo/templates/auth/temp_login_email.html:15
 #, python-format
-msgid ""
-"The following link grants you a one time access to your account at "
-"%(app_name)s."
-msgstr ""
-"El siguiente enlace te permitir� acceder una vez a tu cuenta en %(app_name)s."
+msgid "The following link grants you a one time access to your account at %(app_name)s."
+msgstr "El siguiente enlace te permitir� acceder una vez a tu cuenta en %(app_name)s."
 
 #: forum/skins/default/templates/auth/temp_login_email.html:17
 #: forum/skins/nuxeo/templates/auth/temp_login_email.html:17
@@ -4801,12 +4597,9 @@ msgstr "Ir a tu cuenta"
 #: forum/skins/default/templates/auth/temp_login_email.html:25
 #: forum/skins/nuxeo/templates/auth/temp_login_email.html:25
 #, python-format
-msgid ""
-"The following url grants you a one time access to your account at "
-"%(app_name)s."
+msgid "The following url grants you a one time access to your account at %(app_name)s."
 msgstr ""
-"El siguiente URL te permite el acceso por una sola vez a tu direcci�n en "
-"%(app_name)s."
+"El siguiente URL te permite el acceso por una sola vez a tu direcci�n en %(app_name)s."
 
 #: forum/skins/default/templates/auth/temp_login_request.html:5
 #: forum/skins/nuxeo/templates/auth/temp_login_request.html:5
@@ -4822,21 +4615,21 @@ msgstr "Solicitar una clave de acceso temporal"
 #: forum/skins/nuxeo/templates/auth/temp_login_request.html:8
 msgid ""
 "\n"
-"    If you're experiencing problems accessing your account, or if you forgot "
-"your password,\n"
-"    here you can request a temporary login key. Fill out your account email "
-"and we'll send you a temporary access link that\n"
-"    will enable you to access your account. This token is valid only once "
-"and for a limited period of time.\n"
+"    If you're experiencing problems accessing your account, or if you forgot your "
+"password,\n"
+"    here you can request a temporary login key. Fill out your account email and we'll "
+"send you a temporary access link that\n"
+"    will enable you to access your account. This token is valid only once and for a "
+"limited period of time.\n"
 " "
 msgstr ""
 "\n"
 "   Si est�s experimentando alg�n problema para acceder a tu cuenta, o si has olvidado "
 "tu contrase�a,\n"
-"    aqu� puedes pedir un c�digo temporal de login. Introduce te cuenta de correo "
-"y te enviaremos un enlace de acceso temporal que\n"
-"    te permitir� acceder a tu cuenta. Este link ser� valido una sola vez "
-"y limitado durante un periodo de tiempo.\n"
+"    aqu� puedes pedir un c�digo temporal de login. Introduce te cuenta de correo y te "
+"enviaremos un enlace de acceso temporal que\n"
+"    te permitir� acceder a tu cuenta. Este link ser� valido una sola vez y limitado "
+"durante un periodo de tiempo.\n"
 " "
 
 #: forum/skins/default/templates/auth/temp_login_request.html:26
@@ -4856,19 +4649,18 @@ msgstr "%(prefix)s Bienvenido a %(app_name)s"
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:34
 #, python-format
 msgid ""
-"Howdy and welcome to %(app_name)s. We know you're busy, so we'll keep this "
-"real simple."
+"Howdy and welcome to %(app_name)s. We know you're busy, so we'll keep this real "
+"simple."
 msgstr ""
-"Hola y bienvenido a %(app_name)s. Sabemos que tienes mucho que hacer, as� "
-"que seremos breves."
+"Hola y bienvenido a %(app_name)s. Sabemos que tienes mucho que hacer, as� que seremos "
+"breves."
 
 #: forum/skins/default/templates/auth/welcome_email.html:19
 #: forum/skins/default/templates/auth/welcome_email.html:35
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:19
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:35
 msgid "Here's your login info (store it in a cool dry place):"
-msgstr ""
-"Aqu� va tu informaci�n de registro (almac�nalo en un lugar fresco y seco):"
+msgstr "Aqu� va tu informaci�n de registro (almac�nalo en un lugar fresco y seco):"
 
 #: forum/skins/default/templates/auth/welcome_email.html:21
 #: forum/skins/default/templates/auth/welcome_email.html:37
@@ -4883,8 +4675,7 @@ msgstr "Nombre de usuario:"
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:38
 msgid "Password: As IF we would send your password in cleartext!"
 msgstr ""
-"Contrase�a: �no creer�as que te �bamos a mandar la contrase�a legible por "
-"cualquiera!"
+"Contrase�a: �no creer�as que te �bamos a mandar la contrase�a legible por cualquiera!"
 
 #: forum/skins/default/templates/auth/welcome_email.html:24
 #: forum/skins/nuxeo/templates/auth/welcome_email.html:24
@@ -4918,15 +4709,14 @@ msgstr "marca esta respuesta como la soluci�n aceptada"
 #, python-format
 msgid ""
 "\n"
-"If you like this answer you can award %(awarded_user)s with reputation "
-"points.\n"
+"If you like this answer you can award %(awarded_user)s with reputation points.\n"
 msgstr ""
 
 #: forum/skins/default/templates/node/award_points.html:10
 msgid ""
 "\n"
-"Use the slider below or the input field to choose the amount of points you "
-"would like to give.\n"
+"Use the slider below or the input field to choose the amount of points you would like "
+"to give.\n"
 msgstr ""
 
 #: forum/skins/default/templates/node/award_points.html:17
@@ -5026,9 +4816,7 @@ msgstr "Cerrar la denuncia"
 #: forum/skins/default/templates/node/favorite_mark.html:3
 #: forum/skins/nuxeo/templates/node/favorite_mark.html:3
 msgid "mark/unmark this question as favorite (click again to cancel)"
-msgstr ""
-"marcar/desmarcar esta denuncia como favorita (haz click otra vez para "
-"cancelar)"
+msgstr "marcar/desmarcar esta denuncia como favorita (haz click otra vez para cancelar)"
 
 #: forum/skins/default/templates/node/permanent_link.html:4
 msgid ""
@@ -5050,11 +4838,9 @@ msgstr "m�s"
 #: forum/skins/default/templates/node/report.html:3
 #: forum/skins/nuxeo/templates/node/report.html:3
 #, fuzzy
-msgid ""
-"Please select a reason bellow or use the text box to input your own reason."
+msgid "Please select a reason bellow or use the text box to input your own reason."
 msgstr ""
-"Por favor selecciona un motivo o utiliza la caja de texto para explicar "
-"otros motivos"
+"Por favor selecciona un motivo o utiliza la caja de texto para explicar otros motivos"
 
 #: forum/skins/default/templates/node/vote_buttons.html:3
 #: forum/skins/nuxeo/templates/node/vote_buttons.html:3
@@ -5094,14 +4880,14 @@ msgstr "%(prefix)s Una soluci�n a: %(question_title)s ha sido aceptada"
 #, python-format
 msgid ""
 "\n"
-"            %(accepted_by_link)s has just accepted %(answer_author_link)s's "
-"answer on his question\n"
+"            %(accepted_by_link)s has just accepted %(answer_author_link)s's answer on "
+"his question\n"
 "            %(question_link)s.\n"
 "            "
 msgstr ""
 "\n"
-"            %(accepted_by_link)s ha aceptado la soluci�n de "
-"%(answer_author_link)s a su denuncia\n"
+"            %(accepted_by_link)s ha aceptado la soluci�n de %(answer_author_link)s a "
+"su denuncia\n"
 "            %(question_link)s.\n"
 "            "
 
@@ -5110,8 +4896,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"%(accepted_by)s has just accepted %(answer_author)s's answer on his "
-"question\n"
+"%(accepted_by)s has just accepted %(answer_author)s's answer on his question\n"
 "\"%(question_title)s\".\n"
 msgstr ""
 "\n"
@@ -5153,13 +4938,13 @@ msgstr "%(prefix)s Resumen diario"
 #, python-format
 msgid ""
 "\n"
-"            This is a brief of what's going on the %(app_name)s community "
-"since our last update.\n"
+"            This is a brief of what's going on the %(app_name)s community since our "
+"last update.\n"
 "            "
 msgstr ""
 "\n"
-"            Esto es un resumen de las novedades que ha habido en "
-"%(app_name)s desde el �ltimo resumen que te enviamos.\n"
+"            Esto es un resumen de las novedades que ha habido en %(app_name)s desde "
+"el �ltimo resumen que te enviamos.\n"
 "            "
 
 #: forum/skins/default/templates/notifications/digest.html:33
@@ -5193,13 +4978,13 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            %(new_question_count)s %(new_questions_link)s were posted since "
-"our last update.\n"
+"            %(new_question_count)s %(new_questions_link)s were posted since our last "
+"update.\n"
 "            "
 msgstr ""
 "\n"
-"            %(new_question_count)s %(new_questions_link)s se han publicado "
-"desde el �ltimo resumen.\n"
+"            %(new_question_count)s %(new_questions_link)s se han publicado desde el "
+"�ltimo resumen.\n"
 "            "
 
 #: forum/skins/default/templates/notifications/digest.html:54
@@ -5213,21 +4998,21 @@ msgstr "Creemos que pueden interesarte estas denuncias:"
 #: forum/skins/nuxeo/templates/notifications/digest.html:66
 #, fuzzy
 msgid ""
-"These new questions didn't get many attention from the community, but we "
-"think you may be able to help:"
+"These new questions didn't get many attention from the community, but we think you "
+"may be able to help:"
 msgstr ""
-"Estas denuncias no han recibido mucha atenci�n de la comunidad, pero creemos "
-"que podr�as echar una mano:"
+"Estas denuncias no han recibido mucha atenci�n de la comunidad, pero creemos que "
+"podr�as echar una mano:"
 
 #: forum/skins/default/templates/notifications/digest.html:79
 #: forum/skins/nuxeo/templates/notifications/digest.html:78
 #, python-format
 msgid ""
-"Meanwhile, some of your %(subscriptions_link)s have new updates since you "
-"last visited them:"
+"Meanwhile, some of your %(subscriptions_link)s have new updates since you last "
+"visited them:"
 msgstr ""
-"Mientras tanto, algunas de tus %(subscriptions_link)s tienen nuevas "
-"actualizaciones desde que las visitaste por �ltima vez:"
+"Mientras tanto, algunas de tus %(subscriptions_link)s tienen nuevas actualizaciones "
+"desde que las visitaste por �ltima vez:"
 
 #: forum/skins/default/templates/notifications/digest.html:99
 #, python-format
@@ -5240,19 +5025,18 @@ msgstr ""
 #: forum/skins/default/templates/notifications/digest.html:108
 #, fuzzy, python-format
 msgid ""
-"This is a brief of what's going on the %(app_name)s community since our last "
-"update."
+"This is a brief of what's going on the %(app_name)s community since our last update."
 msgstr ""
 "\n"
-"            Esto es un resumen de las novedades que ha habido en "
-"%(app_name)s desde el �ltimo resumen que te enviamos.\n"
+"            Esto es un resumen de las novedades que ha habido en %(app_name)s desde "
+"el �ltimo resumen que te enviamos.\n"
 "            "
 
 #: forum/skins/default/templates/notifications/digest.html:112
 #, fuzzy, python-format
 msgid ""
-"There are %(new_member_count)s new members in the community. "
-"%(new_member_links)s were the most active so far."
+"There are %(new_member_count)s new members in the community. %(new_member_links)s "
+"were the most active so far."
 msgstr ""
 "\n"
 "            Hay %(new_member_count)s nuevos miembros en la comunidad. "
@@ -5272,18 +5056,17 @@ msgstr ""
 msgid "%(new_question_count)s new questions were posted since our last update."
 msgstr ""
 "\n"
-"            %(new_question_count)s %(new_questions_link)s se han publicado "
-"desde el �ltimo resumen.\n"
+"            %(new_question_count)s %(new_questions_link)s se han publicado desde el "
+"�ltimo resumen.\n"
 "            "
 
 #: forum/skins/default/templates/notifications/digest.html:134
 #, fuzzy
 msgid ""
-"Meanwhile, some of your subscriptions have new updates since you last "
-"visited them:"
+"Meanwhile, some of your subscriptions have new updates since you last visited them:"
 msgstr ""
-"Mientras tanto, algunas de tus %(subscriptions_link)s tienen nuevas "
-"actualizaciones desde que las visitaste por �ltima vez:"
+"Mientras tanto, algunas de tus %(subscriptions_link)s tienen nuevas actualizaciones "
+"desde que las visitaste por �ltima vez:"
 
 #: forum/skins/default/templates/notifications/digest.html:143
 #, python-format
@@ -5336,14 +5119,14 @@ msgstr "%(prefix)s Nueva respuesta a: %(question_title)s"
 #, python-format
 msgid ""
 "\n"
-"            %(author_link)s has just posted a new answer on %(app_name)s to "
-"the question\n"
+"            %(author_link)s has just posted a new answer on %(app_name)s to the "
+"question\n"
 "            %(question_link)s:\n"
 "            "
 msgstr ""
 "\n"
-"            %(author_link)s ha publicado una respuesta nueva en %(app_name)s "
-"a la denuncia\n"
+"            %(author_link)s ha publicado una respuesta nueva en %(app_name)s a la "
+"denuncia\n"
 "            %(question_link)s:\n"
 "            "
 
@@ -5367,8 +5150,7 @@ msgstr "No te olvides de ir a la web y votar."
 #, python-format
 msgid ""
 "\n"
-"%(answer_author)s has just posted a new answer on %(safe_app_name)s to the "
-"question\n"
+"%(answer_author)s has just posted a new answer on %(safe_app_name)s to the question\n"
 "\"%(question_title)s\":\n"
 msgstr ""
 "\n"
@@ -5422,8 +5204,7 @@ msgstr "la denuncia \"%(question_title)s\""
 #: forum/skins/nuxeo/templates/notifications/newmember.html:15
 #, python-format
 msgid "%(prefix)s %(safe_newmember_name)s is a new member on %(safe_app_name)s"
-msgstr ""
-"%(prefix)s %(safe_newmember_name)s se ha registrado en %(safe_app_name)s"
+msgstr "%(prefix)s %(safe_newmember_name)s se ha registrado en %(safe_app_name)s"
 
 #: forum/skins/default/templates/notifications/newmember.html:19
 #: forum/skins/nuxeo/templates/notifications/newmember.html:19
@@ -5431,14 +5212,14 @@ msgstr ""
 msgid ""
 "\n"
 "            %(newmember_link)s has just joined %(app_name)s.\n"
-"            View <a style=\"%(a_style)s\" href=\"%(app_url)s%(newmember_url)s"
-"\">%(newmember_name)s's profile</a>.\n"
+"            View <a style=\"%(a_style)s\" href=\"%(app_url)s%(newmember_url)s\">"
+"%(newmember_name)s's profile</a>.\n"
 "            "
 msgstr ""
 "\n"
 "            %(newmember_link)s se ha unido a %(app_name)s.\n"
-"            Ver el <a style=\"%(a_style)s\" href=\"%(app_url)s"
-"%(newmember_url)s\">perfil de %(newmember_name)s</a>.\n"
+"            Ver el <a style=\"%(a_style)s\" href=\"%(app_url)s%(newmember_url)s"
+"\">perfil de %(newmember_name)s</a>.\n"
 "            "
 
 #: forum/skins/default/templates/notifications/newmember.html:27
@@ -5451,8 +5232,8 @@ msgid ""
 "%(app_url)s%(newmember_url)s\n"
 msgstr ""
 "\n"
-"%(safe_newmember_name)s se ha unido a %(safe_app_name)s.  Puedes visitar el "
-"perfil de %(safe_newmember_name)s usando el siguiente enlace:\n"
+"%(safe_newmember_name)s se ha unido a %(safe_app_name)s.  Puedes visitar el perfil de "
+"%(safe_newmember_name)s usando el siguiente enlace:\n"
 "%(app_url)s%(newmember_url)s\n"
 
 #: forum/skins/default/templates/notifications/newquestion.html:18
@@ -5466,8 +5247,7 @@ msgstr "%(prefix)s Nueva denuncia: %(question_title)s en %(safe_app_name)s"
 #, python-format
 msgid ""
 "\n"
-"            %(author_link)s has just posted a new question on %(app_name)s, "
-"entitled\n"
+"            %(author_link)s has just posted a new question on %(app_name)s, entitled\n"
 "            %(question_link)s\n"
 "             and tagged \"<em>%(tag_links)s</em>\". Here's what it says:\n"
 "            "
@@ -5484,13 +5264,11 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"%(question_author)s has just posted a new question on %(safe_app_name)s, "
-"entitled\n"
+"%(question_author)s has just posted a new question on %(safe_app_name)s, entitled\n"
 "\"%(question_title)s\" and tagged %(question_tags)s:\n"
 msgstr ""
 "\n"
-"%(question_author)s ha publicado una denuncia nueva en %(safe_app_name)s, "
-"titulada\n"
+"%(question_author)s ha publicado una denuncia nueva en %(safe_app_name)s, titulada\n"
 "\"%(question_title)s\" y etiquetada %(question_tags)s:\n"
 
 #: forum/skins/default/templates/osqaadmin/base.html:5
@@ -5626,33 +5404,32 @@ msgstr "Estado de la web"
 #: forum/skins/nuxeo/templates/osqaadmin/dashboard.html:40
 #: forum/skins/nuxeo/templates/osqaadmin/index.html:42
 msgid ""
-"Your site is running in bootstrap mode, click the button below to revert to "
-"defaults."
+"Your site is running in bootstrap mode, click the button below to revert to defaults."
 msgstr ""
-"Tu sitio est� funcionando en modo 'bootstrap'. Pulsa el bot�n inferior para "
-"volver a la configuraci�n por defecto."
+"Tu sitio est� funcionando en modo 'bootstrap'. Pulsa el bot�n inferior para volver a "
+"la configuraci�n por defecto."
 
 #: forum/skins/default/templates/osqaadmin/dashboard.html:43
 #: forum/skins/default/templates/osqaadmin/index.html:45
 #: forum/skins/nuxeo/templates/osqaadmin/dashboard.html:43
 #: forum/skins/nuxeo/templates/osqaadmin/index.html:45
 msgid ""
-"Your site is running in standard mode, click the button below to run in "
-"bootstrap mode."
+"Your site is running in standard mode, click the button below to run in bootstrap "
+"mode."
 msgstr ""
-"Tu sitio est� funcionando en modo standard. Pulsa el bot�n inferior para "
-"pasar a modo 'bootstrap'."
+"Tu sitio est� funcionando en modo standard. Pulsa el bot�n inferior para pasar a modo "
+"'bootstrap'."
 
 #: forum/skins/default/templates/osqaadmin/dashboard.html:45
 #: forum/skins/default/templates/osqaadmin/index.html:47
 #: forum/skins/nuxeo/templates/osqaadmin/dashboard.html:45
 #: forum/skins/nuxeo/templates/osqaadmin/index.html:47
 msgid ""
-"Your site is running with some customized settings, click the buttons below "
-"to run with defaults or in bootstrap mode"
+"Your site is running with some customized settings, click the buttons below to run "
+"with defaults or in bootstrap mode"
 msgstr ""
-"Tu sitio est� funcionando con algunas configuraciones personalizadas. Pulsa "
-"los botones inferiores para pasar a los modos por defecto o 'bootstrap'."
+"Tu sitio est� funcionando con algunas configuraciones personalizadas. Pulsa los "
+"botones inferiores para pasar a los modos por defecto o 'bootstrap'."
 
 #: forum/skins/default/templates/osqaadmin/dashboard.html:49
 #: forum/skins/default/templates/osqaadmin/index.html:51
@@ -5862,11 +5639,11 @@ msgstr ""
 #: forum/skins/default/templates/osqaadmin/maintenance.html:7
 #: forum/skins/nuxeo/templates/osqaadmin/maintenance.html:7
 msgid ""
-"Maintainance mode allows you to close your site for maintainance, allowing "
-"only a predetermined set of ip addresses to access it normally."
+"Maintainance mode allows you to close your site for maintainance, allowing only a "
+"predetermined set of ip addresses to access it normally."
 msgstr ""
-"El modo de mantenimiento te permite cerrar el sitio para mantenimento, "
-"restringiendo el acceso a un n�mero predeterminado de direcciones IP."
+"El modo de mantenimiento te permite cerrar el sitio para mantenimento, restringiendo "
+"el acceso a un n�mero predeterminado de direcciones IP."
 
 #: forum/skins/default/templates/osqaadmin/maintenance.html:13
 #: forum/skins/nuxeo/templates/osqaadmin/maintenance.html:12
@@ -5903,12 +5680,10 @@ msgstr "Moderaci�n"
 
 #: forum/skins/default/templates/osqaadmin/moderation.html:7
 #: forum/skins/nuxeo/templates/osqaadmin/moderation.html:7
-msgid ""
-"These tools allow you to search for undesired behaviours and cheating "
-"patterns."
+msgid "These tools allow you to search for undesired behaviours and cheating patterns."
 msgstr ""
-"Estas herramientas te ayudan a buscar comportamientos no deseados y patrones "
-"de trampa."
+"Estas herramientas te ayudan a buscar comportamientos no deseados y patrones de "
+"trampa."
 
 #: forum/skins/default/templates/osqaadmin/moderation.html:14
 #: forum/skins/nuxeo/templates/osqaadmin/moderation.html:13
@@ -6242,8 +6017,7 @@ msgstr "Actividad reciente"
 
 #: forum/skins/default/templates/osqaadmin/nodeman.html:468
 #: forum/skins/nuxeo/templates/osqaadmin/nodeman.html:462
-#: forum_modules/exporter/exporter.py:368
-#: forum_modules/exporter/importer.py:420
+#: forum_modules/exporter/exporter.py:368 forum_modules/exporter/importer.py:420
 #, fuzzy
 msgid "Tags"
 msgstr "etiquetas"
@@ -6297,11 +6071,10 @@ msgstr "borrar"
 
 #: forum/skins/default/templates/osqaadmin/statistics.html:27
 #: forum/skins/nuxeo/templates/osqaadmin/statistics.html:27
-msgid ""
-"Some simple graphics to help you get a notion of whats going on in your site."
+msgid "Some simple graphics to help you get a notion of whats going on in your site."
 msgstr ""
-"Algunos gr�ficos sencillos para ayudarte a hacerte una idea de qu� est� "
-"pasando en tu sitio."
+"Algunos gr�ficos sencillos para ayudarte a hacerte una idea de qu� est� pasando en tu "
+"sitio."
 
 #: forum/skins/default/templates/osqaadmin/test_email_settings.html:4
 #: forum/skins/nuxeo/templates/osqaadmin/test_email_settings.html:4
@@ -6315,8 +6088,8 @@ msgstr ""
 #: forum/skins/nuxeo/templates/osqaadmin/test_email_settings.html:10
 msgid ""
 "\n"
-"        Please, check your inbox and if you see the new test message your "
-"email STMP settings are correct.\n"
+"        Please, check your inbox and if you see the new test message your email STMP "
+"settings are correct.\n"
 "    "
 msgstr ""
 
@@ -6324,8 +6097,8 @@ msgstr ""
 #: forum/skins/nuxeo/templates/osqaadmin/test_email_settings.html:16
 msgid ""
 "\n"
-"        If you do not see the new test message check your spam folder, and "
-"if you don't find it check your SMTP settings\n"
+"        If you do not see the new test message check your spam folder, and if you "
+"don't find it check your SMTP settings\n"
 "        again. It might be useful to take a look at the log file.\n"
 "    "
 msgstr ""
@@ -6336,9 +6109,8 @@ msgid "next"
 msgstr "texto"
 
 #: forum/skins/default/templates/question_list/item.html:11
-#: forum/skins/nuxeo/templates/question_list/item.html:11
-#: forum/views/commands.py:82 forum/views/commands.py:85
-#: forum/views/commands.py:129
+#: forum/skins/nuxeo/templates/question_list/item.html:11 forum/views/commands.py:82
+#: forum/views/commands.py:85 forum/views/commands.py:129
 msgid "vote"
 msgstr "votar"
 
@@ -6375,8 +6147,7 @@ msgid "most recently updated questions"
 msgstr "�ltimas denuncias actualizadas"
 
 #: forum/skins/default/templates/question_list/sort_tabs.html:4
-#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:4
-#: forum/views/readers.py:39
+#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:4 forum/views/readers.py:39
 msgid "active"
 msgstr "activas"
 
@@ -6386,9 +6157,9 @@ msgid "most recently asked questions"
 msgstr "denuncias enviadas m�s recientemente"
 
 #: forum/skins/default/templates/question_list/sort_tabs.html:5
-#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:5
-#: forum/views/readers.py:40 forum/views/readers.py:56
-#: forum/views/readers.py:309 forum/views/users.py:39 forum/views/users.py:52
+#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:5 forum/views/readers.py:40
+#: forum/views/readers.py:56 forum/views/readers.py:309 forum/views/users.py:39
+#: forum/views/users.py:52
 msgid "newest"
 msgstr "las m�s recientes"
 
@@ -6398,8 +6169,7 @@ msgid "hottest questions"
 msgstr "denuncias m�s candentes"
 
 #: forum/skins/default/templates/question_list/sort_tabs.html:6
-#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:6
-#: forum/views/readers.py:41
+#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:6 forum/views/readers.py:41
 msgid "hottest"
 msgstr "candentes"
 
@@ -6409,8 +6179,7 @@ msgid "most voted questions"
 msgstr "denuncias m�s votadas"
 
 #: forum/skins/default/templates/question_list/sort_tabs.html:7
-#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:7
-#: forum/views/readers.py:42
+#: forum/skins/nuxeo/templates/question_list/sort_tabs.html:7 forum/views/readers.py:42
 msgid "most voted"
 msgstr "las m�s populares"
 
@@ -6480,8 +6249,7 @@ msgid "Unanswered questions"
 msgstr "Denuncias sin respuesta"
 
 #: forum/skins/default/templates/question_list/title.html:20
-#: forum/skins/nuxeo/templates/question_list/title.html:20
-#: forum/views/readers.py:170
+#: forum/skins/nuxeo/templates/question_list/title.html:20 forum/views/readers.py:170
 msgid "All Questions"
 msgstr "Todas las denuncias"
 
@@ -6524,11 +6292,10 @@ msgstr "lista numerada:"
 #: forum/skins/default/templates/sidebar/markdown_help.html:26
 #: forum/skins/nuxeo/templates/sidebar/markdown_help.html:26
 msgid ""
-"to add a line break simply add two spaces to where you would like the new "
-"line to be."
+"to add a line break simply add two spaces to where you would like the new line to be."
 msgstr ""
-"Para a�adir un salto de l�nea simplemente a�ade dos espacios donde desear�as "
-"que estuviera el salto de l�nea."
+"Para a�adir un salto de l�nea simplemente a�ade dos espacios donde desear�as que "
+"estuviera el salto de l�nea."
 
 #: forum/skins/default/templates/sidebar/markdown_help.html:29
 #: forum/skins/nuxeo/templates/sidebar/markdown_help.html:29
@@ -6847,11 +6614,9 @@ msgstr[1] ""
 #: forum/skins/default/templates/users/stats.html:112
 #: forum/skins/nuxeo/templates/users/stats.html:107
 #, python-format
-msgid ""
-"see other questions with %(view_user)s's contributions tagged '%(tag_name)s' "
+msgid "see other questions with %(view_user)s's contributions tagged '%(tag_name)s' "
 msgstr ""
-"ver otras denuncias con contribuciones de %(view_user)s etiquetadas "
-"'%(tag_name)s' "
+"ver otras denuncias con contribuciones de %(view_user)s etiquetadas '%(tag_name)s' "
 
 #: forum/skins/default/templates/users/stats.html:127
 #: forum/skins/nuxeo/templates/users/stats.html:122
@@ -6897,13 +6662,13 @@ msgstr "Opciones de notificaci�n y suscripci�n"
 #: forum/skins/nuxeo/templates/users/subscriptions_settings.html:7
 msgid ""
 "\n"
-"    Here you can decide which types of notifications you wish to receive, "
-"and their frequency.<br />\n"
+"    Here you can decide which types of notifications you wish to receive, and their "
+"frequency.<br />\n"
 "    "
 msgstr ""
 "\n"
-"    Aqu� puedes decidir qu� tipos de notificaciones deseas recibir, y su "
-"frecuencia.<br />\n"
+"    Aqu� puedes decidir qu� tipos de notificaciones deseas recibir, y su frecuencia."
+"<br />\n"
 "    "
 
 #: forum/skins/default/templates/users/subscriptions_settings.html:18
@@ -6985,9 +6750,7 @@ msgstr "%(prefix)s Resumen diario"
 #: forum/skins/default/templates/users/subscriptions_settings.html:90
 #: forum/skins/nuxeo/templates/users/subscriptions_settings.html:89
 msgid "Send me the daily digest with information about the site activity"
-msgstr ""
-"Enviadme un resumen diario con las novedades de la web (denuncias nuevas, "
-"etc.)"
+msgstr "Enviadme un resumen diario con las novedades de la web (denuncias nuevas, etc.)"
 
 #: forum/skins/default/templates/users/subscriptions_settings.html:95
 #: forum/skins/nuxeo/templates/users/subscriptions_settings.html:94
@@ -7000,8 +6763,8 @@ msgid ""
 "Notify me when someone replies to one of my comments on any post using the "
 "<pre>@username</pre> notation"
 msgstr ""
-"Notificadme cuando alguien responde a uno de mis comentarios a cualquier "
-"mensaje usando la notaci�n <pre>@usuario</pre>"
+"Notificadme cuando alguien responde a uno de mis comentarios a cualquier mensaje "
+"usando la notaci�n <pre>@usuario</pre>"
 
 #: forum/skins/default/templates/users/suspend_user.html:4
 #: forum/skins/nuxeo/templates/users/suspend_user.html:4
@@ -7052,8 +6815,7 @@ msgstr "Si se activa, s�lo el usuario suspendido ver� este mensaje."
 #: forum/skins/default/templates/users/users.html:23
 #: forum/skins/nuxeo/templates/users/users.html:6
 #: forum/skins/nuxeo/templates/users/users.html:23
-#: forum_modules/exporter/exporter.py:376
-#: forum_modules/exporter/importer.py:344
+#: forum_modules/exporter/exporter.py:376 forum_modules/exporter/importer.py:344
 msgid "Users"
 msgstr "Miembros"
 
@@ -7083,13 +6845,13 @@ msgstr "las etiquetas son necesarias"
 #, python-format
 msgid ""
 "\n"
-"                        maxlength: \"up to %(max_number_of_tags)s tags, less "
-"than %(max_length_of_tags)s characters each\"\n"
+"                        maxlength: \"up to %(max_number_of_tags)s tags, less than "
+"%(max_length_of_tags)s characters each\"\n"
 "                        "
 msgstr ""
 "\n"
-"                        tama�o: \"hasta %(max_number_of_tags)s etiquetas, "
-"menos de %(max_length_of_tags)s caracteres por cada una\"\n"
+"                        tama�o: \"hasta %(max_number_of_tags)s etiquetas, menos de "
+"%(max_length_of_tags)s caracteres por cada una\"\n"
 "                        "
 
 #: forum/skins/nuxeo/templates/subscription_status.html:19
@@ -7104,8 +6866,7 @@ msgstr ""
 #, fuzzy, python-format
 msgid ""
 "\n"
-"            <a href=\"%(subscriptions_url)s\">Adjust your notification "
-"settings</a>\n"
+"            <a href=\"%(subscriptions_url)s\">Adjust your notification settings</a>\n"
 "        "
 msgstr ""
 "\n"
@@ -7122,8 +6883,7 @@ msgstr "ocultar las denuncias ignoradas"
 msgid ""
 "\n"
 "Award %(awarded_user)s with reputation points.\n"
-msgstr ""
-"la subida de im�genes est� limitada a usuario con m�s de 60 puntos de karma"
+msgstr "la subida de im�genes est� limitada a usuario con m�s de 60 puntos de karma"
 
 #: forum/skins/nuxeo/templates/node/comments.html:42
 msgid "show all"
@@ -7266,11 +7026,9 @@ msgid "report"
 msgstr "denunciar"
 
 #: forum/templatetags/node_tags.py:139
-msgid ""
-"report as offensive (i.e containing spam, advertising, malicious text, etc.)"
+msgid "report as offensive (i.e containing spam, advertising, malicious text, etc.)"
 msgstr ""
-"denunciar este mensaje por ofensivo, con spam, publicidad, texto malicioso, "
-"etc."
+"denunciar este mensaje por ofensivo, con spam, publicidad, texto malicioso, etc."
 
 #: forum/templatetags/node_tags.py:149
 msgid "undelete"
@@ -7446,11 +7204,11 @@ msgstr ""
 
 #: forum/views/auth.py:118 forum/views/auth.py:130
 msgid ""
-"Sorry, these login credentials belong to anoother user. Plese terminate your "
-"current session and try again."
+"Sorry, these login credentials belong to anoother user. Plese terminate your current "
+"session and try again."
 msgstr ""
-"Lo sentimos, estos datos de acceso pertenecen a otro usuario. Por favor sal "
-"de tu sesi�n actual e int�ntalo de nuevo."
+"Lo sentimos, estos datos de acceso pertenecen a otro usuario. Por favor sal de tu "
+"sesi�n actual e int�ntalo de nuevo."
 
 #: forum/views/auth.py:121
 msgid "You are already logged in with that user."
@@ -7466,21 +7224,19 @@ msgstr "Los nuevos datos de acceso se han asociado con tu cuenta"
 
 #: forum/views/auth.py:176
 msgid ""
-"Oops, something went wrong in the middle of this process. Please try again. "
-"Note that you need to have cookies enabled for the authentication to work."
+"Oops, something went wrong in the middle of this process. Please try again. Note that "
+"you need to have cookies enabled for the authentication to work."
 msgstr ""
-"Vaya, algo ha ido mal en mitad del proceso.  Por favor int�ntalo de nuevo.  "
-"Ten en cuenta que debes tener las cookies activas para poder entrar."
+"Vaya, algo ha ido mal en mitad del proceso.  Por favor int�ntalo de nuevo.  Ten en "
+"cuenta que debes tener las cookies activas para poder entrar."
 
 #: forum/views/auth.py:188 forum_modules/localauth/views.py:29
 msgid "A welcome email has been sent to your email address. "
 msgstr "Se ha enviado un email de bienvenida a tu direcci�n de email. "
 
 #: forum/views/auth.py:193
-msgid ""
-"Oops, something went wrong in the middle of this process. Please try again."
-msgstr ""
-"Vaya, algo ha ido mal en mitad del proceso.  Por favor int�ntalo de nuevo."
+msgid "Oops, something went wrong in the middle of this process. Please try again."
+msgstr "Vaya, algo ha ido mal en mitad del proceso.  Por favor int�ntalo de nuevo."
 
 #: forum/views/auth.py:252
 msgid "An email has been sent with your temporary login key"
@@ -7488,11 +7244,11 @@ msgstr "Se ha enviado un email con tu clave de acceso temporal"
 
 #: forum/views/auth.py:273
 msgid ""
-"You are logged in with a temporary access key, please take the time to fix "
-"your issue with authentication."
+"You are logged in with a temporary access key, please take the time to fix your issue "
+"with authentication."
 msgstr ""
-"Est�s conectado con una clave de acceso temporal, por favor aprovecha para "
-"arreglar tu problema de acceso."
+"Est�s conectado con una clave de acceso temporal, por favor aprovecha para arreglar "
+"tu problema de acceso."
 
 #: forum/views/auth.py:298
 msgid "A message with an email validation link was just sent to your address."
@@ -7545,21 +7301,21 @@ msgstr "Lo sentimos, pero esta cuenta est� suspendida"
 #, fuzzy, python-format
 msgid ""
 "Sorry, but you don't have enough reputation points to %(action)s.<br />\n"
-"                The minimum reputation required is %(reputation_required)d "
-"(yours is %(user_reputation)d).\n"
+"                The minimum reputation required is %(reputation_required)d (yours is "
+"%(user_reputation)d).\n"
 "                Please check the <a href='%(faq_url)s'>FAQ</a>"
 msgstr ""
-"Lo sentimos pero no tienes suficiente karma para %(action)s.<br />Por favor "
-"consulta las <a href='%(faq_url)s'>preguntas frecuentes</a>"
+"Lo sentimos pero no tienes suficiente karma para %(action)s.<br />Por favor consulta "
+"las <a href='%(faq_url)s'>preguntas frecuentes</a>"
 
 #: forum/views/commands.py:39
 #, python-format
 msgid ""
-"Sorry, but you don't have enough reputation points to %(action)s.<br /"
-">Please check the <a href='%(faq_url)s'>faq</a>"
+"Sorry, but you don't have enough reputation points to %(action)s.<br />Please check "
+"the <a href='%(faq_url)s'>faq</a>"
 msgstr ""
-"Lo sentimos pero no tienes suficiente karma para %(action)s.<br />Por favor "
-"consulta las <a href='%(faq_url)s'>preguntas frecuentes</a>"
+"Lo sentimos pero no tienes suficiente karma para %(action)s.<br />Por favor consulta "
+"las <a href='%(faq_url)s'>preguntas frecuentes</a>"
 
 #: forum/views/commands.py:47
 #, python-format
@@ -7567,44 +7323,42 @@ msgid ""
 "Sorry but you cannot %(action)s your own post.<br />Please check the <a "
 "href='%(faq_url)s'>faq</a>"
 msgstr ""
-"Lo sentimos pero no puedes %(action)s tu propio mensaje.<br />Por favor "
-"consulta las <a href='%(faq_url)s'>preguntas frecuentes</a>"
+"Lo sentimos pero no puedes %(action)s tu propio mensaje.<br />Por favor consulta las "
+"<a href='%(faq_url)s'>preguntas frecuentes</a>"
 
 #: forum/views/commands.py:55
 #, python-format
 msgid ""
-"Sorry but anonymous users cannot %(action)s.<br />Please login or create an "
-"account <a href='%(signin_url)s'>here</a>."
+"Sorry but anonymous users cannot %(action)s.<br />Please login or create an account "
+"<a href='%(signin_url)s'>here</a>."
 msgstr ""
-"Lo sentimos pero los usuarios an�nimos no pueden %(action)s.<br />Por favor "
-"entra con tu usuario o crea una cuenta <a href='%(signin_url)s'>aqu�</a>."
+"Lo sentimos pero los usuarios an�nimos no pueden %(action)s.<br />Por favor entra con "
+"tu usuario o crea una cuenta <a href='%(signin_url)s'>aqu�</a>."
 
 #: forum/views/commands.py:63
 #, python-format
 msgid ""
-"Sorry, but you don't have enough %(action)s left for today..<br />The limit "
-"is %(limit)s per day..<br />Please check the <a href='%(faq_url)s'>faq</a>"
+"Sorry, but you don't have enough %(action)s left for today..<br />The limit is "
+"%(limit)s per day..<br />Please check the <a href='%(faq_url)s'>faq</a>"
 msgstr ""
 "Lo sentimos, pero hoy no te quedan suficientes %(action)s.<br />El l�mite es "
-"%(limit)s al d�a.<br />Por favor consulta las <a "
-"href='%(faq_url)s'>preguntas frecuentes</a>"
+"%(limit)s al d�a.<br />Por favor consulta las <a href='%(faq_url)s'>preguntas "
+"frecuentes</a>"
 
 #: forum/views/commands.py:71
 #, python-format
 msgid ""
-"Sorry, but you cannot %(action)s twice the same post.<br />Please check the "
-"<a href='%(faq_url)s'>faq</a>"
+"Sorry, but you cannot %(action)s twice the same post.<br />Please check the <a "
+"href='%(faq_url)s'>faq</a>"
 msgstr ""
-"Lo sentimos, pero no puedes %(action)s dos veces el mismo mensaje.<br />Por "
-"favor consulta las <a href='%(faq_url)s'>preguntas frecuentes</a>"
+"Lo sentimos, pero no puedes %(action)s dos veces el mismo mensaje.<br />Por favor "
+"consulta las <a href='%(faq_url)s'>preguntas frecuentes</a>"
 
 #: forum/views/commands.py:106
 #, python-format
 msgid ""
-"Sorry but you cannot cancel a vote after %(ndays)d %(tdays)s from the "
-"original vote"
-msgstr ""
-"Lo sentimos pero no puedes cancelar un voto despu�s de %(ndays)d %(tdays)s"
+"Sorry but you cannot cancel a vote after %(ndays)d %(tdays)s from the original vote"
+msgstr "Lo sentimos pero no puedes cancelar un voto despu�s de %(ndays)d %(tdays)s"
 
 #: forum/views/commands.py:108
 msgid "day"
@@ -7639,8 +7393,7 @@ msgid "Reason is empty"
 msgstr "Motivo vac�o"
 
 #: forum/views/commands.py:167
-msgid ""
-"Thank you for your report. A moderator will review your submission shortly."
+msgid "Thank you for your report. A moderator will review your submission shortly."
 msgstr "Gracias por la informaci�n. Un moderador revisar� tu env�o pronto."
 
 #: forum/views/commands.py:175 forum/views/commands.py:181
@@ -7659,8 +7412,7 @@ msgstr "borrar comentarios"
 msgid "mark a question as favorite"
 msgstr "marcar una denuncia como favorita"
 
-#: forum/views/commands.py:250 forum/views/commands.py:548
-#: forum/views/commands.py:559
+#: forum/views/commands.py:250 forum/views/commands.py:548 forum/views/commands.py:559
 msgid "Invalid request"
 msgstr "Petici�n inv�lida"
 
@@ -7692,23 +7444,19 @@ msgstr "Lo sentimos pero no puedes aceptar la respuesta"
 
 #: forum/views/commands.py:332
 msgid "This question already has an accepted answer."
-msgid_plural ""
-"Sorry but this question has reached the limit of accepted answers."
+msgid_plural "Sorry but this question has reached the limit of accepted answers."
 msgstr[0] "Esta denuncia ya tiene una soluci�n aceptada."
-msgstr[1] ""
-"Lo sentimos pero esta denuncia ha llegado al l�mite de respuestas aceptadas."
+msgstr[1] "Lo sentimos pero esta denuncia ha llegado al l�mite de respuestas aceptadas."
 
 #: forum/views/commands.py:339
-msgid ""
-"The author of this answer already has an accepted answer in this question."
+msgid "The author of this answer already has an accepted answer in this question."
 msgid_plural ""
-"Sorry but the author of this answer has reached the limit of accepted "
-"answers per question."
-msgstr[0] ""
-"El autor de esta respuesta ya tiene una soluci�n aceptada en esta denuncia."
+"Sorry but the author of this answer has reached the limit of accepted answers per "
+"question."
+msgstr[0] "El autor de esta respuesta ya tiene una soluci�n aceptada en esta denuncia."
 msgstr[1] ""
-"Lo sentimos pero el autor de esta respuesta ha llegado al l�mite de "
-"soluciones aceptadas por denuncia."
+"Lo sentimos pero el autor de esta respuesta ha llegado al l�mite de soluciones "
+"aceptadas por denuncia."
 
 #: forum/views/commands.py:347
 #, fuzzy
@@ -7772,8 +7520,7 @@ msgstr "No tienes las credenciales actuales para realizar esta acci�n."
 msgid "The permanent URL to the answer has been copied to your clipboard."
 msgstr ""
 
-#: forum/views/commands.py:609 forum/views/commands.py:613
-#: forum/views/commands.py:625
+#: forum/views/commands.py:609 forum/views/commands.py:613 forum/views/commands.py:625
 #, fuzzy
 msgid "award"
 msgstr "reputaci�n/"
@@ -7788,11 +7535,10 @@ msgid "You have awarded %(awarded_user)s with %(points)d points"
 msgstr ""
 
 #: forum/views/decorators.py:77
-msgid ""
-"We're sorry, but an unknown error ocurred.<br />Please try again in a while."
+msgid "We're sorry, but an unknown error ocurred.<br />Please try again in a while."
 msgstr ""
-"Lo sentimos pero ha ocurrido un error desconocido.<br />Por favor int�ntalo "
-"de nuevo m�s tarde."
+"Lo sentimos pero ha ocurrido un error desconocido.<br />Por favor int�ntalo de nuevo "
+"m�s tarde."
 
 #: forum/views/meta.py:70
 msgid "Thanks for the feedback!"
@@ -7801,8 +7547,7 @@ msgstr "�Gracias por el comentario!"
 #: forum/views/meta.py:78
 msgid "We look forward to hearing your feedback! Please, give it next time :)"
 msgstr ""
-"Nos gustar�a recibir tus comentarios.  Por favor env�anoslos la pr�xima "
-"vez.  :)"
+"Nos gustar�a recibir tus comentarios.  Por favor env�anoslos la pr�xima vez.  :)"
 
 #: forum/views/readers.py:39
 msgid "Most <strong>recently updated</strong> questions"
@@ -7824,8 +7569,8 @@ msgstr "mostvoted"
 msgid "most <strong>voted</strong> questions"
 msgstr "denuncias m�s <strong>votadas</strong>"
 
-#: forum/views/readers.py:55 forum/views/readers.py:307
-#: forum/views/users.py:40 forum/views/users.py:51
+#: forum/views/readers.py:55 forum/views/readers.py:307 forum/views/users.py:40
+#: forum/views/users.py:51
 msgid "oldest"
 msgstr "los m�s antiguos"
 
@@ -7993,14 +7738,12 @@ msgstr "Perfil actualizado."
 #: forum/views/users.py:180
 msgid "Only superusers are allowed to alter other users permissions."
 msgstr ""
-"S�lo los superusuarios est�n autorizados para alterar los permisos de otros "
-"usuarios"
+"S�lo los superusuarios est�n autorizados para alterar los permisos de otros usuarios"
 
 #: forum/views/users.py:183
 msgid "Only the site owner can remove the super user status from other user."
 msgstr ""
-"S�lo el due�o del sitio puede quitarle el est�tus de superusuario a otro "
-"usuario."
+"S�lo el due�o del sitio puede quitarle el est�tus de superusuario a otro usuario."
 
 #: forum/views/users.py:205
 msgid "Only superusers are allowed to award reputation points"
@@ -8077,14 +7820,11 @@ msgstr "Preferencias nuevas guardadas"
 
 #: forum/views/writers.py:61
 msgid "uploading images is limited to users with >60 reputation points"
-msgstr ""
-"la subida de im�genes est� limitada a usuario con m�s de 60 puntos de karma"
+msgstr "la subida de im�genes est� limitada a usuario con m�s de 60 puntos de karma"
 
 #: forum/views/writers.py:63
 msgid "allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
-msgstr ""
-"los tipos de fichero permitidos son 'jpg', 'jpeg', 'gif', 'bmp', 'png', "
-"'tiff'"
+msgstr "los tipos de fichero permitidos son 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"
 
 #: forum/views/writers.py:65
 #, python-format
@@ -8093,10 +7833,8 @@ msgstr "el tama�o m�ximo de los ficheros subidos es de %sM"
 
 #: forum/views/writers.py:67
 #, python-format
-msgid ""
-"Error uploading file. Please contact the site administrator. Thank you. %s"
-msgstr ""
-"Error al subir fichero. Por favor contacta con el administrador. Gracias. %s"
+msgid "Error uploading file. Please contact the site administrator. Thank you. %s"
+msgstr "Error al subir fichero. Por favor contacta con el administrador. Gracias. %s"
 
 #: forum/views/writers.py:98
 #, python-format
@@ -8123,11 +7861,11 @@ msgstr "Clave de la API de WordPress"
 
 #: forum_modules/akismet/settings.py:8
 msgid ""
-"Your WordPress API key. You can get one at <a href='http://wordpress."
-"com/'>http://wordpress.com/</a>"
+"Your WordPress API key. You can get one at <a href='http://wordpress.com/'>http://"
+"wordpress.com/</a>"
 msgstr ""
-"Tu clave de la API de WordPress. Puedes obtener una en <a href='http://"
-"wordpress.com/'>http://wordpress.com/</a>."
+"Tu clave de la API de WordPress. Puedes obtener una en <a href='http://wordpress."
+"com/'>http://wordpress.com/</a>."
 
 #: forum_modules/akismet/settings.py:12
 msgid "Minimum reputation to not have your posts checked"
@@ -8135,11 +7873,10 @@ msgstr "Karma m�nimo para que tus mensajes no sean revisados"
 
 #: forum_modules/akismet/settings.py:13
 msgid ""
-"The minimum reputation a user must have so that when they post a question, "
-"answer or comment it is not checked for spam."
+"The minimum reputation a user must have so that when they post a question, answer or "
+"comment it is not checked for spam."
 msgstr ""
-"Karma m�nimo de un usuario para que sus mensajes no sean comprobados por si "
-"son spam"
+"Karma m�nimo de un usuario para que sus mensajes no sean comprobados por si son spam"
 
 #: forum_modules/akismet/startup.py:52
 #, python-format
@@ -8212,18 +7949,18 @@ msgstr "Soluci�n votada positivamente %s veces"
 #: forum_modules/default_badges/badges.py:81
 msgid "Nice Answer"
 msgstr "Defensor del pueblo"
-# msgstr "Buena Respuesta"
 
+# msgstr "Buena Respuesta"
 #: forum_modules/default_badges/badges.py:86
 msgid "Good Answer"
 msgstr "Abogado pasante"
-# msgstr "Gran Respuesta"
 
+# msgstr "Gran Respuesta"
 #: forum_modules/default_badges/badges.py:91
 msgid "Great Answer"
 msgstr "Abogado"
-# msgstr "Respuesta Genial"
 
+# msgstr "Respuesta Genial"
 #: forum_modules/default_badges/badges.py:100
 #, python-format
 msgid "Question favorited by %s users"
@@ -8240,8 +7977,8 @@ msgstr "Activista de masas"
 #: forum_modules/default_badges/badges.py:119
 msgid "Disciplined"
 msgstr "Honrado"
-# msgstr "Disciplinado"
 
+# msgstr "Disciplinado"
 #: forum_modules/default_badges/badges.py:120
 #, python-format
 msgid "Deleted own post with score of %s or higher"
@@ -8315,8 +8052,8 @@ msgstr "Primer cambio deshecho"
 #: forum_modules/default_badges/badges.py:195
 msgid "Autobiographer"
 msgstr "Activista"
-# msgstr "Autobi�grafo"
 
+# msgstr "Autobi�grafo"
 #: forum_modules/default_badges/badges.py:196
 msgid "Completed all user profile fields"
 msgstr "Completados todos los datos del perfil de usuario"
@@ -8351,8 +8088,8 @@ msgstr "Respondido a tu propia denuncia con al menos %s votos positivos"
 #: forum_modules/default_badges/badges.py:244
 msgid "Strunk & White"
 msgstr "Secretario Judicial"
-# msgstr "Mar�a Moliner"
 
+# msgstr "Mar�a Moliner"
 #: forum_modules/default_badges/badges.py:245
 #, python-format
 msgid "Edited %s entries"
@@ -8377,8 +8114,8 @@ msgstr "Primera respuesta con por lo menos un voto positivo"
 #: forum_modules/default_badges/badges.py:280
 msgid "Enlightened"
 msgstr "Juez"
-# msgstr "Ilustrado"
 
+# msgstr "Ilustrado"
 #: forum_modules/default_badges/badges.py:281
 #, python-format
 msgid "First answer was accepted with at least %s up votes"
@@ -8387,8 +8124,8 @@ msgstr "Primera soluci�n aceptada con por lo menos %s votos positivos"
 #: forum_modules/default_badges/badges.py:292
 msgid "Guru"
 msgstr "Magistrado"
-# msgstr "Gur�"
 
+# msgstr "Gur�"
 #: forum_modules/default_badges/badges.py:293
 #, python-format
 msgid "Accepted answer and voted up %s times"
@@ -8401,17 +8138,16 @@ msgstr "Intelectual"
 #: forum_modules/default_badges/badges.py:305
 #, python-format
 msgid ""
-"Answered a question more than %(dif_days)s days later with at least "
-"%(up_votes)s votes"
+"Answered a question more than %(dif_days)s days later with at least %(up_votes)s votes"
 msgstr ""
-"Respuesta a una denuncia de hace m�s de %(dif_days)s d�as con al menos "
-"%(up_votes)s votos"
+"Respuesta a una denuncia de hace m�s de %(dif_days)s d�as con al menos %(up_votes)s "
+"votos"
 
 #: forum_modules/default_badges/badges.py:317
 msgid "Taxonomist"
 msgstr "Procurador"
-# msgstr "Tax�nomo"
 
+# msgstr "Tax�nomo"
 #: forum_modules/default_badges/badges.py:318
 #, python-format
 msgid "Created a tag used by %s questions"
@@ -8434,12 +8170,12 @@ msgstr "Lecturas de una Denuncia Popular"
 #: forum_modules/default_badges/settings.py:7
 msgid ""
 "\n"
-"Number of question views required to award a Popular Question badge to the "
-"question author\n"
+"Number of question views required to award a Popular Question badge to the question "
+"author\n"
 msgstr ""
 "\n"
-"N�mero de lecturas de una denuncia requeridas para otorgar una medalla de "
-"Denuncia Popular al autor de la denuncia.\n"
+"N�mero de lecturas de una denuncia requeridas para otorgar una medalla de Denuncia "
+"Popular al autor de la denuncia.\n"
 
 #: forum_modules/default_badges/settings.py:12
 msgid "Notable Question views"
@@ -8448,12 +8184,12 @@ msgstr "Vistas de Denuncias Notables"
 #: forum_modules/default_badges/settings.py:13
 msgid ""
 "\n"
-"Number of question views required to award a Notable Question badge to the "
-"question author\n"
+"Number of question views required to award a Notable Question badge to the question "
+"author\n"
 msgstr ""
 "\n"
-"N�mero de lecturas de una denuncia requeridas para otorgar una medalla de "
-"Denuncia Notable al autor de la denuncia.\n"
+"N�mero de lecturas de una denuncia requeridas para otorgar una medalla de Denuncia "
+"Notable al autor de la denuncia.\n"
 
 #: forum_modules/default_badges/settings.py:18
 msgid "Famous Question views"
@@ -8462,12 +8198,12 @@ msgstr "Vistas de Denuncia Famosa"
 #: forum_modules/default_badges/settings.py:19
 msgid ""
 "\n"
-"Number of question views required to award a Famous Question badge to the "
-"question author\n"
+"Number of question views required to award a Famous Question badge to the question "
+"author\n"
 msgstr ""
 "\n"
-"N�mero de lecturas de una denuncia requeridas para otorgar una medalla de "
-"Denuncia Famosa al autor de la denuncia.\n"
+"N�mero de lecturas de una denuncia requeridas para otorgar una medalla de Denuncia "
+"Famosa al autor de la denuncia.\n"
 
 #: forum_modules/default_badges/settings.py:24
 msgid "Nice Answer up votes"
@@ -8476,12 +8212,11 @@ msgstr "Votos positivos para Buena Respuesta"
 #: forum_modules/default_badges/settings.py:25
 msgid ""
 "\n"
-"Number of up votes required to award a Nice Answer badge to the answer "
-"author\n"
+"Number of up votes required to award a Nice Answer badge to the answer author\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos requeridos para otorgar una medalla de Buena "
-"Respuesta al autor de una respuesta\n"
+"N�mero de votos positivos requeridos para otorgar una medalla de Buena Respuesta al "
+"autor de una respuesta\n"
 
 #: forum_modules/default_badges/settings.py:30
 msgid "Nice Question up votes"
@@ -8490,12 +8225,11 @@ msgstr "Votos positivos para Buena Denuncia"
 #: forum_modules/default_badges/settings.py:31
 msgid ""
 "\n"
-"Number of up votes required to award a Nice Question badge to the question "
-"author\n"
+"Number of up votes required to award a Nice Question badge to the question author\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos requeridos para otorgar una medalla de Buena "
-"Denuncia al autor de una denuncia\n"
+"N�mero de votos positivos requeridos para otorgar una medalla de Buena Denuncia al "
+"autor de una denuncia\n"
 
 #: forum_modules/default_badges/settings.py:36
 msgid "Good Answer up votes"
@@ -8504,12 +8238,11 @@ msgstr "Vistas para Gran Denuncia"
 #: forum_modules/default_badges/settings.py:37
 msgid ""
 "\n"
-"Number of up votes required to award a Good Answer badge to the answer "
-"author\n"
+"Number of up votes required to award a Good Answer badge to the answer author\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos requeridos para otorgar una medalla de Gran "
-"Respuesta al autor de una respuesta\n"
+"N�mero de votos positivos requeridos para otorgar una medalla de Gran Respuesta al "
+"autor de una respuesta\n"
 
 #: forum_modules/default_badges/settings.py:42
 msgid "Good Question up votes"
@@ -8518,12 +8251,11 @@ msgstr "Votos para Buena Denuncia"
 #: forum_modules/default_badges/settings.py:43
 msgid ""
 "\n"
-"Number of up votes required to award a Good Question badge to the question "
-"author\n"
+"Number of up votes required to award a Good Question badge to the question author\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos requeridos para otorgar una medalla de Gran "
-"Denuncia al autor de una denuncia\n"
+"N�mero de votos positivos requeridos para otorgar una medalla de Gran Denuncia al "
+"autor de una denuncia\n"
 
 #: forum_modules/default_badges/settings.py:48
 msgid "Great Answer up votes"
@@ -8532,12 +8264,11 @@ msgstr "Votos para Respuesta Genial"
 #: forum_modules/default_badges/settings.py:49
 msgid ""
 "\n"
-"Number of up votes required to award a Great Answer badge to the answer "
-"author\n"
+"Number of up votes required to award a Great Answer badge to the answer author\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos requeridos para otorgar una medalla de Respuesta "
-"Genial al autor de una respuesta\n"
+"N�mero de votos positivos requeridos para otorgar una medalla de Respuesta Genial al "
+"autor de una respuesta\n"
 
 #: forum_modules/default_badges/settings.py:54
 msgid "Great Question up votes"
@@ -8546,12 +8277,11 @@ msgstr "Votos para Denuncia Genial"
 #: forum_modules/default_badges/settings.py:55
 msgid ""
 "\n"
-"Number of up votes required to award a Great Question badge to the question "
-"author\n"
+"Number of up votes required to award a Great Question badge to the question author\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos requeridos para otorgar una medalla de Denuncia "
-"Genial al autor de una denuncia\n"
+"N�mero de votos positivos requeridos para otorgar una medalla de Denuncia Genial al "
+"autor de una denuncia\n"
 
 #: forum_modules/default_badges/settings.py:60
 msgid "Favorite Question favorite count"
@@ -8560,13 +8290,12 @@ msgstr "Cuenta para Denuncia Favorita"
 #: forum_modules/default_badges/settings.py:61
 msgid ""
 "\n"
-"How many times a question needs to be favorited by other users to award a "
-"Favorite Question badge to the question author\n"
+"How many times a question needs to be favorited by other users to award a Favorite "
+"Question badge to the question author\n"
 msgstr ""
 "\n"
-"Cu�ntas veces tiene que estar declarada como favorita por otros usuarios una "
-"denuncia para otorgar una medalla de Denuncia Favorita al autor de la "
-"denuncia\n"
+"Cu�ntas veces tiene que estar declarada como favorita por otros usuarios una denuncia "
+"para otorgar una medalla de Denuncia Favorita al autor de la denuncia\n"
 
 #: forum_modules/default_badges/settings.py:66
 msgid "Stellar Question favorite count"
@@ -8575,13 +8304,12 @@ msgstr "Cuenta para Denuncia Estelar"
 #: forum_modules/default_badges/settings.py:67
 msgid ""
 "\n"
-"How many times a question needs to be favorited by other users to award a "
-"Stellar Question badge to the question author\n"
+"How many times a question needs to be favorited by other users to award a Stellar "
+"Question badge to the question author\n"
 msgstr ""
 "\n"
-"Cu�ntas veces tiene que estar declarada como favorita por otros usuarios una "
-"denuncia para otorgar una medalla de Denuncia Estelar al autor de la "
-"denuncia\n"
+"Cu�ntas veces tiene que estar declarada como favorita por otros usuarios una denuncia "
+"para otorgar una medalla de Denuncia Estelar al autor de la denuncia\n"
 
 #: forum_modules/default_badges/settings.py:72
 msgid "Disciplined minimum score"
@@ -8590,12 +8318,12 @@ msgstr "Puntuaci�n m�nima para Disciplinado"
 #: forum_modules/default_badges/settings.py:73
 msgid ""
 "\n"
-"Minimum score a question needs to have to award the Disciplined badge to an "
-"author of a question who deletes it.\n"
+"Minimum score a question needs to have to award the Disciplined badge to an author of "
+"a question who deletes it.\n"
 msgstr ""
 "\n"
-"Puntuaci�n m�nima que tiene que tener una denuncia para otorgarle la medalla "
-"de Disciplinado al autor de una denuncia que la borra.\n"
+"Puntuaci�n m�nima que tiene que tener una denuncia para otorgarle la medalla de "
+"Disciplinado al autor de una denuncia que la borra.\n"
 
 #: forum_modules/default_badges/settings.py:78
 msgid "Peer Pressure maximum score"
@@ -8604,12 +8332,12 @@ msgstr "Puntuaci�n M�xima de Presi�n Social"
 #: forum_modules/default_badges/settings.py:79
 msgid ""
 "\n"
-"Maximum score a question needs to have to award the Peer Pressure badge to "
-"an author of a question who deletes it.\n"
+"Maximum score a question needs to have to award the Peer Pressure badge to an author "
+"of a question who deletes it.\n"
 msgstr ""
 "\n"
-"Puntuaci�n m�xima que tiene que tener una denuncia para otorgarle la medalla "
-"de Presi�n Social al autor de una denuncia que la borra.\n"
+"Puntuaci�n m�xima que tiene que tener una denuncia para otorgarle la medalla de "
+"Presi�n Social al autor de una denuncia que la borra.\n"
 
 #: forum_modules/default_badges/settings.py:84
 msgid "Civic Duty votes"
@@ -8621,8 +8349,8 @@ msgid ""
 "Number of votes an user needs to cast to be awarded the Civic Duty badge.\n"
 msgstr ""
 "\n"
-"N�mero de votos que tiene que emitir un usuario para recibir la medalla al "
-"Deber C�vico.\n"
+"N�mero de votos que tiene que emitir un usuario para recibir la medalla al Deber "
+"C�vico.\n"
 
 #: forum_modules/default_badges/settings.py:90
 msgid "Pundit number of comments"
@@ -8634,8 +8362,8 @@ msgid ""
 "Number of comments an user needs to post to be awarded the Pundit badge.\n"
 msgstr ""
 "\n"
-"N�mero de comentarios que tiene que publicar un usuario para recibir la "
-"medalla de Comentarista.\n"
+"N�mero de comentarios que tiene que publicar un usuario para recibir la medalla de "
+"Comentarista.\n"
 
 #: forum_modules/default_badges/settings.py:96
 msgid "Self Learner up votes"
@@ -8644,12 +8372,12 @@ msgstr "Votos para Autodidacta"
 #: forum_modules/default_badges/settings.py:97
 msgid ""
 "\n"
-"Number of up votes an answer from the question author needs to have for the "
-"author to be awarded the Self Learner badge.\n"
+"Number of up votes an answer from the question author needs to have for the author to "
+"be awarded the Self Learner badge.\n"
 msgstr ""
 "\n"
-"N�mero de votos que necesita recibir una respuesta del autor de la denuncia "
-"para que el autor reciba la medalla de Autodidacta.\n"
+"N�mero de votos que necesita recibir una respuesta del autor de la denuncia para que "
+"el autor reciba la medalla de Autodidacta.\n"
 
 #: forum_modules/default_badges/settings.py:102
 msgid "Strunk and White updates"
@@ -8658,12 +8386,12 @@ msgstr "Correcciones para Mar�a Moliner"
 #: forum_modules/default_badges/settings.py:103
 msgid ""
 "\n"
-"Number of question or answer updates an user needs to make to be awarded the "
-"Strunk & White badge.\n"
+"Number of question or answer updates an user needs to make to be awarded the Strunk & "
+"White badge.\n"
 msgstr ""
 "\n"
-"N�mero de correcciones a denuncias o respuestas que tiene que hacer un "
-"usuario para recibir la medalla de Mar�a Moliner.\n"
+"N�mero de correcciones a denuncias o respuestas que tiene que hacer un usuario para "
+"recibir la medalla de Mar�a Moliner.\n"
 
 #: forum_modules/default_badges/settings.py:108
 msgid "Enlightened up votes"
@@ -8672,12 +8400,12 @@ msgstr "Votos positivos para Ilustrado"
 #: forum_modules/default_badges/settings.py:109
 msgid ""
 "\n"
-"Number of up votes an accepted answer needs to have for the author to be "
-"awarded the Enlightened badge.\n"
+"Number of up votes an accepted answer needs to have for the author to be awarded the "
+"Enlightened badge.\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos que ha de recibir una soluci�n aceptada para que "
-"el autor reciba la medalla de Ilustrado.\n"
+"N�mero de votos positivos que ha de recibir una soluci�n aceptada para que el autor "
+"reciba la medalla de Ilustrado.\n"
 
 #: forum_modules/default_badges/settings.py:114
 msgid "Guru up votes"
@@ -8686,12 +8414,12 @@ msgstr "Votos positivos para ser gur�"
 #: forum_modules/default_badges/settings.py:115
 msgid ""
 "\n"
-"Number of up votes an accepted answer needs to have for the author to be "
-"awarded the Guru badge.\n"
+"Number of up votes an accepted answer needs to have for the author to be awarded the "
+"Guru badge.\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos que ha de recibir una soluci�n aceptada para que "
-"el autor reciba la medalla de Gur�.\n"
+"N�mero de votos positivos que ha de recibir una soluci�n aceptada para que el autor "
+"reciba la medalla de Gur�.\n"
 
 #: forum_modules/default_badges/settings.py:120
 msgid "Necromancer up votes"
@@ -8704,8 +8432,8 @@ msgid ""
 "Necromancer badge.\n"
 msgstr ""
 "\n"
-"N�mero de votos positivos que ha de recibir una soluci�n aceptada para que "
-"el autor reciba la medalla de Nigromante.\n"
+"N�mero de votos positivos que ha de recibir una soluci�n aceptada para que el autor "
+"reciba la medalla de Nigromante.\n"
 
 #: forum_modules/default_badges/settings.py:126
 msgid "Necromancer difference in days"
@@ -8714,13 +8442,12 @@ msgstr "Diferencia en d�as para Nigromante"
 #: forum_modules/default_badges/settings.py:127
 msgid ""
 "\n"
-"Difference in days betwen the posted date of a question and an answer for "
-"the answer author to be awarded the Necromancer badge.\n"
+"Difference in days betwen the posted date of a question and an answer for the answer "
+"author to be awarded the Necromancer badge.\n"
 msgstr ""
 "\n"
-"Diferencia en d�as entre las fechas de publicaci�n de la denuncia y la "
-"respuesta para que el autor de la respuesta reciba la medalla de "
-"Nigromante.\n"
+"Diferencia en d�as entre las fechas de publicaci�n de la denuncia y la respuesta para "
+"que el autor de la respuesta reciba la medalla de Nigromante.\n"
 
 #: forum_modules/default_badges/settings.py:132
 msgid "Taxonomist usage count"
@@ -8729,12 +8456,12 @@ msgstr "Cuenta de uso para Tax�nomo"
 #: forum_modules/default_badges/settings.py:133
 msgid ""
 "\n"
-"How many usages a tag needs to have for the tag creator to be awarded the "
-"Taxonomist badge. \n"
+"How many usages a tag needs to have for the tag creator to be awarded the Taxonomist "
+"badge. \n"
 msgstr ""
 "\n"
-"Cu�ntos usos de una etiqueta se requieren para que el creador de la etiqueta "
-"reciba la medalla de Tax�nomo. \n"
+"Cu�ntos usos de una etiqueta se requieren para que el creador de la etiqueta reciba "
+"la medalla de Tax�nomo. \n"
 
 #: forum_modules/exporter/exporter.py:191
 msgid "Compressing xml files"
@@ -8757,14 +8484,12 @@ msgstr "Acceso fallido."
 msgid "Saving backup file"
 msgstr ""
 
-#: forum_modules/exporter/exporter.py:266
-#: forum_modules/exporter/importer.py:235
+#: forum_modules/exporter/exporter.py:266 forum_modules/exporter/importer.py:235
 #, fuzzy
 msgid "Queued"
 msgstr "used"
 
-#: forum_modules/exporter/exporter.py:269
-#: forum_modules/exporter/importer.py:238
+#: forum_modules/exporter/exporter.py:269 forum_modules/exporter/importer.py:238
 #, fuzzy
 msgid "Starting"
 msgstr "interesante"
@@ -8788,8 +8513,7 @@ msgstr ""
 msgid "Writing %s temp file"
 msgstr ""
 
-#: forum_modules/exporter/exporter.py:301
-#: forum_modules/exporter/exporter.py:319
+#: forum_modules/exporter/exporter.py:301 forum_modules/exporter/exporter.py:319
 #: forum_modules/exporter/importer.py:270
 #, fuzzy
 msgid "Done"
@@ -8799,20 +8523,17 @@ msgstr "Ninguno"
 msgid "Compressing files"
 msgstr ""
 
-#: forum_modules/exporter/exporter.py:433
-#: forum_modules/exporter/importer.py:440
+#: forum_modules/exporter/exporter.py:433 forum_modules/exporter/importer.py:440
 #, fuzzy
 msgid "Nodes"
 msgstr "los m�s antiguos"
 
-#: forum_modules/exporter/exporter.py:484
-#: forum_modules/exporter/importer.py:543
+#: forum_modules/exporter/exporter.py:484 forum_modules/exporter/importer.py:543
 #, fuzzy
 msgid "Actions"
 msgstr "Ubicaci�n"
 
-#: forum_modules/exporter/exporter.py:530
-#: forum_modules/exporter/importer.py:632
+#: forum_modules/exporter/exporter.py:530 forum_modules/exporter/importer.py:632
 #, fuzzy
 msgid "Awards"
 msgstr "reputaci�n/"
@@ -9014,15 +8735,15 @@ msgstr "de"
 
 #: forum_modules/facebookauth/authentication.py:59
 msgid ""
-"Something wrond happened during Facebook authentication, administrators will "
-"be notified"
+"Something wrond happened during Facebook authentication, administrators will be "
+"notified"
 msgstr ""
 
 #: forum_modules/localauth/forms.py:83
 msgid "Please enter valid username and password (both are case-sensitive)."
 msgstr ""
-"Por favor introduce un nombre de usuario y contrase�a (los dos distinguen "
-"entre may�sculas y min�sculas)"
+"Por favor introduce un nombre de usuario y contrase�a (los dos distinguen entre "
+"may�sculas y min�sculas)"
 
 #: forum_modules/localauth/forms.py:87
 msgid "Login failed."
@@ -9087,8 +8808,7 @@ msgstr ""
 #: forum_modules/oauthauth/settings.py:7
 msgid ""
 "\n"
-"Get this key at the <a href=\"http://twitter.com/apps/\">Twitter apps</a> to "
-"enable\n"
+"Get this key at the <a href=\"http://twitter.com/apps/\">Twitter apps</a> to enable\n"
 "authentication in your site through Twitter.\n"
 msgstr ""
 
@@ -9099,8 +8819,8 @@ msgstr ""
 #: forum_modules/oauthauth/settings.py:15
 msgid ""
 "\n"
-"This your Twitter consumer secret that you'll get in the same place as the "
-"consumer key.\n"
+"This your Twitter consumer secret that you'll get in the same place as the consumer "
+"key.\n"
 msgstr ""
 
 #: forum_modules/oauthauth/settings.py:21
@@ -9258,8 +8978,7 @@ msgstr ""
 msgid "updater"
 msgstr "actualizar"
 
-#: forum_modules/updates/views.py:8
-#: forum_modules/updates/templates/index.html:38
+#: forum_modules/updates/views.py:8 forum_modules/updates/templates/index.html:38
 #, fuzzy
 msgid "Update Checker"
 msgstr "�ltimo comprobado"
@@ -9294,9 +9013,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Create some canned comments to be used for easier moderation."
-#~ msgstr ""
-#~ "Puedes escribir m�s opciones para razones que dar para cerrar una "
-#~ "denuncia."
+#~ msgstr "Puedes escribir m�s opciones para razones que dar para cerrar una denuncia."
 
 #~ msgid "Change email "
 #~ msgstr "Cambiar email"
@@ -9315,21 +9032,19 @@ msgstr ""
 
 #~ msgid "You can answer anonymously and then login."
 #~ msgstr ""
-#~ "Para publicar la respuesta despu�s deber�s identificarte con una cuenta "
-#~ "externa (Facebook, Google, etc.) o registrarte."
+#~ "Para publicar la respuesta despu�s deber�s identificarte con una cuenta externa "
+#~ "(Facebook, Google, etc.) o registrarte."
 
 #~ msgid "Answer your own question only to give an answer."
 #~ msgstr "Responde a tu propia denuncia s�lo para dar una respuesta."
 
 #~ msgid "Please only give an answer, no discussions."
 #~ msgstr ""
-#~ "Por favor responde s�lo a la denuncia original, no a otras respuestas "
-#~ "(para eso est�n los comentarios)."
+#~ "Por favor responde s�lo a la denuncia original, no a otras respuestas (para eso "
+#~ "est�n los comentarios)."
 
-#~ msgid ""
-#~ "Remember, your answer will not be published until you validate your email."
-#~ msgstr ""
-#~ "Recuerda que tu respuesta no ser� publicada hasta que valides tu email."
+#~ msgid "Remember, your answer will not be published until you validate your email."
+#~ msgstr "Recuerda que tu respuesta no ser� publicada hasta que valides tu email."
 
 #~ msgid "Existing account"
 #~ msgstr "Cuenta existente"
@@ -9347,22 +9062,16 @@ msgstr ""
 #~ msgstr "Activa esta opci�n para hacer que la ordenaci�n se mantenga"
 
 #~ msgid "Sorry, your Facebook session has expired, please try again"
-#~ msgstr ""
-#~ "Lo sentimos, tu sesi�n de Facebook ha expirado, por favor int�ntalo de "
-#~ "nuevo"
+#~ msgstr "Lo sentimos, tu sesi�n de Facebook ha expirado, por favor int�ntalo de nuevo"
 
 #~ msgid ""
-#~ "The authentication with Facebook connect failed, cannot find "
-#~ "authentication tokens"
+#~ "The authentication with Facebook connect failed, cannot find authentication tokens"
 #~ msgstr ""
 #~ "La autenticaci�n con Facebook ha fallado, no se encuentran los tokens de "
 #~ "autenticaci�n"
 
-#~ msgid ""
-#~ "The authentication with Facebook connect failed due to an invalid "
-#~ "signature"
-#~ msgstr ""
-#~ "La autenticaci�n con Facebook ha fallado debido a una firma incorrecta"
+#~ msgid "The authentication with Facebook connect failed due to an invalid signature"
+#~ msgstr "La autenticaci�n con Facebook ha fallado debido a una firma incorrecta"
 
 #~ msgid "okay, let's try!"
 #~ msgstr "OK, lo probar�"
@@ -9383,41 +9092,38 @@ msgstr ""
 #~ "                "
 #~ msgstr ""
 #~ "\n"
-#~ "                Haz una denuncia que pueda ser interesante tambi�n para "
-#~ "otros usuarios de %(app_title)s \n"
+#~ "                Haz una denuncia que pueda ser interesante tambi�n para otros "
+#~ "usuarios de %(app_title)s \n"
 #~ "                "
 
 #~ msgid "please try provide enough details"
 #~ msgstr "Por favor intenta dar suficientes detalles"
 
 #~ msgid "Tags are words that will tell others what this question is about."
-#~ msgstr ""
-#~ "Las etiquetas son palabras que indican de qu� temas trata la denuncia."
+#~ msgstr "Las etiquetas son palabras que indican de qu� temas trata la denuncia."
 
 #~ msgid "They will help other find your question."
 #~ msgstr "Sirven para que otras personas puedan encontrar tu denuncia."
 
 #~ msgid ""
 #~ "\n"
-#~ "                A question can have up to %(max_number_of_tags)s tags, "
-#~ "but it must have at least %(min_number_of_tags)s.\n"
+#~ "                A question can have up to %(max_number_of_tags)s tags, but it must "
+#~ "have at least %(min_number_of_tags)s.\n"
 #~ "            "
 #~ msgstr ""
 #~ "\n"
-#~ "                Una denuncia puede tener un m�ximo de "
-#~ "%(max_number_of_tags)s etiquetas, y como m�nimo %(min_number_of_tags)s.\n"
+#~ "                Una denuncia puede tener un m�ximo de %(max_number_of_tags)s "
+#~ "etiquetas, y como m�nimo %(min_number_of_tags)s.\n"
 #~ "            "
 
 #~ msgid ""
-#~ "Please create your screen name and save your email address. Saved email "
-#~ "address will let you subscribe for the updates on the most interesting "
-#~ "questions and will be used to create and retrieve your unique avatar "
-#~ "image. "
+#~ "Please create your screen name and save your email address. Saved email address "
+#~ "will let you subscribe for the updates on the most interesting questions and will "
+#~ "be used to create and retrieve your unique avatar image. "
 #~ msgstr ""
-#~ "Por favor elige un nombre de usuario e introduce tu direcci�n de email.  "
-#~ "Esta direcci�n de email te permitir� suscribirte para recibir avisos de "
-#~ "las denuncias que te interesen. Tambi�n puedes usarla para crear tu "
-#~ "imagen avatar."
+#~ "Por favor elige un nombre de usuario e introduce tu direcci�n de email.  Esta "
+#~ "direcci�n de email te permitir� suscribirte para recibir avisos de las denuncias "
+#~ "que te interesen. Tambi�n puedes usarla para crear tu imagen avatar."
 
 #~ msgid "receive updates motivational blurb"
 #~ msgstr ""
@@ -9429,32 +9135,31 @@ msgstr ""
 
 #~ msgid "Tag filter tool will be your right panel, once you log in."
 #~ msgstr ""
-#~ "Encontrar�s la herramienta para filtrar etiquetas en el lateral derecho, "
-#~ "una vez que hayas entrado."
+#~ "Encontrar�s la herramienta para filtrar etiquetas en el lateral derecho, una vez "
+#~ "que hayas entrado."
 
 #~ msgid ""
 #~ "\n"
 #~ "    Currently you have notifications enabled. You can always stop all "
-#~ "notifications without losing your settings and restart them afterwards."
-#~ "<br />\n"
+#~ "notifications without losing your settings and restart them afterwards.<br />\n"
 #~ "    "
 #~ msgstr ""
 #~ "\n"
-#~ "    Actualmente tienes las <b>notificaciones activas</b>. Siempre puedes "
-#~ "parar todas las notificaciones sin perder tus opciones y reiniciarlas m�s "
-#~ "adelante.<br />\n"
+#~ "    Actualmente tienes las <b>notificaciones activas</b>. Siempre puedes parar "
+#~ "todas las notificaciones sin perder tus opciones y reiniciarlas m�s adelante.<br /"
+#~ ">\n"
 #~ "    "
 
 #~ msgid ""
 #~ "\n"
-#~ "    Currently you have notifications disabled. You can enable them by "
-#~ "clicking on the <strong>Start notifications</strong> button below.<br />\n"
+#~ "    Currently you have notifications disabled. You can enable them by clicking on "
+#~ "the <strong>Start notifications</strong> button below.<br />\n"
 #~ "    "
 #~ msgstr ""
 #~ "\n"
-#~ "    Actualmente tienes las <b>notificaciones desactivadas</b>.  Puedes "
-#~ "activarlas haciendo click en el bot�n <strong>Activar notificaciones</"
-#~ "strong> de abajo.<br />\n"
+#~ "    Actualmente tienes las <b>notificaciones desactivadas</b>.  Puedes activarlas "
+#~ "haciendo click en el bot�n <strong>Activar notificaciones</strong> de abajo.<br /"
+#~ ">\n"
 #~ "    "
 
 #~ msgid "Questions I ask"
