@@ -2040,7 +2040,7 @@ width: 215px;
     color: #fff;
 }
 
-#top:before{
+#roof{
     content: "";
     width: 100%;
     height: 30px;
@@ -2063,7 +2063,7 @@ width: 215px;
 }
 
 .nav {
-    float: right;
+    float: left;
     margin: 20px 0px 10px 0px;
     width: 780px;
 margin-top: 81px;
