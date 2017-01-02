@@ -18,7 +18,7 @@ class NodeContent(models.Model):
 
     @property
     def html(self):
-        return self.body
+        return 123
 
     @property
     def headline(self):
