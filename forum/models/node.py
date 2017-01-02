@@ -18,7 +18,7 @@ class NodeContent(models.Model):
 
     @property
     def html(self):
-        return '12345'
+        return self.body
         return mark_safe(sanitize_html(markdown.markdown(self.body)))
 
     @property
