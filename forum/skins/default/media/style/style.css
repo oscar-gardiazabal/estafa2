@@ -2010,6 +2010,9 @@ div.wmd-button-bar {
 #sidebar-upper, #sidebar-lower{
     display: none;
 }
+a[href="/preguntas-frecuentes/"], a[href="/acerca-de/"] { 
+    display: none;
+}
 
 #questionsBlock{
 margin-top: 40px;
