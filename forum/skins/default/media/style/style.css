@@ -204,7 +204,7 @@ margin-top: 40px;
 }
 
 #top {
-    float: right;
+    float: left;
     padding-top: 4px;
     width: 500px;
 }
@@ -2044,7 +2044,6 @@ width: 215px;
     content: "";
     width: 100%;
     height: 30px;
-    position: absolute;
     z-index: -1;
     left: 0;
     background-color: rgb(50,50,50);
