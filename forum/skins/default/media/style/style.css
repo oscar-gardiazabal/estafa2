@@ -2065,6 +2065,9 @@ width: 215px;
     color:gainsboro;
     text-shadow: 1px 1px black;
 }
+#top{
+    padding-top: 6px;
+}
 
 .nav {
     float: left;
