@@ -2,8 +2,9 @@
 *.swp
 *.log
 cache/??
-# osqa.wsgi
-# settings_local.py
+osqa.wsgi
+nbproject
+settings_local.py
 .idea
 *.iml
 env
