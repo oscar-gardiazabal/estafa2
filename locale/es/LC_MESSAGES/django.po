@@ -2737,8 +2737,8 @@ msgid ""
 "(mysteryman) a simple, cartoon-style silhouetted outline of a person (does not vary "
 "by email hash)"
 msgstr ""
-"(mysteryman) una silueta caricaturesca de una persona que no var�a seg�n su "
-"direcci�n de correo electr�nico"
+"(mysteryman) una silueta caricaturesca de una persona que no var�a seg�n su direcci�n "
+"de correo electr�nico"
 
 #: forum/settings/users.py:107
 msgid "a geometric pattern based on an email hash"
@@ -9186,7 +9186,6 @@ msgstr ""
 #~ msgid "Notifications are now enabled"
 #~ msgstr "Las notificaciones han sido activadas"
 
-Add a comment to this line
 #~ msgid "Notifications are now disabled"
 #~ msgstr "Las notificaciones han sido desactivadas"
 
