@@ -74,7 +74,7 @@ FORUM_SCRIPT_ALIAS = '' #no leading slash, default = '' empty string
 #OTHER SETTINGS
 
 USE_I18N = True
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'en'
 EMAIL_VALIDATION = 'off' #string - on|off
 MIN_USERNAME_LENGTH = 1
 EMAIL_UNIQUE = False
