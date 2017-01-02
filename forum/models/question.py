@@ -56,6 +56,9 @@ class Question(QandA):
     def get_absolute_url(self):
         return ('question', (), {'id': self.id, 'slug': django_urlquote(slugify(self.title))})
 
+    def HTML(self):
+        return '123'
+
     def get_answer_count_by_user(self, user_id):
         from answer import Answer
         query_set = Answer.objects.filter(author__id=user_id)

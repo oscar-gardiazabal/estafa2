@@ -18,7 +18,7 @@ class NodeContent(models.Model):
 
     @property
     def html(self):
-        return 123
+        return mark_safe(sanitize_html(markdown.markdown(self.body)))
 
     @property
     def headline(self):
