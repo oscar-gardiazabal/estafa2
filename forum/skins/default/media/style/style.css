@@ -207,22 +207,6 @@ margin-top: 40px;
     float: right;
     padding-top: 4px;
     width: 500px;
-
-position: absolute;
-width: 100%;
-left: 0;
-color: #e0e0e0;
-background-color: rgb(50,50,50);
-text-shadow: 1px 1px black;
-
-background: -webkit-gradient(linear, left top, left bottom, from(rgb(100,100,100)), to(rgb(30,30,30)));
-background: -webkit-linear-gradient(rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
-background: -moz-linear-gradient(top, rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
-background: -ms-linear-gradient(top, rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
-background: -o-linear-gradient(top,rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
-box-shadow: 0 1px 8px rgb(120,120,120);
-
-border-bottom: 1px solid black;
 }
 
 #top a {
@@ -250,74 +234,6 @@ margin-left: 6px;
     float: left;
     position: absolute;
 margin-top: 40px;
-}
-
-#nav {
-    float: right;
-    margin: 20px 0px 10px 0px;
-    width: 780px;
-margin-top: 81px;
-}
-
-#nav a {
-    border-style: solid;
-    border-width: 1px 1px 2px;
-    display: block;
-    float: left;
-    line-height: 24px;
-    margin-left: 10px;
-padding: 0 10px;
-box-shadow: 0 1px 3px rgb(150,150,150), inset 1px 1px rgba(255,255,255,0.5);
-background: -webkit-linear-gradient(rgb(230,255,255),rgb(100,140,170) 7%,rgb(120,140,190) 50%,rgb(100,125,125) 50%,rgb(90,130,190));
-
-border-color: rgb(60,60,60);
-text-shadow: 1px 1px rgb(30,30,30);
-border-radius: 3px;
-
-font-weight: bold;
-color: rgba(255,255,255,0.8);
-font-size: 117%;
-}
-
-#nav a:hover {
-text-decoration: none;
-background: gold;
-border-width: 2px 1px 1px 1px;
-color: black;
-text-shadow: 1px 1px white;
-background: -webkit-linear-gradient(rgb(255,255,230),rgb(210,210,100) 7%,rgb(230,230,120) 50%,rgb(175,175,100) 50%,rgb(230,230,90));
-}
-
-#nav a.on {
-background: rgb(250,250,250);
-text-shadow: 1px 1px white;
-border-width: 2px 1px 1px 1px;
-    background: white;
-    color: rgb(50,50,50);
-    text-decoration: none;
-}
-
-#nav a:active {
-box-shadow: inset 0 2px 5px black !important;
-}
-
-#nav a:hover {
-box-shadow: none;
-}
-
-#nav a.on {
-box-shadow: inset 0 1px 3px rgb(100,100,100);
-}
-
-#nav a#nav_ask {
-    float: right;
-    text-decoration: none;
-background: -webkit-linear-gradient(rgb(255,200,200),rgb(140,60,60) 7%,rgb(160,50,50) 50%,rgb(110,10,10) 50%,rgb(160,60,60));
-}
-
-#nav a#nav_ask:hover {
-color: white !important;
-text-shadow: 1px 1px black !important;
 }
 
 #searchBar {
@@ -2124,4 +2040,92 @@ width: 215px;
     color: #fff;
 }
 
+#top:before{
+    content: "";
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    background-color: rgb(50,50,50);
+    text-shadow: 1px 1px black;
+    color: #e0e0e0;
 
+    background-color: rgb(50,50,50);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(100,100,100)), to(rgb(30,30,30)));
+    background: -webkit-linear-gradient(rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
+    background: -moz-linear-gradient(top, rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
+    background: -ms-linear-gradient(top, rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
+    background: -o-linear-gradient(top,rgb(255,255,255),rgb(110,110,110) 7%,rgb(50,50,50) 85%,rgb(0,0,0));
+    box-shadow: 0 1px 8px rgb(120,120,120);
+
+    border-bottom: 1px solid black;
+}
+
+.nav {
+    float: right;
+    margin: 20px 0px 10px 0px;
+    width: 780px;
+margin-top: 81px;
+}
+
+.nav a {
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    display: block;
+    float: left;
+    line-height: 24px;
+    margin-left: 10px;
+padding: 0 10px;
+box-shadow: 0 1px 3px rgb(150,150,150), inset 1px 1px rgba(255,255,255,0.5);
+background: -webkit-linear-gradient(rgb(230,255,255),rgb(100,140,170) 7%,rgb(120,140,190) 50%,rgb(100,125,125) 50%,rgb(90,130,190));
+
+border-color: rgb(60,60,60);
+text-shadow: 1px 1px rgb(30,30,30);
+border-radius: 3px;
+
+font-weight: bold;
+color: rgba(255,255,255,0.8);
+font-size: 117%;
+}
+
+.nav a:hover {
+text-decoration: none;
+background: gold;
+border-width: 2px 1px 1px 1px;
+color: black;
+text-shadow: 1px 1px white;
+background: -webkit-linear-gradient(rgb(255,255,230),rgb(210,210,100) 7%,rgb(230,230,120) 50%,rgb(175,175,100) 50%,rgb(230,230,90));
+}
+
+.nav a.on {
+background: rgb(250,250,250);
+text-shadow: 1px 1px white;
+border-width: 2px 1px 1px 1px;
+    background: white;
+    color: rgb(50,50,50);
+    text-decoration: none;
+}
+
+.nav a:active {
+box-shadow: inset 0 2px 5px black !important;
+}
+
+.nav a:hover {
+box-shadow: none;
+}
+
+.nav a.on {
+box-shadow: inset 0 1px 3px rgb(100,100,100);
+}
+
+.nav a#nav_ask {
+    float: right;
+    text-decoration: none;
+background: -webkit-linear-gradient(rgb(255,200,200),rgb(140,60,60) 7%,rgb(160,50,50) 50%,rgb(110,10,10) 50%,rgb(160,60,60));
+}
+
+.nav a#nav_ask:hover {
+color: white !important;
+text-shadow: 1px 1px black !important;
+}
