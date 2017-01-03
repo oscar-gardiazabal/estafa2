@@ -209,7 +209,7 @@ msgstr ""
 #: forum/forms.py:52 forum/skins/default/templates/header.html:31
 #: forum/skins/default/templates/header.html:59
 msgid "tags"
-msgstr "ranking"
+msgstr "entidades"
 
 #: forum/forms.py:54
 msgid ""
