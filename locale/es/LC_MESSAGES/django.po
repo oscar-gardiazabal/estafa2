@@ -209,7 +209,7 @@ msgstr ""
 #: forum/forms.py:52 forum/skins/default/templates/header.html:31
 #: forum/skins/default/templates/header.html:59
 msgid "tags"
-msgstr "estafadores"
+msgstr "ranking"
 
 #: forum/forms.py:54
 msgid ""
@@ -2254,7 +2254,7 @@ msgstr "haz click para ocultar/mostrar la versión"
 
 #: forum/skins/default/templates/tag_selector.html:4
 msgid "Interesting tags"
-msgstr "Mostrar antes las denuncias de los siguientes estafadores:"
+msgstr "Mostrar antes las denuncias de las siguientes organizaciones:"
 
 #: forum/skins/default/templates/tag_selector.html:14
 #, python-format
@@ -2268,7 +2268,7 @@ msgstr "Añadir"
 
 #: forum/skins/default/templates/tag_selector.html:21
 msgid "Ignored tags"
-msgstr "Ocultar denuncias de los siguientes estafadores:"
+msgstr "Ocultar denuncias de las siguientes organizaciones:"
 
 #: forum/skins/default/templates/tag_selector.html:31
 #, python-format
