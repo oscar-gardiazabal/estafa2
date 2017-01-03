@@ -70,9 +70,8 @@ def vote_post(request, id, vote_type):
     if not user.is_authenticated():
         raise AnonymousNotAllowedException(_('vote'))
 
-# TROLL: Allow answer own question:
-#    if user == post.author:
-#        raise CannotDoOnOwnException(_('vote'))
+    if user == post.author:
+        raise CannotDoOnOwnException(_('vote'))
 
     if not (vote_type == 'up' and user.can_vote_up() or user.can_vote_down()):
         raise NotEnoughRepPointsException(vote_type == 'up' and _('upvote') or _('downvote'))
