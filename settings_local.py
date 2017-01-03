@@ -88,6 +88,7 @@ RESOURCE_REVISION=4
 
 OSQA_DEFAULT_SKIN = 'default'
 
-DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
+#DISABLED_MODULES = ['books', 'recaptcha', 'project_badges']
+DISABLED_MODULES = ['books', 'project_badges']
 
 from forum.settings import *
