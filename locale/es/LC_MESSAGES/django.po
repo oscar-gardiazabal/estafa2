@@ -445,7 +445,7 @@ msgstr "unmark-tag/"
 
 #: forum/urls.py:78 forum/urls.py:80 forum/urls.py:81
 msgid "users/"
-msgstr "usuarios2/"
+msgstr "users/"
 
 #: forum/urls.py:79
 msgid "moderate-user/"
