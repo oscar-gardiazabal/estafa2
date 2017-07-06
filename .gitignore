@@ -14,3 +14,5 @@ pip-log.txt
 tmp/*
 forum/upfiles/[^R]*
 .svn
+
+settings_local.py
